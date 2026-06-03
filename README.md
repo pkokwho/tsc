@@ -4,6 +4,13 @@
 
 **[在线演示](https://pkokwho.github.io/tsc/)** | **[English](README_EN.md)**
 
+## 截图预览
+
+<p align="center">
+  <img src="assets/dark-theme.png" alt="深色主题" width="48%" />
+  <img src="assets/light-theme.png" alt="浅色主题" width="48%" />
+</p>
+
 ## 功能特性
 
 - **多模型支持** — 通用模型、Midjourney、Flux、视频 AI 四种格式

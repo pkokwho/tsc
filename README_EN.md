@@ -4,6 +4,13 @@ A modern AI prompt generator with Apple-style dark UI. Enter your creative idea 
 
 **[Live Demo](https://pkokwho.github.io/tsc/)** | **[中文](README.md)**
 
+## Screenshots
+
+<p align="center">
+  <img src="assets/dark-theme.png" alt="Dark Theme" width="48%" />
+  <img src="assets/light-theme.png" alt="Light Theme" width="48%" />
+</p>
+
 ## Features
 
 - **Multi-Model Support** — Generate prompts for Universal, Midjourney, Flux, and Video AI
