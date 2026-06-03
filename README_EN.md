@@ -2,7 +2,7 @@
 
 A modern AI prompt generator with Apple-style dark UI. Enter your creative idea in any language, and instantly generate professional prompts for Midjourney, Flux, Video AI, and all image generation models.
 
-**[Live Demo](https://pkokwho.github.io/tsc/)**
+**[Live Demo](https://pkokwho.github.io/tsc/)** | **[中文](README.md)**
 
 ## Features
 
