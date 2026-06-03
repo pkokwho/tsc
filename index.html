@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Prompt Generator | 提示词生成器</title>
+<style>
+  /* ==================== CSS Variables ==================== */
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: rgba(255,255,255,0.04);
+    --bg-card: rgba(255,255,255,0.06);
+    --bg-card-hover: rgba(255,255,255,0.09);
+    --border-color: rgba(255,255,255,0.08);
+    --border-active: rgba(99,102,241,0.5);
+    --text-primary: rgba(255,255,255,0.95);
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-tertiary: rgba(255,255,255,0.35);
+    --accent-1: #6366f1;
+    --accent-2: #a855f7;
+    --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+    --accent-glow: rgba(99,102,241,0.4);
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+    --shadow-glow: 0 0 40px rgba(99,102,241,0.15);
+    --font-stack: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+    --transition-fast: 0.2s cubic-bezier(0.4,0,0.2,1);
+    --transition-medium: 0.4s cubic-bezier(0.4,0,0.2,1);
+    --transition-slow: 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* ==================== Reset & Base ==================== */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    font-family: var(--font-stack);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ==================== Background Effects ==================== */
+  .bg-effects {
+    position: fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
+  }
+  .bg-orb {
+    position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.12;
+    animation: orbFloat 20s ease-in-out infinite alternate;
+  }
+  .bg-orb-1 { width:600px; height:600px; background:#6366f1; top:-200px; left:-100px; }
+  .bg-orb-2 { width:500px; height:500px; background:#a855f7; bottom:-150px; right:-100px; animation-delay:-10s; }
+  .bg-orb-3 { width:300px; height:300px; background:#06b6d4; top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:-5s; }
+  .bg-grid {
+    position: absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  @keyframes orbFloat {
+    0% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(50px,-30px) scale(1.1); }
+    100% { transform: translate(-30px,50px) scale(0.95); }
+  }
+
+  /* ==================== Layout ==================== */
+  .container { position: relative; z-index:1; max-width:1200px; margin:0 auto; padding: 0 24px; }
+
+  /* ==================== Navigation ==================== */
+  nav {
+    position: sticky; top:0; z-index:100;
+    background: rgba(10,10,15,0.7);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .nav-inner {
+    display:flex; align-items:center; justify-content:center;
+    max-width:1200px; margin:0 auto; padding:16px 24px;
+  }
+  .nav-brand {
+    display:flex; align-items:center; gap:12px;
+    font-size:18px; font-weight:600; letter-spacing:-0.02em;
+    background: var(--accent-gradient); -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .nav-brand svg { flex-shrink:0; }
+
+  /* ==================== Hero Section ==================== */
+  .hero {
+    text-align:center; padding:80px 24px 48px;
+    animation: fadeUp 0.8s ease-out both;
+  }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:6px 16px; border-radius:100px;
+    background: rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2);
+    font-size:13px; color:var(--accent-1); margin-bottom:24px;
+  }
+  .hero-badge-dot {
+    width:6px; height:6px; border-radius:50%; background:var(--accent-1);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight:700; letter-spacing:-0.03em;
+    line-height:1.1; margin-bottom:16px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .hero p {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--text-secondary); max-width:600px; margin:0 auto;
+    line-height:1.6;
+  }
+
+  /* ==================== Input Section ==================== */
+  .input-section {
+    animation: fadeUp 0.8s ease-out 0.2s both;
+    margin-bottom:48px;
+  }
+  .input-card {
+    background: var(--bg-card);
+    border:1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding:32px;
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .input-card:focus-within {
+    border-color: var(--border-active);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+  }
+  .input-label {
+    display:block; font-size:14px; font-weight:500;
+    color: var(--text-secondary); margin-bottom:12px;
+    letter-spacing: 0.02em;
+  }
+  .input-textarea {
+    width:100%; min-height:140px; padding:16px;
+    background: rgba(255,255,255,0.04);
+    border:1px solid transparent;
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    font-size: 16px;
+    line-height: 1.6;
+    resize: vertical;
+    transition: all var(--transition-fast);
+    outline: none;
+  }
+  .input-textarea::placeholder { color: var(--text-tertiary); }
+  .input-textarea:focus {
+    background: rgba(255,255,255,0.06);
+    border-color: var(--border-active);
+  }
+
+  /* ==================== Controls ==================== */
+  .controls {
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap:16px; margin-top:24px;
+  }
+  .control-group label {
+    display:block; font-size:13px; color:var(--text-secondary);
+    margin-bottom:8px; font-weight:500;
+  }
+  .control-select {
+    width:100%; padding:12px 16px;
+    background: rgba(255,255,255,0.04);
+    border:1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    font-size:14px;
+    outline:none; cursor:pointer;
+    appearance:none; -webkit-appearance:none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position: right 16px center;
+    transition: all var(--transition-fast);
+  }
+  .control-select:focus {
+    border-color: var(--border-active);
+    background-color: rgba(255,255,255,0.06);
+  }
+  .control-select option { background:#1a1a2e; color:#fff; }
+
+  /* ==================== Generate Button ==================== */
+  .btn-generate {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; margin-top:24px; padding:16px 32px;
+    background: var(--accent-gradient);
+    border:none; border-radius: var(--radius-md);
+    color:#fff; font-family:var(--font-stack);
+    font-size:16px; font-weight:600;
+    cursor:pointer; position:relative; overflow:hidden;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+  }
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+  }
+  .btn-generate:active { transform: translateY(0); }
+  .btn-generate:disabled {
+    opacity:0.5; cursor:not-allowed; transform:none;
+  }
+  .btn-generate .btn-shimmer {
+    position:absolute; inset:0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+  .btn-generate:hover .btn-shimmer { transform: translateX(100%); }
+
+  /* ==================== Results Section ==================== */
+  .results-section {
+    padding-bottom:80px;
+    animation: fadeUp 0.8s ease-out 0.4s both;
+  }
+  .results-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:24px;
+  }
+  .results-title {
+    font-size:20px; font-weight:600; letter-spacing:-0.01em;
+  }
+  .results-count {
+    font-size:13px; color:var(--text-tertiary);
+    padding:4px 12px; border-radius:100px;
+    background:var(--bg-secondary);
+  }
+  .results-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap:20px;
+  }
+
+  /* ==================== Prompt Card ==================== */
+  .prompt-card {
+    background: var(--bg-card);
+    border:1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow:hidden;
+    transition: all var(--transition-medium);
+    animation: cardIn 0.5s ease-out both;
+  }
+  .prompt-card:nth-child(1) { animation-delay: 0.05s; }
+  .prompt-card:nth-child(2) { animation-delay: 0.15s; }
+  .prompt-card:nth-child(3) { animation-delay: 0.25s; }
+  .prompt-card:nth-child(4) { animation-delay: 0.35s; }
+  .prompt-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255,255,255,0.12);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+  .card-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 24px 16px;
+    border-bottom:1px solid var(--border-color);
+  }
+  .card-model {
+    display:flex; align-items:center; gap:10px;
+  }
+  .card-model-icon {
+    width:36px; height:36px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; font-weight:700;
+  }
+  .card-model-icon.mj { background: linear-gradient(135deg, #5865f2, #4752c4); }
+  .card-model-icon.flux { background: linear-gradient(135deg, #f97316, #ea580c); }
+  .card-model-icon.video { background: linear-gradient(135deg, #ec4899, #db2777); }
+  .card-model-icon.universal { background: linear-gradient(135deg, #10b981, #059669); }
+  .card-model-name { font-size:15px; font-weight:600; }
+  .card-model-desc { font-size:12px; color:var(--text-tertiary); }
+  .card-body { padding:20px 24px; }
+  .card-prompt {
+    font-size:14px; line-height:1.7;
+    color: var(--text-secondary);
+    word-break: break-word;
+    white-space: pre-wrap;
+    min-height: 100px;
+  }
+  .card-footer {
+    display:flex; gap:8px; padding:16px 24px 20px;
+    border-top:1px solid var(--border-color);
+  }
+  .btn-copy {
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    flex:1; padding:10px 16px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-family: var(--font-stack);
+    font-size:13px; font-weight:500;
+    cursor:pointer; transition: all var(--transition-fast);
+  }
+  .btn-copy:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .btn-copy.copied {
+    background: rgba(34,197,94,0.15);
+    border-color: rgba(34,197,94,0.3);
+    color: #22c55e;
+  }
+
+  /* ==================== Empty State ==================== */
+  .empty-state {
+    text-align:center; padding:80px 24px;
+    color: var(--text-tertiary);
+  }
+  .empty-icon {
+    width:64px; height:64px; margin:0 auto 16px;
+    opacity:0.3;
+  }
+  .empty-state p { font-size:15px; }
+
+  /* ==================== Toast ==================== */
+  .toast-container {
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    z-index:1000;
+  }
+  .toast {
+    padding:12px 24px; border-radius:100px;
+    background: rgba(34,197,94,0.15);
+    border:1px solid rgba(34,197,94,0.3);
+    color:#22c55e; font-size:14px; font-weight:500;
+    backdrop-filter: blur(10px);
+    animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 2s forwards;
+    white-space:nowrap;
+  }
+
+  /* ==================== Animations ==================== */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes cardIn {
+    from { opacity:0; transform:translateY(30px) scale(0.95); }
+    to { opacity:1; transform:translateY(0) scale(1); }
+  }
+  @keyframes toastIn {
+    from { opacity:0; transform:translateY(10px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes toastOut {
+    from { opacity:1; }
+    to { opacity:0; transform:translateY(-10px); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .spinner {
+    width:18px; height:18px;
+    border:2px solid rgba(255,255,255,0.2);
+    border-top-color:#fff;
+    border-radius:50%;
+    animation:spin 0.6s linear infinite;
+  }
+
+  /* ==================== Responsive ==================== */
+  @media (max-width:768px) {
+    .hero { padding:48px 16px 32px; }
+    .input-card { padding:20px; }
+    .controls { grid-template-columns:1fr 1fr; gap:12px; }
+    .results-grid { grid-template-columns:1fr; }
+    .card-body { padding:16px 20px; }
+    .card-header { padding:16px 20px 12px; }
+    .card-footer { padding:12px 20px 16px; }
+    .container { padding:0 16px; }
+  }
+  @media (max-width:480px) {
+    .controls { grid-template-columns:1fr; }
+    .hero h1 { font-size:28px; }
+    .hero p { font-size:15px; }
+  }
+
+  /* ==================== Footer ==================== */
+  footer {
+    text-align:center; padding:40px 24px;
+    border-top:1px solid var(--border-color);
+    color:var(--text-tertiary); font-size:13px;
+  }
+  footer a {
+    color:var(--accent-1); text-decoration:none;
+  }
+  footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<!-- Background Effects -->
+<div class="bg-effects">
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="url(#g1)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M2 17l10 5 10-5" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 12l10 5 10-5" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="g1" x1="2" y1="2" x2="22" y2="22"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs>
+      </svg>
+      PromptForge
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    AI-Powered Prompt Generation
+  </div>
+  <h1>用中文描述，<br>自动生成专业提示词</h1>
+  <p>输入你的创意想法，一键生成适配 Midjourney、Flux 和视频 AI 模型的高质量 Prompt</p>
+</section>
+
+<!-- Input Section -->
+<section class="input-section container">
+  <div class="input-card">
+    <label class="input-label">描述你的创意</label>
+    <textarea class="input-textarea" id="description" placeholder="例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格"></textarea>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>画面比例</label>
+        <select class="control-select" id="aspectRatio">
+          <option value="1:1">1:1 正方形</option>
+          <option value="16:9" selected>16:9 宽屏</option>
+          <option value="9:16">9:16 竖屏</option>
+          <option value="4:3">4:3 标准</option>
+          <option value="3:2">3:2 经典</option>
+          <option value="2:3">2:3 肖像</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>艺术风格</label>
+        <select class="control-select" id="style">
+          <option value="写实摄影">写实摄影</option>
+          <option value="赛博朋克">赛博朋克</option>
+          <option value="动漫风格">动漫风格</option>
+          <option value="油画质感">油画质感</option>
+          <option value="水彩手绘">水彩手绘</option>
+          <option value="极简主义">极简主义</option>
+          <option value="科幻未来">科幻未来</option>
+          <option value="奇幻魔法">奇幻魔法</option>
+          <option value="暗黑哥特">暗黑哥特</option>
+          <option value="复古胶片">复古胶片</option>
+          <option value="3D渲染">3D渲染</option>
+          <option value="像素艺术">像素艺术</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>画面质量</label>
+        <select class="control-select" id="quality">
+          <option value="1">标准</option>
+          <option value="2" selected>高质量</option>
+          <option value="3">超高质量</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>风格化强度</label>
+        <select class="control-select" id="stylize">
+          <option value="100">低 (100)</option>
+          <option value="250" selected>中 (250)</option>
+          <option value="500">高 (500)</option>
+          <option value="750">极高 (750)</option>
+          <option value="1000">最大 (1000)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-generate" id="generateBtn" onclick="generatePrompts()">
+      <span class="btn-shimmer"></span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span id="btnText">生成提示词</span>
+    </button>
+  </div>
+</section>
+
+<!-- Results Section -->
+<section class="results-section container" id="resultsSection">
+  <div class="results-header">
+    <h2 class="results-title">生成结果</h2>
+    <span class="results-count" id="resultsCount">等待生成</span>
+  </div>
+
+  <div class="results-grid" id="resultsGrid">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p>在上方输入描述，点击生成按钮开始</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>PromptForge AI 提示词生成器 | 单文件部署，支持 GitHub Pages</p>
+</footer>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/* ==================== Style Mapping ==================== */
+const STYLE_MAP = {
+  '写实摄影': { mj: 'photorealistic, ultra detailed photography', flux: 'photorealistic, professional photography', video: 'photorealistic, cinematic', universal: 'photorealistic, professional photography, ultra detailed, sharp focus' },
+  '赛博朋克': { mj: 'cyberpunk, neon lights, futuristic city', flux: 'cyberpunk aesthetic, neon lighting, futuristic', video: 'cyberpunk, neon glow, futuristic atmosphere', universal: 'cyberpunk style, neon lights, futuristic cityscape, glowing elements' },
+  '动漫风格': { mj: 'anime style, cel shading, vibrant colors', flux: 'anime style, cel shaded, vibrant colors', video: 'anime style animation, cel shading', universal: 'anime art style, cel shading, vibrant colors, detailed illustration' },
+  '油画质感': { mj: 'oil painting style, rich textures, canvas', flux: 'oil painting style, thick brushstrokes, rich texture', video: 'oil painting animation, rich texture', universal: 'oil painting style, thick impasto brushstrokes, rich color palette, canvas texture' },
+  '水彩手绘': { mj: 'watercolor painting, soft edges, artistic', flux: 'watercolor style, soft washes, artistic', video: 'watercolor animation style, soft fluid motion', universal: 'watercolor painting style, soft washes, fluid edges, artistic' },
+  '极简主义': { mj: 'minimalist design, clean lines, negative space', flux: 'minimalist composition, clean and simple', video: 'minimalist aesthetic, clean motion', universal: 'minimalist composition, clean lines, generous negative space, simple forms' },
+  '科幻未来': { mj: 'sci-fi futuristic, advanced technology, space', flux: 'sci-fi futuristic, advanced technology', video: 'sci-fi cinematic, futuristic atmosphere', universal: 'sci-fi futuristic, advanced technology, space exploration, sleek design' },
+  '奇幻魔法': { mj: 'fantasy magical, ethereal, enchanted', flux: 'fantasy magical world, ethereal glow', video: 'fantasy cinematic, magical atmosphere', universal: 'fantasy magical world, ethereal glow, enchanted atmosphere, mystical elements' },
+  '暗黑哥特': { mj: 'dark gothic, moody atmosphere, dramatic shadows', flux: 'dark gothic style, dramatic lighting', video: 'dark gothic cinematic, moody atmosphere', universal: 'dark gothic style, dramatic lighting, moody atmosphere, ornate details' },
+  '复古胶片': { mj: 'vintage film photography, film grain, retro', flux: 'vintage film aesthetic, retro style, film grain', video: 'vintage film look, retro cinematic', universal: 'vintage film photography aesthetic, film grain, retro color grading, nostalgic mood' },
+  '3D渲染': { mj: '3D render, octane render, ray tracing', flux: '3D rendered, octane render, photorealistic 3D', video: '3D animation, octane render style', universal: '3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting' },
+  '像素艺术': { mj: 'pixel art, 16-bit style, retro gaming', flux: 'pixel art style, retro game aesthetic', video: 'pixel art animation, retro style', universal: 'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details' }
+};
+
+const QUALITY_MAP = { '1': '', '2': 'masterpiece, best quality', '3': 'masterpiece, best quality, ultra detailed, 8K UHD' };
+const ASPECT_MAP = { '1:1':'1:1', '16:9':'16:9', '9:16':'9:16', '4:3':'4:3', '3:2':'3:2', '2:3':'2:3' };
+
+/* ==================== Prompt Generator ==================== */
+function generateMidjourneyPrompt(desc, style, aspect, quality, stylize) {
+  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
+  const q = QUALITY_MAP[quality];
+  let prompt = desc;
+  if (q) prompt = q + ', ' + prompt;
+  prompt += ', ' + s.mj;
+  prompt += ' --v 6.0 --ar ' + aspect + ' --q 2 --style raw --s ' + stylize;
+  return prompt;
+}
+
+function generateFluxPrompt(desc, style) {
+  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
+  return desc + ', ' + s.flux + ', ultra detailed, professional quality, sharp focus, cinematic composition';
+}
+
+function generateVideoPrompt(desc, style) {
+  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
+  return desc + ', ' + s.video + ', smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion';
+}
+
+function generateUniversalPrompt(desc, style) {
+  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
+  return desc + ', ' + s.universal + ', high quality, best quality, masterpiece, ultra detailed, professional composition, cinematic lighting';
+}
+
+/* ==================== Core Logic ==================== */
+function generatePrompts() {
+  const desc = document.getElementById('description').value.trim();
+  if (!desc) {
+    document.getElementById('description').focus();
+    showToast('请输入描述内容', 'warning');
+    return;
+  }
+
+  const style = document.getElementById('style').value;
+  const aspect = document.getElementById('aspectRatio').value;
+  const quality = document.getElementById('quality').value;
+  const stylize = document.getElementById('stylize').value;
+  const btn = document.getElementById('generateBtn');
+  const btnText = document.getElementById('btnText');
+
+  // Loading state
+  btn.disabled = true;
+  btnText.innerHTML = '<span class="spinner"></span> 生成中...';
+
+  setTimeout(() => {
+    const mjPrompt = generateMidjourneyPrompt(desc, style, aspect, quality, stylize);
+    const fluxPrompt = generateFluxPrompt(desc, style);
+    const videoPrompt = generateVideoPrompt(desc, style);
+    const universalPrompt = generateUniversalPrompt(desc, style);
+
+    renderResults([
+      { model: '通用模型', icon: 'ALL', iconClass: 'universal', desc: '适配所有生图模型', prompt: universalPrompt },
+      { model: 'Midjourney', icon: 'MJ', iconClass: 'mj', desc: 'AI 绘画 · 专业级', prompt: mjPrompt },
+      { model: 'Flux', icon: 'FL', iconClass: 'flux', desc: 'AI 绘画 · 开源模型', prompt: fluxPrompt },
+      { model: '视频生成', icon: 'VI', iconClass: 'video', desc: 'AI 视频 · 动态效果', prompt: videoPrompt }
+    ]);
+
+    btn.disabled = false;
+    btnText.textContent = '重新生成';
+    showToast('提示词生成成功！', 'success');
+  }, 800);
+}
+
+function renderResults(cards) {
+  const grid = document.getElementById('resultsGrid');
+  const count = document.getElementById('resultsCount');
+  count.textContent = '已生成 ' + cards.length + ' 条';
+
+  grid.innerHTML = cards.map((card, i) => `
+    <div class="prompt-card" style="animation-delay:${i * 0.1}s">
+      <div class="card-header">
+        <div class="card-model">
+          <div class="card-model-icon ${card.iconClass}">${card.icon}</div>
+          <div>
+            <div class="card-model-name">${card.model}</div>
+            <div class="card-model-desc">${card.desc}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-prompt" id="prompt-${i}">${card.prompt}</div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-copy" onclick="copyPrompt(${i}, this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          复制
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function copyPrompt(index, btn) {
+  const text = document.getElementById('prompt-' + index).textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.classList.add('copied');
+    btn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      已复制
+    `;
+    showToast('已复制到剪贴板', 'success');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        复制
+      `;
+    }, 2000);
+  } catch (err) {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('已复制到剪贴板', 'success');
+  }
+}
+
+function showToast(msg, type) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  if (type === 'warning') {
+    toast.style.background = 'rgba(234,179,8,0.15)';
+    toast.style.borderColor = 'rgba(234,179,8,0.3)';
+    toast.style.color = '#eab308';
+  }
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
+}
+
+/* ==================== Keyboard Shortcut ==================== */
+document.getElementById('description').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    generatePrompts();
+  }
+});
+</script>
+
+</body>
+</html>
