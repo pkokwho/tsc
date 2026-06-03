@@ -1,21 +1,61 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Prompt Generator | 提示词生成器</title>
+
+<!-- ==================== SEO Meta ==================== -->
+<title>TSC AI Prompt Studio | AI 提示词生成器</title>
+<meta name="description" content="TSC AI Prompt Studio - 输入中文描述，自动生成适配 Midjourney、Flux、视频 AI 及通用模型的高质量 Prompt。支持中英双语，深色/浅色主题切换。">
+<meta name="keywords" content="AI Prompt Generator, Midjourney Prompt, Flux Prompt, Video Prompt, 提示词生成器, AI绘画, AI视频, Prompt Engineering">
+<meta name="author" content="TSC AI Prompt Studio">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://pkokwho.github.io/tsc/">
+
+<!-- ==================== Open Graph ==================== -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="TSC AI Prompt Studio | AI 提示词生成器">
+<meta property="og:description" content="输入中文描述，一键生成适配 Midjourney、Flux、视频 AI 及通用模型的高质量 Prompt">
+<meta property="og:url" content="https://pkokwho.github.io/tsc/">
+<meta property="og:site_name" content="TSC AI Prompt Studio">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+
+<!-- ==================== Twitter Card ==================== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TSC AI Prompt Studio | AI 提示词生成器">
+<meta name="twitter:description" content="输入中文描述，一键生成适配 Midjourney、Flux、视频 AI 及通用模型的高质量 Prompt">
+
+<!-- ==================== JSON-LD Structured Data ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TSC AI Prompt Studio",
+  "description": "AI Prompt Generator - 输入中文描述，自动生成适配多种AI模型的高质量Prompt",
+  "url": "https://pkokwho.github.io/tsc/",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "inLanguage": ["zh-CN", "en"]
+}
+</script>
+
 <style>
-  /* ==================== CSS Variables ==================== */
+  /* ==================== CSS Variables - Dark Theme (Default) ==================== */
   :root {
     --bg-primary: #0a0a0f;
     --bg-secondary: rgba(255,255,255,0.04);
     --bg-card: rgba(255,255,255,0.06);
     --bg-card-hover: rgba(255,255,255,0.09);
+    --bg-nav: rgba(10,10,15,0.7);
     --border-color: rgba(255,255,255,0.08);
     --border-active: rgba(99,102,241,0.5);
     --text-primary: rgba(255,255,255,0.95);
     --text-secondary: rgba(255,255,255,0.55);
     --text-tertiary: rgba(255,255,255,0.35);
+    --text-gradient-from: #fff;
+    --text-gradient-to: rgba(255,255,255,0.7);
     --accent-1: #6366f1;
     --accent-2: #a855f7;
     --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
@@ -30,6 +70,42 @@
     --transition-fast: 0.2s cubic-bezier(0.4,0,0.2,1);
     --transition-medium: 0.4s cubic-bezier(0.4,0,0.2,1);
     --transition-slow: 0.6s cubic-bezier(0.4,0,0.2,1);
+    --select-bg: #1a1a2e;
+    --select-arrow: rgba(255,255,255,0.4);
+    --input-bg: rgba(255,255,255,0.04);
+    --input-focus-bg: rgba(255,255,255,0.06);
+    --copy-bg: rgba(255,255,255,0.06);
+    --copy-hover-bg: rgba(255,255,255,0.1);
+    --copy-border: rgba(255,255,255,0.15);
+    --orb-opacity: 0.12;
+    --grid-line: rgba(255,255,255,0.02);
+  }
+
+  /* ==================== CSS Variables - Light Theme ==================== */
+  [data-theme="light"] {
+    --bg-primary: #f5f5f7;
+    --bg-secondary: rgba(0,0,0,0.03);
+    --bg-card: rgba(255,255,255,0.8);
+    --bg-card-hover: rgba(255,255,255,0.95);
+    --bg-nav: rgba(245,245,247,0.75);
+    --border-color: rgba(0,0,0,0.08);
+    --border-active: rgba(99,102,241,0.4);
+    --text-primary: rgba(0,0,0,0.88);
+    --text-secondary: rgba(0,0,0,0.55);
+    --text-tertiary: rgba(0,0,0,0.35);
+    --text-gradient-from: #1a1a1a;
+    --text-gradient-to: rgba(0,0,0,0.6);
+    --shadow-card: 0 4px 24px rgba(0,0,0,0.08);
+    --shadow-glow: 0 0 40px rgba(99,102,241,0.08);
+    --select-bg: #fff;
+    --select-arrow: rgba(0,0,0,0.4);
+    --input-bg: rgba(0,0,0,0.03);
+    --input-focus-bg: rgba(0,0,0,0.05);
+    --copy-bg: rgba(0,0,0,0.04);
+    --copy-hover-bg: rgba(0,0,0,0.08);
+    --copy-border: rgba(0,0,0,0.12);
+    --orb-opacity: 0.06;
+    --grid-line: rgba(0,0,0,0.03);
   }
 
   /* ==================== Reset & Base ==================== */
@@ -42,6 +118,7 @@
     min-height: 100vh;
     overflow-x: hidden;
     line-height: 1.6;
+    transition: background var(--transition-medium), color var(--transition-medium);
   }
 
   /* ==================== Background Effects ==================== */
@@ -49,8 +126,9 @@
     position: fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
   }
   .bg-orb {
-    position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.12;
+    position: absolute; border-radius: 50%; filter: blur(120px); opacity: var(--orb-opacity);
     animation: orbFloat 20s ease-in-out infinite alternate;
+    transition: opacity var(--transition-medium);
   }
   .bg-orb-1 { width:600px; height:600px; background:#6366f1; top:-200px; left:-100px; }
   .bg-orb-2 { width:500px; height:500px; background:#a855f7; bottom:-150px; right:-100px; animation-delay:-10s; }
@@ -58,9 +136,10 @@
   .bg-grid {
     position: absolute; inset:0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 60px 60px;
+    transition: background-image var(--transition-medium);
   }
   @keyframes orbFloat {
     0% { transform: translate(0,0) scale(1); }
@@ -74,13 +153,14 @@
   /* ==================== Navigation ==================== */
   nav {
     position: sticky; top:0; z-index:100;
-    background: rgba(10,10,15,0.7);
+    background: var(--bg-nav);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     border-bottom: 1px solid var(--border-color);
+    transition: background var(--transition-medium), border-color var(--transition-medium);
   }
   .nav-inner {
-    display:flex; align-items:center; justify-content:center;
+    display:flex; align-items:center; justify-content:space-between;
     max-width:1200px; margin:0 auto; padding:16px 24px;
   }
   .nav-brand {
@@ -90,6 +170,26 @@
     -webkit-text-fill-color:transparent; background-clip:text;
   }
   .nav-brand svg { flex-shrink:0; }
+
+  /* 导航右侧操作按钮组 */
+  .nav-actions {
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav-btn {
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px;
+    background: var(--bg-card);
+    border:1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor:pointer; transition: all var(--transition-fast);
+    font-size:14px; font-weight:600; font-family:var(--font-stack);
+  }
+  .nav-btn:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+    border-color: var(--border-active);
+  }
 
   /* ==================== Hero Section ==================== */
   .hero {
@@ -111,8 +211,9 @@
     font-size: clamp(36px, 6vw, 64px);
     font-weight:700; letter-spacing:-0.03em;
     line-height:1.1; margin-bottom:16px;
-    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+    background: linear-gradient(135deg, var(--text-gradient-from) 0%, var(--text-gradient-to) 100%);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    transition: background var(--transition-medium);
   }
   .hero p {
     font-size: clamp(16px, 2vw, 20px);
@@ -132,7 +233,7 @@
     padding:32px;
     backdrop-filter: blur(20px);
     box-shadow: var(--shadow-card);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-medium);
   }
   .input-card:focus-within {
     border-color: var(--border-active);
@@ -145,12 +246,12 @@
   }
   .input-textarea {
     width:100%; min-height:140px; padding:16px;
-    background: rgba(255,255,255,0.04);
+    background: var(--input-bg);
     border:1px solid transparent;
     border-radius: var(--radius-md);
     color: var(--text-primary);
     font-family: var(--font-stack);
-    font-size: 16px;
+    font-size: 16px; /* 防止 iOS 缩放 */
     line-height: 1.6;
     resize: vertical;
     transition: all var(--transition-fast);
@@ -158,7 +259,7 @@
   }
   .input-textarea::placeholder { color: var(--text-tertiary); }
   .input-textarea:focus {
-    background: rgba(255,255,255,0.06);
+    background: var(--input-focus-bg);
     border-color: var(--border-active);
   }
 
@@ -173,23 +274,24 @@
   }
   .control-select {
     width:100%; padding:12px 16px;
-    background: rgba(255,255,255,0.04);
+    background: var(--input-bg);
     border:1px solid var(--border-color);
     border-radius: var(--radius-sm);
     color: var(--text-primary);
     font-family: var(--font-stack);
-    font-size:14px;
+    font-size:16px; /* 防止 iOS 缩放 */
     outline:none; cursor:pointer;
     appearance:none; -webkit-appearance:none;
     background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat:no-repeat; background-position: right 16px center;
     transition: all var(--transition-fast);
+    min-height:44px; /* 触摸友好最小高度 */
   }
   .control-select:focus {
     border-color: var(--border-active);
-    background-color: rgba(255,255,255,0.06);
+    background-color: var(--input-focus-bg);
   }
-  .control-select option { background:#1a1a2e; color:#fff; }
+  .control-select option { background:var(--select-bg); color:var(--text-primary); }
 
   /* ==================== Generate Button ==================== */
   .btn-generate {
@@ -202,6 +304,7 @@
     cursor:pointer; position:relative; overflow:hidden;
     transition: all var(--transition-fast);
     box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+    min-height:44px; /* 触摸友好 */
   }
   .btn-generate:hover {
     transform: translateY(-2px);
@@ -257,7 +360,7 @@
   .prompt-card:nth-child(4) { animation-delay: 0.35s; }
   .prompt-card:hover {
     background: var(--bg-card-hover);
-    border-color: rgba(255,255,255,0.12);
+    border-color: rgba(99,102,241,0.15);
     transform: translateY(-4px);
     box-shadow: var(--shadow-card);
   }
@@ -272,7 +375,7 @@
   .card-model-icon {
     width:36px; height:36px; border-radius:10px;
     display:flex; align-items:center; justify-content:center;
-    font-size:16px; font-weight:700;
+    font-size:16px; font-weight:700; color:#fff;
   }
   .card-model-icon.mj { background: linear-gradient(135deg, #5865f2, #4752c4); }
   .card-model-icon.flux { background: linear-gradient(135deg, #f97316, #ea580c); }
@@ -295,18 +398,19 @@
   .btn-copy {
     display:flex; align-items:center; justify-content:center; gap:6px;
     flex:1; padding:10px 16px;
-    background: rgba(255,255,255,0.06);
+    background: var(--copy-bg);
     border:1px solid var(--border-color);
     border-radius: var(--radius-sm);
     color: var(--text-secondary);
     font-family: var(--font-stack);
     font-size:13px; font-weight:500;
     cursor:pointer; transition: all var(--transition-fast);
+    min-height:44px; /* 触摸友好 */
   }
   .btn-copy:hover {
-    background: rgba(255,255,255,0.1);
+    background: var(--copy-hover-bg);
     color: var(--text-primary);
-    border-color: rgba(255,255,255,0.15);
+    border-color: var(--copy-border);
   }
   .btn-copy.copied {
     background: rgba(34,197,94,0.15);
@@ -378,11 +482,15 @@
     .card-header { padding:16px 20px 12px; }
     .card-footer { padding:12px 20px 16px; }
     .container { padding:0 16px; }
+    .nav-inner { padding:12px 16px; }
+    .nav-brand { font-size:16px; }
   }
   @media (max-width:480px) {
     .controls { grid-template-columns:1fr; }
     .hero h1 { font-size:28px; }
     .hero p { font-size:15px; }
+    .nav-btn { width:36px; height:36px; font-size:12px; }
+    .nav-actions { gap:6px; }
   }
 
   /* ==================== Footer ==================== */
@@ -390,6 +498,7 @@
     text-align:center; padding:40px 24px;
     border-top:1px solid var(--border-color);
     color:var(--text-tertiary); font-size:13px;
+    transition: border-color var(--transition-medium);
   }
   footer a {
     color:var(--accent-1); text-decoration:none;
@@ -399,7 +508,7 @@
 </head>
 <body>
 
-<!-- Background Effects -->
+<!-- ==================== Background Effects ==================== -->
 <div class="bg-effects">
   <div class="bg-orb bg-orb-1"></div>
   <div class="bg-orb bg-orb-2"></div>
@@ -407,7 +516,7 @@
   <div class="bg-grid"></div>
 </div>
 
-<!-- Navigation -->
+<!-- ==================== Navigation ==================== -->
 <nav>
   <div class="nav-inner">
     <div class="nav-brand">
@@ -417,91 +526,76 @@
         <path d="M2 12l10 5 10-5" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         <defs><linearGradient id="g1" x1="2" y1="2" x2="22" y2="22"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs>
       </svg>
-      PromptForge
+      TSC AI Prompt Studio
+    </div>
+    <!-- 右侧操作按钮：语言切换 + 主题切换 -->
+    <div class="nav-actions">
+      <button class="nav-btn" id="langBtn" onclick="toggleLang()" title="Switch Language" aria-label="Switch Language">EN</button>
+      <button class="nav-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme" aria-label="Toggle Theme">
+        <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </nav>
 
-<!-- Hero -->
+<!-- ==================== Hero ==================== -->
 <section class="hero">
   <div class="hero-badge">
     <span class="hero-badge-dot"></span>
-    AI-Powered Prompt Generation
+    <span data-i18n="heroBadge">AI-Powered Prompt Generation</span>
   </div>
-  <h1>用中文描述，<br>自动生成专业提示词</h1>
-  <p>输入你的创意想法，一键生成适配 Midjourney、Flux 和视频 AI 模型的高质量 Prompt</p>
+  <h1 data-i18n-html="heroTitle">用中文描述，<br>自动生成专业提示词</h1>
+  <p data-i18n="heroDesc">输入你的创意想法，一键生成适配 Midjourney、Flux 和视频 AI 模型的高质量 Prompt</p>
 </section>
 
-<!-- Input Section -->
+<!-- ==================== Input Section ==================== -->
 <section class="input-section container">
   <div class="input-card">
-    <label class="input-label">描述你的创意</label>
-    <textarea class="input-textarea" id="description" placeholder="例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格"></textarea>
+    <label class="input-label" data-i18n="inputLabel">描述你的创意</label>
+    <textarea class="input-textarea" id="description" data-i18n-placeholder="inputPlaceholder" placeholder="例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格"></textarea>
 
     <div class="controls">
+      <!-- 画面比例选择 -->
       <div class="control-group">
-        <label>画面比例</label>
-        <select class="control-select" id="aspectRatio">
-          <option value="1:1">1:1 正方形</option>
-          <option value="16:9" selected>16:9 宽屏</option>
-          <option value="9:16">9:16 竖屏</option>
-          <option value="4:3">4:3 标准</option>
-          <option value="3:2">3:2 经典</option>
-          <option value="2:3">2:3 肖像</option>
-        </select>
+        <label data-i18n="aspectLabel">画面比例</label>
+        <select class="control-select" id="aspectRatio"></select>
       </div>
+      <!-- 艺术风格选择 -->
       <div class="control-group">
-        <label>艺术风格</label>
-        <select class="control-select" id="style">
-          <option value="写实摄影">写实摄影</option>
-          <option value="赛博朋克">赛博朋克</option>
-          <option value="动漫风格">动漫风格</option>
-          <option value="油画质感">油画质感</option>
-          <option value="水彩手绘">水彩手绘</option>
-          <option value="极简主义">极简主义</option>
-          <option value="科幻未来">科幻未来</option>
-          <option value="奇幻魔法">奇幻魔法</option>
-          <option value="暗黑哥特">暗黑哥特</option>
-          <option value="复古胶片">复古胶片</option>
-          <option value="3D渲染">3D渲染</option>
-          <option value="像素艺术">像素艺术</option>
-        </select>
+        <label data-i18n="styleLabel">艺术风格</label>
+        <select class="control-select" id="style"></select>
       </div>
+      <!-- 画面质量选择 -->
       <div class="control-group">
-        <label>画面质量</label>
-        <select class="control-select" id="quality">
-          <option value="1">标准</option>
-          <option value="2" selected>高质量</option>
-          <option value="3">超高质量</option>
-        </select>
+        <label data-i18n="qualityLabel">画面质量</label>
+        <select class="control-select" id="quality"></select>
       </div>
+      <!-- 风格化强度选择 -->
       <div class="control-group">
-        <label>风格化强度</label>
-        <select class="control-select" id="stylize">
-          <option value="100">低 (100)</option>
-          <option value="250" selected>中 (250)</option>
-          <option value="500">高 (500)</option>
-          <option value="750">极高 (750)</option>
-          <option value="1000">最大 (1000)</option>
-        </select>
+        <label data-i18n="stylizeLabel">风格化强度</label>
+        <select class="control-select" id="stylize"></select>
       </div>
     </div>
 
+    <!-- 生成按钮 -->
     <button class="btn-generate" id="generateBtn" onclick="generatePrompts()">
       <span class="btn-shimmer"></span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
         <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
-      <span id="btnText">生成提示词</span>
+      <span id="btnText" data-i18n="generateBtn">生成提示词</span>
     </button>
   </div>
 </section>
 
-<!-- Results Section -->
+<!-- ==================== Results Section ==================== -->
 <section class="results-section container" id="resultsSection">
   <div class="results-header">
-    <h2 class="results-title">生成结果</h2>
-    <span class="results-count" id="resultsCount">等待生成</span>
+    <h2 class="results-title" data-i18n="resultsTitle">生成结果</h2>
+    <span class="results-count" id="resultsCount" data-i18n="resultsWaiting">等待生成</span>
   </div>
 
   <div class="results-grid" id="resultsGrid">
@@ -512,21 +606,259 @@
           <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <p>在上方输入描述，点击生成按钮开始</p>
+      <p data-i18n="emptyText">在上方输入描述，点击生成按钮开始</p>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
+<!-- ==================== Footer ==================== -->
 <footer>
-  <p>PromptForge AI 提示词生成器 | 单文件部署，支持 GitHub Pages</p>
+  <p data-i18n="footerText">TSC AI Prompt Studio | 单文件部署，支持 GitHub Pages</p>
 </footer>
 
-<!-- Toast Container -->
+<!-- ==================== Toast Container ==================== -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-/* ==================== Style Mapping ==================== */
+/* ==================== 国际化 - Locales ==================== */
+const LOCALES = {
+  zh: {
+    /* 导航 */
+    langBtn: 'EN',
+    /* Hero 区域 */
+    heroBadge: 'AI-Powered Prompt Generation',
+    heroTitle: '用中文描述，<br>自动生成专业提示词',
+    heroDesc: '输入你的创意想法，一键生成适配 Midjourney、Flux 和视频 AI 模型的高质量 Prompt',
+    /* 输入区域 */
+    inputLabel: '描述你的创意',
+    inputPlaceholder: '例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格',
+    /* 控件标签 */
+    aspectLabel: '画面比例',
+    styleLabel: '艺术风格',
+    qualityLabel: '画面质量',
+    stylizeLabel: '风格化强度',
+    /* 画面比例选项 */
+    aspectOptions: [
+      { value: '1:1', text: '1:1 正方形' },
+      { value: '16:9', text: '16:9 宽屏' },
+      { value: '9:16', text: '9:16 竖屏' },
+      { value: '4:3', text: '4:3 标准' },
+      { value: '3:2', text: '3:2 经典' },
+      { value: '2:3', text: '2:3 肖像' }
+    ],
+    /* 艺术风格选项 */
+    styleOptions: [
+      { value: '写实摄影', text: '写实摄影' },
+      { value: '赛博朋克', text: '赛博朋克' },
+      { value: '动漫风格', text: '动漫风格' },
+      { value: '油画质感', text: '油画质感' },
+      { value: '水彩手绘', text: '水彩手绘' },
+      { value: '极简主义', text: '极简主义' },
+      { value: '科幻未来', text: '科幻未来' },
+      { value: '奇幻魔法', text: '奇幻魔法' },
+      { value: '暗黑哥特', text: '暗黑哥特' },
+      { value: '复古胶片', text: '复古胶片' },
+      { value: '3D渲染', text: '3D渲染' },
+      { value: '像素艺术', text: '像素艺术' }
+    ],
+    /* 画面质量选项 */
+    qualityOptions: [
+      { value: '1', text: '标准' },
+      { value: '2', text: '高质量' },
+      { value: '3', text: '超高质量' }
+    ],
+    /* 风格化强度选项 */
+    stylizeOptions: [
+      { value: '100', text: '低 (100)' },
+      { value: '250', text: '中 (250)' },
+      { value: '500', text: '高 (500)' },
+      { value: '750', text: '极高 (750)' },
+      { value: '1000', text: '最大 (1000)' }
+    ],
+    /* 按钮 */
+    generateBtn: '生成提示词',
+    regenBtn: '重新生成',
+    generating: '<span class="spinner"></span> 生成中...',
+    /* 结果区域 */
+    resultsTitle: '生成结果',
+    resultsWaiting: '等待生成',
+    resultsCount: '已生成 {n} 条',
+    emptyText: '在上方输入描述，点击生成按钮开始',
+    /* 卡片模型描述 */
+    modelUniversal: '适配所有生图模型',
+    modelMj: 'AI 绘画 · 专业级',
+    modelFlux: 'AI 绘画 · 开源模型',
+    modelVideo: 'AI 视频 · 动态效果',
+    /* 复制按钮 */
+    copyBtn: '复制',
+    copiedBtn: '已复制',
+    /* 提示消息 */
+    toastEmpty: '请输入描述内容',
+    toastSuccess: '提示词生成成功！',
+    toastCopied: '已复制到剪贴板',
+    /* 页脚 */
+    footerText: 'TSC AI Prompt Studio | 单文件部署，支持 GitHub Pages'
+  },
+  en: {
+    /* Navigation */
+    langBtn: '中',
+    /* Hero */
+    heroBadge: 'AI-Powered Prompt Generation',
+    heroTitle: 'Describe in your language,<br>generate professional prompts',
+    heroDesc: 'Enter your creative idea, one-click generate high-quality Prompts for Midjourney, Flux, and Video AI models',
+    /* Input */
+    inputLabel: 'Describe your idea',
+    inputPlaceholder: 'e.g. A cat wearing a spacesuit standing on the moon, blue Earth in the background, starry sky, surrealism style',
+    /* Controls */
+    aspectLabel: 'Aspect Ratio',
+    styleLabel: 'Art Style',
+    qualityLabel: 'Image Quality',
+    stylizeLabel: 'Stylize Intensity',
+    /* Aspect options */
+    aspectOptions: [
+      { value: '1:1', text: '1:1 Square' },
+      { value: '16:9', text: '16:9 Widescreen' },
+      { value: '9:16', text: '9:16 Portrait' },
+      { value: '4:3', text: '4:3 Standard' },
+      { value: '3:2', text: '3:2 Classic' },
+      { value: '2:3', text: '2:3 Portrait' }
+    ],
+    /* Style options */
+    styleOptions: [
+      { value: '写实摄影', text: 'Photorealistic' },
+      { value: '赛博朋克', text: 'Cyberpunk' },
+      { value: '动漫风格', text: 'Anime Style' },
+      { value: '油画质感', text: 'Oil Painting' },
+      { value: '水彩手绘', text: 'Watercolor' },
+      { value: '极简主义', text: 'Minimalist' },
+      { value: '科幻未来', text: 'Sci-Fi Futuristic' },
+      { value: '奇幻魔法', text: 'Fantasy Magical' },
+      { value: '暗黑哥特', text: 'Dark Gothic' },
+      { value: '复古胶片', text: 'Vintage Film' },
+      { value: '3D渲染', text: '3D Render' },
+      { value: '像素艺术', text: 'Pixel Art' }
+    ],
+    /* Quality options */
+    qualityOptions: [
+      { value: '1', text: 'Standard' },
+      { value: '2', text: 'High Quality' },
+      { value: '3', text: 'Ultra Quality' }
+    ],
+    /* Stylize options */
+    stylizeOptions: [
+      { value: '100', text: 'Low (100)' },
+      { value: '250', text: 'Medium (250)' },
+      { value: '500', text: 'High (500)' },
+      { value: '750', text: 'Very High (750)' },
+      { value: '1000', text: 'Max (1000)' }
+    ],
+    /* Buttons */
+    generateBtn: 'Generate Prompts',
+    regenBtn: 'Regenerate',
+    generating: '<span class="spinner"></span> Generating...',
+    /* Results */
+    resultsTitle: 'Results',
+    resultsWaiting: 'Waiting',
+    resultsCount: '{n} prompts generated',
+    emptyText: 'Enter a description above and click Generate',
+    /* Card model descriptions */
+    modelUniversal: 'All Image Models',
+    modelMj: 'AI Art · Professional',
+    modelFlux: 'AI Art · Open Source',
+    modelVideo: 'AI Video · Motion',
+    /* Copy */
+    copyBtn: 'Copy',
+    copiedBtn: 'Copied',
+    /* Toasts */
+    toastEmpty: 'Please enter a description',
+    toastSuccess: 'Prompts generated successfully!',
+    toastCopied: 'Copied to clipboard',
+    /* Footer */
+    footerText: 'TSC AI Prompt Studio | Single-file deploy, GitHub Pages ready'
+  }
+};
+
+/* ==================== 语言检测与状态管理 ==================== */
+
+/* 自动检测浏览器语言，优先使用存储的偏好 */
+let currentLang = localStorage.getItem('tsc-lang') ||
+  (navigator.language.startsWith('zh') ? 'zh' : 'en');
+
+/* 当前主题，默认深色 */
+let currentTheme = localStorage.getItem('tsc-theme') || 'dark';
+
+/* ==================== 语言切换功能 ==================== */
+function toggleLang() {
+  currentLang = currentLang === 'zh' ? 'en' : 'zh';
+  localStorage.setItem('tsc-lang', currentLang);
+  applyLocale();
+}
+
+/* 应用当前语言到页面所有文本 */
+function applyLocale() {
+  const t = LOCALES[currentLang];
+
+  /* 更新 html lang 属性 */
+  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+
+  /* 更新语言切换按钮文字 */
+  document.getElementById('langBtn').textContent = t.langBtn;
+
+  /* 更新 data-i18n 文本 */
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  /* 更新 data-i18n-html（含 HTML 标签的文本） */
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  /* 更新 placeholder */
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+
+  /* 更新 select 选项 */
+  populateSelect('aspectRatio', t.aspectOptions, '16:9');
+  populateSelect('style', t.styleOptions, '写实摄影');
+  populateSelect('quality', t.qualityOptions, '2');
+  populateSelect('stylize', t.stylizeOptions, '250');
+}
+
+/* 填充 select 下拉选项 */
+function populateSelect(id, options, defaultVal) {
+  const sel = document.getElementById(id);
+  const currentVal = sel.value || defaultVal;
+  sel.innerHTML = options.map(o =>
+    `<option value="${o.value}"${o.value === currentVal ? ' selected' : ''}>${o.text}</option>`
+  ).join('');
+}
+
+/* ==================== 主题切换功能 ==================== */
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('tsc-theme', currentTheme);
+  applyTheme();
+}
+
+/* 应用主题到页面 */
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  /* 更新主题图标：深色显示太阳，浅色显示月亮 */
+  const icon = document.getElementById('themeIcon');
+  if (currentTheme === 'dark') {
+    icon.innerHTML = '<circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+  } else {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+}
+
+/* ==================== 风格映射表 ==================== */
 const STYLE_MAP = {
   '写实摄影': { mj: 'photorealistic, ultra detailed photography', flux: 'photorealistic, professional photography', video: 'photorealistic, cinematic', universal: 'photorealistic, professional photography, ultra detailed, sharp focus' },
   '赛博朋克': { mj: 'cyberpunk, neon lights, futuristic city', flux: 'cyberpunk aesthetic, neon lighting, futuristic', video: 'cyberpunk, neon glow, futuristic atmosphere', universal: 'cyberpunk style, neon lights, futuristic cityscape, glowing elements' },
@@ -542,10 +874,12 @@ const STYLE_MAP = {
   '像素艺术': { mj: 'pixel art, 16-bit style, retro gaming', flux: 'pixel art style, retro game aesthetic', video: 'pixel art animation, retro style', universal: 'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details' }
 };
 
+/* 质量映射表 */
 const QUALITY_MAP = { '1': '', '2': 'masterpiece, best quality', '3': 'masterpiece, best quality, ultra detailed, 8K UHD' };
-const ASPECT_MAP = { '1:1':'1:1', '16:9':'16:9', '9:16':'9:16', '4:3':'4:3', '3:2':'3:2', '2:3':'2:3' };
 
-/* ==================== Prompt Generator ==================== */
+/* ==================== Prompt 生成函数 ==================== */
+
+/* 生成 Midjourney 格式 Prompt */
 function generateMidjourneyPrompt(desc, style, aspect, quality, stylize) {
   const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
   const q = QUALITY_MAP[quality];
@@ -556,30 +890,37 @@ function generateMidjourneyPrompt(desc, style, aspect, quality, stylize) {
   return prompt;
 }
 
+/* 生成 Flux 格式 Prompt */
 function generateFluxPrompt(desc, style) {
   const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
   return desc + ', ' + s.flux + ', ultra detailed, professional quality, sharp focus, cinematic composition';
 }
 
+/* 生成视频格式 Prompt */
 function generateVideoPrompt(desc, style) {
   const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
   return desc + ', ' + s.video + ', smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion';
 }
 
+/* 生成通用格式 Prompt（适配所有生图模型） */
 function generateUniversalPrompt(desc, style) {
   const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
   return desc + ', ' + s.universal + ', high quality, best quality, masterpiece, ultra detailed, professional composition, cinematic lighting';
 }
 
-/* ==================== Core Logic ==================== */
+/* ==================== 核心逻辑：生成提示词 ==================== */
 function generatePrompts() {
   const desc = document.getElementById('description').value.trim();
+  const t = LOCALES[currentLang];
+
+  /* 校验：描述不能为空 */
   if (!desc) {
     document.getElementById('description').focus();
-    showToast('请输入描述内容', 'warning');
+    showToast(t.toastEmpty, 'warning');
     return;
   }
 
+  /* 获取参数 */
   const style = document.getElementById('style').value;
   const aspect = document.getElementById('aspectRatio').value;
   const quality = document.getElementById('quality').value;
@@ -587,34 +928,43 @@ function generatePrompts() {
   const btn = document.getElementById('generateBtn');
   const btnText = document.getElementById('btnText');
 
-  // Loading state
+  /* 设置加载状态 */
   btn.disabled = true;
-  btnText.innerHTML = '<span class="spinner"></span> 生成中...';
+  btnText.innerHTML = t.generating;
 
+  /* 模拟生成延迟（实际为本地计算） */
   setTimeout(() => {
+    /* 生成四种格式的 Prompt */
     const mjPrompt = generateMidjourneyPrompt(desc, style, aspect, quality, stylize);
     const fluxPrompt = generateFluxPrompt(desc, style);
     const videoPrompt = generateVideoPrompt(desc, style);
     const universalPrompt = generateUniversalPrompt(desc, style);
 
+    /* 渲染结果卡片 */
     renderResults([
-      { model: '通用模型', icon: 'ALL', iconClass: 'universal', desc: '适配所有生图模型', prompt: universalPrompt },
-      { model: 'Midjourney', icon: 'MJ', iconClass: 'mj', desc: 'AI 绘画 · 专业级', prompt: mjPrompt },
-      { model: 'Flux', icon: 'FL', iconClass: 'flux', desc: 'AI 绘画 · 开源模型', prompt: fluxPrompt },
-      { model: '视频生成', icon: 'VI', iconClass: 'video', desc: 'AI 视频 · 动态效果', prompt: videoPrompt }
+      { model: currentLang === 'zh' ? '通用模型' : 'Universal', icon: 'ALL', iconClass: 'universal', desc: t.modelUniversal, prompt: universalPrompt },
+      { model: 'Midjourney', icon: 'MJ', iconClass: 'mj', desc: t.modelMj, prompt: mjPrompt },
+      { model: 'Flux', icon: 'FL', iconClass: 'flux', desc: t.modelFlux, prompt: fluxPrompt },
+      { model: currentLang === 'zh' ? '视频生成' : 'Video', icon: 'VI', iconClass: 'video', desc: t.modelVideo, prompt: videoPrompt }
     ]);
 
+    /* 恢复按钮状态 */
     btn.disabled = false;
-    btnText.textContent = '重新生成';
-    showToast('提示词生成成功！', 'success');
+    btnText.textContent = t.regenBtn;
+    showToast(t.toastSuccess, 'success');
   }, 800);
 }
 
+/* ==================== 渲染结果卡片 ==================== */
 function renderResults(cards) {
   const grid = document.getElementById('resultsGrid');
   const count = document.getElementById('resultsCount');
-  count.textContent = '已生成 ' + cards.length + ' 条';
+  const t = LOCALES[currentLang];
 
+  /* 更新计数文字 */
+  count.textContent = t.resultsCount.replace('{n}', cards.length);
+
+  /* 生成卡片 HTML */
   grid.innerHTML = cards.map((card, i) => `
     <div class="prompt-card" style="animation-delay:${i * 0.1}s">
       <div class="card-header">
@@ -635,25 +985,31 @@ function renderResults(cards) {
             <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
             <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/>
           </svg>
-          复制
+          ${t.copyBtn}
         </button>
       </div>
     </div>
   `).join('');
 }
 
+/* ==================== 复制功能 ==================== */
 async function copyPrompt(index, btn) {
   const text = document.getElementById('prompt-' + index).textContent;
+  const t = LOCALES[currentLang];
+
   try {
+    /* 优先使用 Clipboard API */
     await navigator.clipboard.writeText(text);
     btn.classList.add('copied');
     btn.innerHTML = `
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
         <polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      已复制
+      ${t.copiedBtn}
     `;
-    showToast('已复制到剪贴板', 'success');
+    showToast(t.toastCopied, 'success');
+
+    /* 2秒后恢复按钮状态 */
     setTimeout(() => {
       btn.classList.remove('copied');
       btn.innerHTML = `
@@ -661,42 +1017,54 @@ async function copyPrompt(index, btn) {
           <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
           <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/>
         </svg>
-        复制
+        ${t.copyBtn}
       `;
     }, 2000);
   } catch (err) {
-    // Fallback
+    /* 降级方案：使用 textarea + execCommand */
     const ta = document.createElement('textarea');
     ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-    showToast('已复制到剪贴板', 'success');
+    showToast(t.toastCopied, 'success');
   }
 }
 
+/* ==================== Toast 提示 ==================== */
 function showToast(msg, type) {
   const container = document.getElementById('toastContainer');
   const toast = document.createElement('div');
   toast.className = 'toast';
+
+  /* 警告类型使用黄色样式 */
   if (type === 'warning') {
     toast.style.background = 'rgba(234,179,8,0.15)';
     toast.style.borderColor = 'rgba(234,179,8,0.3)';
     toast.style.color = '#eab308';
   }
+
   toast.textContent = msg;
   container.appendChild(toast);
+
+  /* 2.5秒后自动移除 */
   setTimeout(() => toast.remove(), 2500);
 }
 
-/* ==================== Keyboard Shortcut ==================== */
+/* ==================== 键盘快捷键：Ctrl+Enter 生成 ==================== */
 document.getElementById('description').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
     e.preventDefault();
     generatePrompts();
   }
 });
+
+/* ==================== 初始化：应用语言和主题 ==================== */
+applyLocale();
+applyTheme();
 </script>
 
 </body>
