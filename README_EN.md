@@ -1,8 +1,18 @@
+<div align="center">
+
 # TSC AI Prompt Studio
 
-A modern AI prompt generator with Apple-style dark UI. Enter your creative idea in any language, and instantly generate professional prompts for Midjourney, Flux, Video AI, and all image generation models.
+**Modern AI Prompt Generator**
 
-**[Live Demo](https://pkokwho.github.io/tsc/)** | **[中文](README.md)**
+Enter your creative idea in any language, and instantly generate professional prompts for Midjourney, Flux, Video AI, and all image generation models
+
+[Live Demo](https://pkokwho.github.io/tsc/) · [Report Bug](https://github.com/pkokwho/tsc/issues) · [Request Feature](https://github.com/pkokwho/tsc/issues/new?template=feature_request.md) · [中文](README.md)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-brightgreen.svg)](https://pkokwho.github.io/tsc/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+</div>
 
 ## Screenshots
 
@@ -31,12 +41,23 @@ A modern AI prompt generator with Apple-style dark UI. Enter your creative idea 
    ```
 2. Open `index.html` in your browser — that's it!
 
-## Deploy to GitHub Pages
+No dependencies to install. No build step required.
 
-1. Push to your GitHub repository
+## Deployment
+
+### GitHub Pages
+
+1. Fork or push this repository to GitHub
 2. Go to **Settings → Pages**
 3. Set source to `master` branch, root directory
 4. Your site will be live at `https://<username>.github.io/tsc/`
+
+### Other Platforms
+
+`index.html` is a complete single-file application that can be deployed to any static hosting service:
+- Vercel / Netlify / Cloudflare Pages
+- Any web server
+- Open locally in a browser
 
 ## Tech Stack
 
@@ -48,13 +69,33 @@ A modern AI prompt generator with Apple-style dark UI. Enter your creative idea 
 
 ```
 tsc/
-├── index.html          # Complete single-file application
-├── README.md           # Chinese documentation
-├── README_EN.md        # English documentation
-├── CONTRIBUTING.md     # Contribution guide
-└── LICENSE             # MIT License
+├── .github/
+│   ├── ISSUE_TEMPLATE/    # Issue templates
+│   └── PULL_REQUEST_TEMPLATE.md
+├── assets/                # Screenshots and static assets
+├── index.html             # Complete single-file application
+├── CHANGELOG.md           # Changelog
+├── CODE_OF_CONDUCT.md     # Code of Conduct
+├── CONTRIBUTING.md        # Contribution guide
+├── LICENSE                # MIT License
+├── README.md              # Chinese documentation
+├── README_EN.md           # English documentation
+├── SECURITY.md            # Security policy
+└── SUPPORT.md             # Support channels
 ```
+
+## Contributing
+
+Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md) for details.
+
+## Code of Conduct
+
+This project adopts the [Contributor Covenant](CODE_OF_CONDUCT.md) as its code of conduct. By participating, you are expected to uphold this code.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © TSC AI Prompt Studio
