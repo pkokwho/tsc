@@ -24,6 +24,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MIT LICENSE
 - Universal prompt generator for all image models
 - 12 art styles with full i18n support
+- CODE_OF_CONDUCT.md (Contributor Covenant v2.0)
+- SECURITY.md (security policy and vulnerability reporting)
+- SUPPORT.md (support channels)
+- CHANGELOG.md (this file)
+- .github/ISSUE_TEMPLATE/ (bug report, feature request, question)
+- .github/PULL_REQUEST_TEMPLATE.md
+- .github/ISSUE_TEMPLATE/config.yml (issue template config)
+- .gitignore
+- README badges (MIT License, GitHub Pages, PRs Welcome)
 
 ### Changed
 
@@ -32,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All UI text now managed through LOCALES object
 - Select dropdowns now dynamically populated from locale data
 - Copy fallback improved with hidden textarea approach
+- README.md enhanced with centered header, badges, and multi-platform deployment guide
+- CONTRIBUTING.md enhanced with Conventional Commits, testing checklist, and style guide
 
 ## [1.0.0] - 2026-06-03
 
