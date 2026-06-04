@@ -14,12 +14,21 @@ Enter your creative idea in any language, and instantly generate professional pr
 
 </div>
 
-## Screenshots
+## Demo
+
+<p align="center">
+  <img src="assets/demo.gif" alt="TSC AI Prompt Studio Demo" width="100%" />
+</p>
+
+<details>
+<summary>Screenshots</summary>
 
 <p align="center">
   <img src="assets/dark-theme.png" alt="Dark Theme" width="48%" />
   <img src="assets/light-theme.png" alt="Light Theme" width="48%" />
 </p>
+
+</details>
 
 ## Features
 

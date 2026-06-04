@@ -14,12 +14,21 @@
 
 </div>
 
-## 截图预览
+## 演示
+
+<p align="center">
+  <img src="assets/demo.gif" alt="TSC AI Prompt Studio Demo" width="100%" />
+</p>
+
+<details>
+<summary>截图预览</summary>
 
 <p align="center">
   <img src="assets/dark-theme.png" alt="深色主题" width="48%" />
   <img src="assets/light-theme.png" alt="浅色主题" width="48%" />
 </p>
+
+</details>
 
 ## 功能特性
 
