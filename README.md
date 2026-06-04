@@ -1,8 +1,26 @@
 # TSC AI Prompt Studio
 
-现代化 AI 提示词生成器，Apple 风格深色 UI。输入中文描述，一键生成适配 Midjourney、Flux、视频 AI 及通用模型的专业 Prompt。
+<p align="center">
+  <strong>Generate professional prompts for AI models.</strong>
+</p>
 
-**[在线演示](https://pkokwho.github.io/tsc/)** | **[English](README_EN.md)**
+<p align="center">
+🌐 中文 / English · ⚡ Fast · 📱 Responsive · 🎨 Modern UI
+</p>
+
+**在线体验：** https://pkokwho.github.io/tsc/  
+**English Docs：** README_EN.md
+
+## Why TSC?
+
+TSC AI Prompt Studio 帮助用户将简单想法快速转换为适用于不同 AI 模型的高质量 Prompt。
+
+支持：
+
+- ChatGPT / 通用模型
+- Midjourney
+- Flux
+- Video AI
 
 ## 截图预览
 
@@ -13,48 +31,52 @@
 
 ## 功能特性
 
-- **多模型支持** — 通用模型、Midjourney、Flux、视频 AI 四种格式
-- **中英双语** — 自动检测浏览器语言，一键切换
-- **深色/浅色主题** — 点击切换，偏好本地保存
-- **12 种艺术风格** — 写实摄影、赛博朋克、动漫风格、油画质感、水彩手绘、极简主义、科幻未来、奇幻魔法、暗黑哥特、复古胶片、3D渲染、像素艺术
-- **可调参数** — 画面比例、质量等级、风格化强度
-- **一键复制** — 即时复制任意 Prompt 到剪贴板
-- **响应式设计** — 适配桌面、平板、手机
-- **单文件部署** — 零依赖，随处部署
-- **SEO & 社交** — Open Graph、Twitter Card、JSON-LD 结构化数据
+- 多模型 Prompt 生成
+- 中英双语支持
+- 自动检测浏览器语言
+- 深色 / 浅色主题
+- 12 种艺术风格
+- 可调比例与质量参数
+- 一键复制 Prompt
+- 响应式设计
+- 零依赖部署
+- SEO 与社交媒体优化
 
 ## 快速开始
 
-1. 克隆仓库：
-   ```bash
-   git clone https://github.com/pkokwho/tsc.git
-   ```
-2. 浏览器打开 `index.html` 即可使用
+```bash
+git clone https://github.com/pkokwho/tsc.git
+```
 
-## 部署到 GitHub Pages
+直接打开 `index.html` 即可运行。
 
-1. 推送到 GitHub 仓库
-2. 进入 **Settings → Pages**
-3. 设置源为 `master` 分支，根目录
-4. 访问 `https://<username>.github.io/tsc/`
+## GitHub Pages 部署
+
+1. 推送代码到 GitHub
+2. Settings → Pages
+3. 选择默认分支和根目录
+4. 保存并等待部署完成
 
 ## 技术栈
 
-- 原生 HTML / CSS / JavaScript
-- CSS 自定义属性实现主题切换
-- 无框架、无构建工具、零依赖
+- HTML
+- CSS
+- JavaScript
+- 无框架、无构建工具
 
-## 项目结构
+## 项目路线图
 
-```
-tsc/
-├── index.html          # 完整单文件应用
-├── README.md           # 中文说明
-├── README_EN.md        # 英文说明
-├── CONTRIBUTING.md     # 贡献指南
-└── LICENSE             # MIT 许可证
-```
+- [x] 中英双语
+- [x] 深色模式
+- [x] 响应式设计
+- [ ] Prompt Optimizer
+- [ ] Prompt Translator
+- [ ] Template Library
 
-## 许可证
+## 支持项目
 
-[MIT](LICENSE)
+如果这个项目对你有帮助，欢迎点一个 ⭐ Star。
+
+## License
+
+MIT
