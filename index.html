@@ -79,6 +79,8 @@
     --copy-border: rgba(255,255,255,0.15);
     --orb-opacity: 0.12;
     --grid-line: rgba(255,255,255,0.02);
+    --star-btn-bg: rgba(255,255,255,0.06);
+    --star-btn-hover: rgba(255,255,255,0.12);
   }
 
   /* ==================== CSS Variables - Light Theme ==================== */
@@ -106,6 +108,8 @@
     --copy-border: rgba(0,0,0,0.12);
     --orb-opacity: 0.06;
     --grid-line: rgba(0,0,0,0.03);
+    --star-btn-bg: rgba(0,0,0,0.04);
+    --star-btn-hover: rgba(0,0,0,0.08);
   }
 
   /* ==================== Reset & Base ==================== */
@@ -122,11 +126,9 @@
   }
 
   /* ==================== Background Effects ==================== */
-  .bg-effects {
-    position: fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
-  }
+  .bg-effects { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
   .bg-orb {
-    position: absolute; border-radius: 50%; filter: blur(120px); opacity: var(--orb-opacity);
+    position:absolute; border-radius:50%; filter:blur(120px); opacity:var(--orb-opacity);
     animation: orbFloat 20s ease-in-out infinite alternate;
     transition: opacity var(--transition-medium);
   }
@@ -134,138 +136,188 @@
   .bg-orb-2 { width:500px; height:500px; background:#a855f7; bottom:-150px; right:-100px; animation-delay:-10s; }
   .bg-orb-3 { width:300px; height:300px; background:#06b6d4; top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:-5s; }
   .bg-grid {
-    position: absolute; inset:0;
+    position:absolute; inset:0;
     background-image:
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 60px 60px;
-    transition: background-image var(--transition-medium);
   }
   @keyframes orbFloat {
-    0% { transform: translate(0,0) scale(1); }
-    50% { transform: translate(50px,-30px) scale(1.1); }
-    100% { transform: translate(-30px,50px) scale(0.95); }
+    0% { transform:translate(0,0) scale(1); }
+    50% { transform:translate(50px,-30px) scale(1.1); }
+    100% { transform:translate(-30px,50px) scale(0.95); }
   }
 
   /* ==================== Layout ==================== */
-  .container { position: relative; z-index:1; max-width:1200px; margin:0 auto; padding: 0 24px; }
+  .container { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:0 24px; }
 
   /* ==================== Navigation ==================== */
   nav {
-    position: sticky; top:0; z-index:100;
-    background: var(--bg-nav);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid var(--border-color);
+    position:sticky; top:0; z-index:100;
+    background:var(--bg-nav);
+    backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid var(--border-color);
     transition: background var(--transition-medium), border-color var(--transition-medium);
   }
   .nav-inner {
     display:flex; align-items:center; justify-content:space-between;
-    max-width:1200px; margin:0 auto; padding:16px 24px;
+    max-width:1200px; margin:0 auto; padding:12px 24px;
   }
+  .nav-left { display:flex; align-items:center; gap:12px; }
   .nav-brand {
-    display:flex; align-items:center; gap:12px;
-    font-size:18px; font-weight:600; letter-spacing:-0.02em;
-    background: var(--accent-gradient); -webkit-background-clip:text;
+    display:flex; align-items:center; gap:10px;
+    font-size:17px; font-weight:600; letter-spacing:-0.02em;
+    background:var(--accent-gradient); -webkit-background-clip:text;
     -webkit-text-fill-color:transparent; background-clip:text;
+    text-decoration:none;
   }
-  .nav-brand svg { flex-shrink:0; }
 
   /* 导航右侧操作按钮组 */
-  .nav-actions {
-    display:flex; align-items:center; gap:8px;
-  }
+  .nav-actions { display:flex; align-items:center; gap:8px; }
   .nav-btn {
     display:flex; align-items:center; justify-content:center;
     width:40px; height:40px;
-    background: var(--bg-card);
-    border:1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    color: var(--text-secondary);
-    cursor:pointer; transition: all var(--transition-fast);
+    background:var(--bg-card); border:1px solid var(--border-color);
+    border-radius:var(--radius-sm); color:var(--text-secondary);
+    cursor:pointer; transition:all var(--transition-fast);
     font-size:14px; font-weight:600; font-family:var(--font-stack);
   }
   .nav-btn:hover {
-    background: var(--bg-card-hover);
-    color: var(--text-primary);
-    border-color: var(--border-active);
+    background:var(--bg-card-hover); color:var(--text-primary);
+    border-color:var(--border-active);
   }
+
+  /* GitHub Star 按钮 */
+  .btn-star {
+    display:flex; align-items:center; gap:6px;
+    padding:8px 16px; height:40px;
+    background:var(--star-btn-bg); border:1px solid var(--border-color);
+    border-radius:var(--radius-sm); color:var(--text-secondary);
+    font-family:var(--font-stack); font-size:13px; font-weight:500;
+    cursor:pointer; transition:all var(--transition-fast);
+    text-decoration:none; white-space:nowrap;
+  }
+  .btn-star:hover {
+    background:var(--star-btn-hover); color:var(--text-primary);
+    border-color:var(--border-active);
+  }
+  .btn-star svg { flex-shrink:0; }
+  .star-count { font-weight:600; }
 
   /* ==================== Hero Section ==================== */
   .hero {
-    text-align:center; padding:80px 24px 48px;
-    animation: fadeUp 0.8s ease-out both;
+    text-align:center; padding:64px 24px 40px;
+    animation:fadeUp 0.8s ease-out both;
   }
+
+  /* Hero Logo */
+  .hero-logo {
+    width:80px; height:80px; margin:0 auto 28px;
+    animation:logoIn 1s ease-out both;
+  }
+  @keyframes logoIn {
+    from { opacity:0; transform:scale(0.7) rotate(-10deg); }
+    to { opacity:1; transform:scale(1) rotate(0); }
+  }
+
   .hero-badge {
     display:inline-flex; align-items:center; gap:6px;
     padding:6px 16px; border-radius:100px;
-    background: rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2);
+    background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2);
     font-size:13px; color:var(--accent-1); margin-bottom:24px;
   }
   .hero-badge-dot {
     width:6px; height:6px; border-radius:50%; background:var(--accent-1);
-    animation: pulse 2s ease-in-out infinite;
+    animation:pulse 2s ease-in-out infinite;
   }
   @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
   .hero h1 {
-    font-size: clamp(36px, 6vw, 64px);
-    font-weight:700; letter-spacing:-0.03em;
+    font-size:clamp(32px,6vw,60px); font-weight:700; letter-spacing:-0.03em;
     line-height:1.1; margin-bottom:16px;
-    background: linear-gradient(135deg, var(--text-gradient-from) 0%, var(--text-gradient-to) 100%);
+    background:linear-gradient(135deg, var(--text-gradient-from) 0%, var(--text-gradient-to) 100%);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    transition: background var(--transition-medium);
   }
-  .hero p {
-    font-size: clamp(16px, 2vw, 20px);
-    color: var(--text-secondary); max-width:600px; margin:0 auto;
-    line-height:1.6;
+  .hero-sub {
+    font-size:clamp(15px,2vw,19px); color:var(--text-secondary);
+    max-width:580px; margin:0 auto 28px; line-height:1.6;
+  }
+
+  /* Hero 特性标签 */
+  .hero-features {
+    display:flex; flex-wrap:wrap; justify-content:center; gap:8px;
+    margin-bottom:32px;
+  }
+  .hero-feature-tag {
+    display:inline-flex; align-items:center; gap:5px;
+    padding:6px 14px; border-radius:100px;
+    background:var(--bg-card); border:1px solid var(--border-color);
+    font-size:12px; color:var(--text-secondary); white-space:nowrap;
+  }
+  .hero-feature-tag svg { flex-shrink:0; opacity:0.6; }
+
+  /* Hero CTA 按钮 */
+  .hero-cta {
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    flex-wrap:wrap;
+  }
+  .btn-cta-primary {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 28px; border:none; border-radius:var(--radius-md);
+    background:var(--accent-gradient); color:#fff;
+    font-family:var(--font-stack); font-size:15px; font-weight:600;
+    cursor:pointer; transition:all var(--transition-fast);
+    box-shadow:0 4px 20px rgba(99,102,241,0.3);
+    text-decoration:none;
+  }
+  .btn-cta-primary:hover {
+    transform:translateY(-2px); box-shadow:0 8px 30px rgba(99,102,241,0.4);
+  }
+  .btn-cta-secondary {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 28px; border:1px solid var(--border-color); border-radius:var(--radius-md);
+    background:var(--bg-card); color:var(--text-primary);
+    font-family:var(--font-stack); font-size:15px; font-weight:500;
+    cursor:pointer; transition:all var(--transition-fast);
+    text-decoration:none;
+  }
+  .btn-cta-secondary:hover {
+    background:var(--bg-card-hover); border-color:var(--border-active);
+    transform:translateY(-2px);
   }
 
   /* ==================== Input Section ==================== */
   .input-section {
-    animation: fadeUp 0.8s ease-out 0.2s both;
-    margin-bottom:48px;
+    animation:fadeUp 0.8s ease-out 0.2s both; margin-bottom:48px;
   }
   .input-card {
-    background: var(--bg-card);
-    border:1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding:32px;
-    backdrop-filter: blur(20px);
-    box-shadow: var(--shadow-card);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-medium);
+    background:var(--bg-card); border:1px solid var(--border-color);
+    border-radius:var(--radius-lg); padding:32px;
+    backdrop-filter:blur(20px); box-shadow:var(--shadow-card);
+    transition:border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-medium);
   }
   .input-card:focus-within {
-    border-color: var(--border-active);
-    box-shadow: var(--shadow-card), var(--shadow-glow);
+    border-color:var(--border-active);
+    box-shadow:var(--shadow-card), var(--shadow-glow);
   }
   .input-label {
     display:block; font-size:14px; font-weight:500;
-    color: var(--text-secondary); margin-bottom:12px;
-    letter-spacing: 0.02em;
+    color:var(--text-secondary); margin-bottom:12px; letter-spacing:0.02em;
   }
   .input-textarea {
     width:100%; min-height:140px; padding:16px;
-    background: var(--input-bg);
-    border:1px solid transparent;
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-    font-family: var(--font-stack);
-    font-size: 16px; /* 防止 iOS 缩放 */
-    line-height: 1.6;
-    resize: vertical;
-    transition: all var(--transition-fast);
-    outline: none;
+    background:var(--input-bg); border:1px solid transparent;
+    border-radius:var(--radius-md); color:var(--text-primary);
+    font-family:var(--font-stack); font-size:16px; line-height:1.6;
+    resize:vertical; transition:all var(--transition-fast); outline:none;
   }
-  .input-textarea::placeholder { color: var(--text-tertiary); }
-  .input-textarea:focus {
-    background: var(--input-focus-bg);
-    border-color: var(--border-active);
-  }
+  .input-textarea::placeholder { color:var(--text-tertiary); }
+  .input-textarea:focus { background:var(--input-focus-bg); border-color:var(--border-active); }
 
   /* ==================== Controls ==================== */
   .controls {
-    display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
     gap:16px; margin-top:24px;
   }
   .control-group label {
@@ -273,123 +325,85 @@
     margin-bottom:8px; font-weight:500;
   }
   .control-select {
-    width:100%; padding:12px 16px;
-    background: var(--input-bg);
-    border:1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    color: var(--text-primary);
-    font-family: var(--font-stack);
-    font-size:16px; /* 防止 iOS 缩放 */
-    outline:none; cursor:pointer;
-    appearance:none; -webkit-appearance:none;
-    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position: right 16px center;
-    transition: all var(--transition-fast);
-    min-height:44px; /* 触摸友好最小高度 */
+    width:100%; padding:12px 16px; background:var(--input-bg);
+    border:1px solid var(--border-color); border-radius:var(--radius-sm);
+    color:var(--text-primary); font-family:var(--font-stack); font-size:16px;
+    outline:none; cursor:pointer; appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 16px center;
+    transition:all var(--transition-fast); min-height:44px;
   }
-  .control-select:focus {
-    border-color: var(--border-active);
-    background-color: var(--input-focus-bg);
-  }
+  .control-select:focus { border-color:var(--border-active); background-color:var(--input-focus-bg); }
   .control-select option { background:var(--select-bg); color:var(--text-primary); }
 
   /* ==================== Generate Button ==================== */
   .btn-generate {
     display:flex; align-items:center; justify-content:center; gap:10px;
     width:100%; margin-top:24px; padding:16px 32px;
-    background: var(--accent-gradient);
-    border:none; border-radius: var(--radius-md);
-    color:#fff; font-family:var(--font-stack);
-    font-size:16px; font-weight:600;
+    background:var(--accent-gradient); border:none; border-radius:var(--radius-md);
+    color:#fff; font-family:var(--font-stack); font-size:16px; font-weight:600;
     cursor:pointer; position:relative; overflow:hidden;
-    transition: all var(--transition-fast);
-    box-shadow: 0 4px 20px rgba(99,102,241,0.3);
-    min-height:44px; /* 触摸友好 */
+    transition:all var(--transition-fast);
+    box-shadow:0 4px 20px rgba(99,102,241,0.3); min-height:44px;
   }
-  .btn-generate:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(99,102,241,0.4);
-  }
-  .btn-generate:active { transform: translateY(0); }
-  .btn-generate:disabled {
-    opacity:0.5; cursor:not-allowed; transform:none;
-  }
+  .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(99,102,241,0.4); }
+  .btn-generate:active { transform:translateY(0); }
+  .btn-generate:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
   .btn-generate .btn-shimmer {
     position:absolute; inset:0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform:translateX(-100%); transition:transform 0.6s;
   }
-  .btn-generate:hover .btn-shimmer { transform: translateX(100%); }
+  .btn-generate:hover .btn-shimmer { transform:translateX(100%); }
 
   /* ==================== Results Section ==================== */
-  .results-section {
-    padding-bottom:80px;
-    animation: fadeUp 0.8s ease-out 0.4s both;
-  }
+  .results-section { padding-bottom:80px; animation:fadeUp 0.8s ease-out 0.4s both; }
   .results-header {
-    display:flex; align-items:center; justify-content:space-between;
-    margin-bottom:24px;
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;
   }
-  .results-title {
-    font-size:20px; font-weight:600; letter-spacing:-0.01em;
-  }
+  .results-title { font-size:20px; font-weight:600; letter-spacing:-0.01em; }
   .results-count {
     font-size:13px; color:var(--text-tertiary);
-    padding:4px 12px; border-radius:100px;
-    background:var(--bg-secondary);
+    padding:4px 12px; border-radius:100px; background:var(--bg-secondary);
   }
   .results-grid {
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap:20px;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:20px;
   }
 
   /* ==================== Prompt Card ==================== */
   .prompt-card {
-    background: var(--bg-card);
-    border:1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    overflow:hidden;
-    transition: all var(--transition-medium);
-    animation: cardIn 0.5s ease-out both;
+    background:var(--bg-card); border:1px solid var(--border-color);
+    border-radius:var(--radius-lg); overflow:hidden;
+    transition:all var(--transition-medium); animation:cardIn 0.5s ease-out both;
   }
-  .prompt-card:nth-child(1) { animation-delay: 0.05s; }
-  .prompt-card:nth-child(2) { animation-delay: 0.15s; }
-  .prompt-card:nth-child(3) { animation-delay: 0.25s; }
-  .prompt-card:nth-child(4) { animation-delay: 0.35s; }
+  .prompt-card:nth-child(1) { animation-delay:0.05s; }
+  .prompt-card:nth-child(2) { animation-delay:0.15s; }
+  .prompt-card:nth-child(3) { animation-delay:0.25s; }
+  .prompt-card:nth-child(4) { animation-delay:0.35s; }
   .prompt-card:hover {
-    background: var(--bg-card-hover);
-    border-color: rgba(99,102,241,0.15);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card);
+    background:var(--bg-card-hover); border-color:rgba(99,102,241,0.15);
+    transform:translateY(-4px); box-shadow:var(--shadow-card);
   }
   .card-header {
     display:flex; align-items:center; justify-content:space-between;
-    padding:20px 24px 16px;
-    border-bottom:1px solid var(--border-color);
+    padding:20px 24px 16px; border-bottom:1px solid var(--border-color);
   }
-  .card-model {
-    display:flex; align-items:center; gap:10px;
-  }
+  .card-model { display:flex; align-items:center; gap:10px; }
   .card-model-icon {
     width:36px; height:36px; border-radius:10px;
     display:flex; align-items:center; justify-content:center;
     font-size:16px; font-weight:700; color:#fff;
   }
-  .card-model-icon.mj { background: linear-gradient(135deg, #5865f2, #4752c4); }
-  .card-model-icon.flux { background: linear-gradient(135deg, #f97316, #ea580c); }
-  .card-model-icon.video { background: linear-gradient(135deg, #ec4899, #db2777); }
-  .card-model-icon.universal { background: linear-gradient(135deg, #10b981, #059669); }
+  .card-model-icon.mj { background:linear-gradient(135deg, #5865f2, #4752c4); }
+  .card-model-icon.flux { background:linear-gradient(135deg, #f97316, #ea580c); }
+  .card-model-icon.video { background:linear-gradient(135deg, #ec4899, #db2777); }
+  .card-model-icon.universal { background:linear-gradient(135deg, #10b981, #059669); }
   .card-model-name { font-size:15px; font-weight:600; }
   .card-model-desc { font-size:12px; color:var(--text-tertiary); }
   .card-body { padding:20px 24px; }
   .card-prompt {
-    font-size:14px; line-height:1.7;
-    color: var(--text-secondary);
-    word-break: break-word;
-    white-space: pre-wrap;
-    min-height: 100px;
+    font-size:14px; line-height:1.7; color:var(--text-secondary);
+    word-break:break-word; white-space:pre-wrap; min-height:100px;
   }
   .card-footer {
     display:flex; gap:8px; padding:16px 24px 20px;
@@ -397,84 +411,46 @@
   }
   .btn-copy {
     display:flex; align-items:center; justify-content:center; gap:6px;
-    flex:1; padding:10px 16px;
-    background: var(--copy-bg);
-    border:1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    color: var(--text-secondary);
-    font-family: var(--font-stack);
-    font-size:13px; font-weight:500;
-    cursor:pointer; transition: all var(--transition-fast);
-    min-height:44px; /* 触摸友好 */
+    flex:1; padding:10px 16px; background:var(--copy-bg);
+    border:1px solid var(--border-color); border-radius:var(--radius-sm);
+    color:var(--text-secondary); font-family:var(--font-stack);
+    font-size:13px; font-weight:500; cursor:pointer;
+    transition:all var(--transition-fast); min-height:44px;
   }
-  .btn-copy:hover {
-    background: var(--copy-hover-bg);
-    color: var(--text-primary);
-    border-color: var(--copy-border);
-  }
-  .btn-copy.copied {
-    background: rgba(34,197,94,0.15);
-    border-color: rgba(34,197,94,0.3);
-    color: #22c55e;
-  }
+  .btn-copy:hover { background:var(--copy-hover-bg); color:var(--text-primary); border-color:var(--copy-border); }
+  .btn-copy.copied { background:rgba(34,197,94,0.15); border-color:rgba(34,197,94,0.3); color:#22c55e; }
 
   /* ==================== Empty State ==================== */
-  .empty-state {
-    text-align:center; padding:80px 24px;
-    color: var(--text-tertiary);
-  }
-  .empty-icon {
-    width:64px; height:64px; margin:0 auto 16px;
-    opacity:0.3;
-  }
+  .empty-state { text-align:center; padding:80px 24px; color:var(--text-tertiary); }
+  .empty-icon { width:64px; height:64px; margin:0 auto 16px; opacity:0.3; }
   .empty-state p { font-size:15px; }
 
   /* ==================== Toast ==================== */
-  .toast-container {
-    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-    z-index:1000;
-  }
+  .toast-container { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:1000; }
   .toast {
     padding:12px 24px; border-radius:100px;
-    background: rgba(34,197,94,0.15);
-    border:1px solid rgba(34,197,94,0.3);
+    background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3);
     color:#22c55e; font-size:14px; font-weight:500;
-    backdrop-filter: blur(10px);
-    animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 2s forwards;
+    backdrop-filter:blur(10px);
+    animation:toastIn 0.3s ease-out, toastOut 0.3s ease-in 2s forwards;
     white-space:nowrap;
   }
 
   /* ==================== Animations ==================== */
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(20px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-  @keyframes cardIn {
-    from { opacity:0; transform:translateY(30px) scale(0.95); }
-    to { opacity:1; transform:translateY(0) scale(1); }
-  }
-  @keyframes toastIn {
-    from { opacity:0; transform:translateY(10px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-  @keyframes toastOut {
-    from { opacity:1; }
-    to { opacity:0; transform:translateY(-10px); }
-  }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes cardIn { from{opacity:0;transform:translateY(30px) scale(0.95);} to{opacity:1;transform:translateY(0) scale(1);} }
+  @keyframes toastIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes toastOut { from{opacity:1;} to{opacity:0;transform:translateY(-10px);} }
+  @keyframes spin { to{transform:rotate(360deg);} }
   .spinner {
-    width:18px; height:18px;
-    border:2px solid rgba(255,255,255,0.2);
-    border-top-color:#fff;
-    border-radius:50%;
-    animation:spin 0.6s linear infinite;
+    width:18px; height:18px; border:2px solid rgba(255,255,255,0.2);
+    border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite;
   }
 
   /* ==================== Responsive ==================== */
   @media (max-width:768px) {
-    .hero { padding:48px 16px 32px; }
+    .hero { padding:40px 16px 28px; }
+    .hero-logo { width:60px; height:60px; margin-bottom:20px; }
     .input-card { padding:20px; }
     .controls { grid-template-columns:1fr 1fr; gap:12px; }
     .results-grid { grid-template-columns:1fr; }
@@ -482,15 +458,21 @@
     .card-header { padding:16px 20px 12px; }
     .card-footer { padding:12px 20px 16px; }
     .container { padding:0 16px; }
-    .nav-inner { padding:12px 16px; }
-    .nav-brand { font-size:16px; }
+    .nav-inner { padding:10px 16px; }
+    .nav-brand { font-size:15px; gap:8px; }
+    .btn-star .star-text { display:none; }
+    .btn-star { padding:8px 12px; }
+    .hero-features { gap:6px; }
+    .hero-feature-tag { padding:5px 10px; font-size:11px; }
   }
   @media (max-width:480px) {
     .controls { grid-template-columns:1fr; }
-    .hero h1 { font-size:28px; }
-    .hero p { font-size:15px; }
+    .hero h1 { font-size:26px; }
+    .hero-sub { font-size:14px; }
     .nav-btn { width:36px; height:36px; font-size:12px; }
     .nav-actions { gap:6px; }
+    .hero-cta { flex-direction:column; }
+    .btn-cta-primary, .btn-cta-secondary { width:100%; justify-content:center; }
   }
 
   /* ==================== Footer ==================== */
@@ -498,12 +480,12 @@
     text-align:center; padding:40px 24px;
     border-top:1px solid var(--border-color);
     color:var(--text-tertiary); font-size:13px;
-    transition: border-color var(--transition-medium);
+    transition:border-color var(--transition-medium);
   }
-  footer a {
-    color:var(--accent-1); text-decoration:none;
-  }
+  footer a { color:var(--accent-1); text-decoration:none; }
   footer a:hover { text-decoration:underline; }
+  .footer-links { display:flex; justify-content:center; gap:20px; margin-bottom:12px; flex-wrap:wrap; }
+  .footer-links a { display:inline-flex; align-items:center; gap:5px; }
 </style>
 </head>
 <body>
@@ -519,17 +501,32 @@
 <!-- ==================== Navigation ==================== -->
 <nav>
   <div class="nav-inner">
-    <div class="nav-brand">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="url(#g1)" stroke-width="1.5" stroke-linejoin="round"/>
-        <path d="M2 17l10 5 10-5" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 12l10 5 10-5" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <defs><linearGradient id="g1" x1="2" y1="2" x2="22" y2="22"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs>
-      </svg>
-      TSC AI Prompt Studio
+    <div class="nav-left">
+      <a href="https://pkokwho.github.io/tsc/" class="nav-brand">
+        <!-- TSC Logo: Spark + Layers -->
+        <svg width="28" height="28" viewBox="0 0 80 80" fill="none">
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="80" y2="80">
+              <stop stop-color="#6366f1"/>
+              <stop offset="1" stop-color="#a855f7"/>
+            </linearGradient>
+          </defs>
+          <rect x="4" y="4" width="72" height="72" rx="18" fill="url(#logoGrad)" opacity="0.15"/>
+          <path d="M40 12L20 24v16l20 12 20-12V24L40 12z" stroke="url(#logoGrad)" stroke-width="3" fill="none" stroke-linejoin="round"/>
+          <path d="M20 40l20 12 20-12" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 52l20 12 20-12" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          <circle cx="40" cy="24" r="4" fill="url(#logoGrad)"/>
+        </svg>
+        TSC AI Prompt Studio
+      </a>
     </div>
-    <!-- 右侧操作按钮：语言切换 + 主题切换 -->
+    <!-- 右侧操作按钮：Star + 语言 + 主题 -->
     <div class="nav-actions">
+      <a class="btn-star" href="https://github.com/pkokwho/tsc" target="_blank" rel="noopener" aria-label="Star on GitHub">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0l2.47 5.01L16 5.82l-4 3.9.94 5.51L8 12.52l-4.94 2.71.94-5.51-4-3.9 5.53-.81L8 0z"/></svg>
+        <span class="star-text">Star</span>
+        <span class="star-count" id="starCount">-</span>
+      </a>
       <button class="nav-btn" id="langBtn" onclick="toggleLang()" title="Switch Language" aria-label="Switch Language">EN</button>
       <button class="nav-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme" aria-label="Toggle Theme">
         <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -543,44 +540,93 @@
 
 <!-- ==================== Hero ==================== -->
 <section class="hero">
+  <!-- Hero Logo -->
+  <div class="hero-logo">
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+      <defs>
+        <linearGradient id="heroLogoGrad" x1="0" y1="0" x2="80" y2="80">
+          <stop stop-color="#6366f1"/>
+          <stop offset="1" stop-color="#a855f7"/>
+        </linearGradient>
+      </defs>
+      <rect x="2" y="2" width="76" height="76" rx="20" fill="url(#heroLogoGrad)" opacity="0.12"/>
+      <rect x="2" y="2" width="76" height="76" rx="20" stroke="url(#heroLogoGrad)" stroke-width="1.5" opacity="0.3"/>
+      <path d="M40 14L18 27v17l22 13 22-13V27L40 14z" stroke="url(#heroLogoGrad)" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+      <path d="M18 44l22 13 22-13" stroke="url(#heroLogoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18 56l22 13 22-13" stroke="url(#heroLogoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+      <circle cx="40" cy="27" r="4.5" fill="url(#heroLogoGrad)"/>
+    </svg>
+  </div>
+
   <div class="hero-badge">
     <span class="hero-badge-dot"></span>
     <span data-i18n="heroBadge">AI-Powered Prompt Generation</span>
   </div>
   <h1 data-i18n-html="heroTitle">用中文描述，<br>自动生成专业提示词</h1>
-  <p data-i18n="heroDesc">输入你的创意想法，一键生成适配 Midjourney、Flux 和视频 AI 模型的高质量 Prompt</p>
+  <p class="hero-sub" data-i18n="heroDesc">输入你的创意想法，一键生成适配 Midjourney、Flux 和视频 AI 模型的高质量 Prompt</p>
+
+  <!-- 特性标签 -->
+  <div class="hero-features">
+    <span class="hero-feature-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2"/></svg>
+      <span data-i18n="tagMultiModel">多模型支持</span>
+    </span>
+    <span class="hero-feature-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20" stroke="currentColor" stroke-width="2"/><path d="M12 2a15 15 0 010 20M12 2a15 15 0 000 20" stroke="currentColor" stroke-width="2"/></svg>
+      <span data-i18n="tagBilingual">中英双语</span>
+    </span>
+    <span class="hero-feature-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="2"/></svg>
+      <span data-i18n="tagTheme">深色/浅色主题</span>
+    </span>
+    <span class="hero-feature-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2"/></svg>
+      <span data-i18n="tagResponsive">响应式设计</span>
+    </span>
+    <span class="hero-feature-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2"/></svg>
+      <span data-i18n="tagZeroDep">零依赖部署</span>
+    </span>
+  </div>
+
+  <!-- CTA 按钮 -->
+  <div class="hero-cta">
+    <a class="btn-cta-primary" href="#inputSection" data-i18n="ctaStart">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      开始生成
+    </a>
+    <a class="btn-cta-secondary" href="https://github.com/pkokwho/tsc" target="_blank" rel="noopener" data-i18n="ctaGithub">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+  </div>
 </section>
 
 <!-- ==================== Input Section ==================== -->
-<section class="input-section container">
+<section class="input-section container" id="inputSection">
   <div class="input-card">
     <label class="input-label" data-i18n="inputLabel">描述你的创意</label>
     <textarea class="input-textarea" id="description" data-i18n-placeholder="inputPlaceholder" placeholder="例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格"></textarea>
 
     <div class="controls">
-      <!-- 画面比例选择 -->
       <div class="control-group">
         <label data-i18n="aspectLabel">画面比例</label>
         <select class="control-select" id="aspectRatio"></select>
       </div>
-      <!-- 艺术风格选择 -->
       <div class="control-group">
         <label data-i18n="styleLabel">艺术风格</label>
         <select class="control-select" id="style"></select>
       </div>
-      <!-- 画面质量选择 -->
       <div class="control-group">
         <label data-i18n="qualityLabel">画面质量</label>
         <select class="control-select" id="quality"></select>
       </div>
-      <!-- 风格化强度选择 -->
       <div class="control-group">
         <label data-i18n="stylizeLabel">风格化强度</label>
         <select class="control-select" id="stylize"></select>
       </div>
     </div>
 
-    <!-- 生成按钮 -->
     <button class="btn-generate" id="generateBtn" onclick="generatePrompts()">
       <span class="btn-shimmer"></span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -597,7 +643,6 @@
     <h2 class="results-title" data-i18n="resultsTitle">生成结果</h2>
     <span class="results-count" id="resultsCount" data-i18n="resultsWaiting">等待生成</span>
   </div>
-
   <div class="results-grid" id="resultsGrid">
     <div class="empty-state" id="emptyState">
       <div class="empty-icon">
@@ -613,6 +658,14 @@
 
 <!-- ==================== Footer ==================== -->
 <footer>
+  <div class="footer-links">
+    <a href="https://github.com/pkokwho/tsc" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+    <a href="https://github.com/pkokwho/tsc/issues" target="_blank" rel="noopener" data-i18n="footerIssues">反馈问题</a>
+    <a href="https://github.com/pkokwho/tsc/blob/master/LICENSE" target="_blank" rel="noopener">MIT License</a>
+  </div>
   <p data-i18n="footerText">TSC AI Prompt Studio | 单文件部署，支持 GitHub Pages</p>
 </footer>
 
@@ -623,185 +676,93 @@
 /* ==================== 国际化 - Locales ==================== */
 const LOCALES = {
   zh: {
-    /* 导航 */
     langBtn: 'EN',
-    /* Hero 区域 */
     heroBadge: 'AI-Powered Prompt Generation',
     heroTitle: '用中文描述，<br>自动生成专业提示词',
     heroDesc: '输入你的创意想法，一键生成适配 Midjourney、Flux 和视频 AI 模型的高质量 Prompt',
-    /* 输入区域 */
+    tagMultiModel: '多模型支持',
+    tagBilingual: '中英双语',
+    tagTheme: '深色/浅色主题',
+    tagResponsive: '响应式设计',
+    tagZeroDep: '零依赖部署',
+    ctaStart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 开始生成',
+    ctaGithub: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub',
     inputLabel: '描述你的创意',
     inputPlaceholder: '例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格',
-    /* 控件标签 */
-    aspectLabel: '画面比例',
-    styleLabel: '艺术风格',
-    qualityLabel: '画面质量',
-    stylizeLabel: '风格化强度',
-    /* 画面比例选项 */
+    aspectLabel: '画面比例', styleLabel: '艺术风格', qualityLabel: '画面质量', stylizeLabel: '风格化强度',
     aspectOptions: [
-      { value: '1:1', text: '1:1 正方形' },
-      { value: '16:9', text: '16:9 宽屏' },
-      { value: '9:16', text: '9:16 竖屏' },
-      { value: '4:3', text: '4:3 标准' },
-      { value: '3:2', text: '3:2 经典' },
-      { value: '2:3', text: '2:3 肖像' }
+      {value:'1:1',text:'1:1 正方形'},{value:'16:9',text:'16:9 宽屏'},{value:'9:16',text:'9:16 竖屏'},
+      {value:'4:3',text:'4:3 标准'},{value:'3:2',text:'3:2 经典'},{value:'2:3',text:'2:3 肖像'}
     ],
-    /* 艺术风格选项 */
     styleOptions: [
-      { value: '写实摄影', text: '写实摄影' },
-      { value: '赛博朋克', text: '赛博朋克' },
-      { value: '动漫风格', text: '动漫风格' },
-      { value: '油画质感', text: '油画质感' },
-      { value: '水彩手绘', text: '水彩手绘' },
-      { value: '极简主义', text: '极简主义' },
-      { value: '科幻未来', text: '科幻未来' },
-      { value: '奇幻魔法', text: '奇幻魔法' },
-      { value: '暗黑哥特', text: '暗黑哥特' },
-      { value: '复古胶片', text: '复古胶片' },
-      { value: '3D渲染', text: '3D渲染' },
-      { value: '像素艺术', text: '像素艺术' }
+      {value:'写实摄影',text:'写实摄影'},{value:'赛博朋克',text:'赛博朋克'},{value:'动漫风格',text:'动漫风格'},
+      {value:'油画质感',text:'油画质感'},{value:'水彩手绘',text:'水彩手绘'},{value:'极简主义',text:'极简主义'},
+      {value:'科幻未来',text:'科幻未来'},{value:'奇幻魔法',text:'奇幻魔法'},{value:'暗黑哥特',text:'暗黑哥特'},
+      {value:'复古胶片',text:'复古胶片'},{value:'3D渲染',text:'3D渲染'},{value:'像素艺术',text:'像素艺术'}
     ],
-    /* 画面质量选项 */
-    qualityOptions: [
-      { value: '1', text: '标准' },
-      { value: '2', text: '高质量' },
-      { value: '3', text: '超高质量' }
-    ],
-    /* 风格化强度选项 */
-    stylizeOptions: [
-      { value: '100', text: '低 (100)' },
-      { value: '250', text: '中 (250)' },
-      { value: '500', text: '高 (500)' },
-      { value: '750', text: '极高 (750)' },
-      { value: '1000', text: '最大 (1000)' }
-    ],
-    /* 按钮 */
-    generateBtn: '生成提示词',
-    regenBtn: '重新生成',
+    qualityOptions: [{value:'1',text:'标准'},{value:'2',text:'高质量'},{value:'3',text:'超高质量'}],
+    stylizeOptions: [{value:'100',text:'低 (100)'},{value:'250',text:'中 (250)'},{value:'500',text:'高 (500)'},{value:'750',text:'极高 (750)'},{value:'1000',text:'最大 (1000)'}],
+    generateBtn: '生成提示词', regenBtn: '重新生成',
     generating: '<span class="spinner"></span> 生成中...',
-    /* 结果区域 */
-    resultsTitle: '生成结果',
-    resultsWaiting: '等待生成',
-    resultsCount: '已生成 {n} 条',
+    resultsTitle: '生成结果', resultsWaiting: '等待生成', resultsCount: '已生成 {n} 条',
     emptyText: '在上方输入描述，点击生成按钮开始',
-    /* 卡片模型描述 */
-    modelUniversal: '适配所有生图模型',
-    modelMj: 'AI 绘画 · 专业级',
-    modelFlux: 'AI 绘画 · 开源模型',
-    modelVideo: 'AI 视频 · 动态效果',
-    /* 复制按钮 */
-    copyBtn: '复制',
-    copiedBtn: '已复制',
-    /* 提示消息 */
-    toastEmpty: '请输入描述内容',
-    toastSuccess: '提示词生成成功！',
-    toastCopied: '已复制到剪贴板',
-    /* 页脚 */
+    modelUniversal: '适配所有生图模型', modelMj: 'AI 绘画 · 专业级', modelFlux: 'AI 绘画 · 开源模型', modelVideo: 'AI 视频 · 动态效果',
+    copyBtn: '复制', copiedBtn: '已复制',
+    toastEmpty: '请输入描述内容', toastSuccess: '提示词生成成功！', toastCopied: '已复制到剪贴板',
+    footerIssues: '反馈问题',
     footerText: 'TSC AI Prompt Studio | 单文件部署，支持 GitHub Pages'
   },
   en: {
-    /* Navigation */
     langBtn: '中',
-    /* Hero */
     heroBadge: 'AI-Powered Prompt Generation',
     heroTitle: 'Describe in your language,<br>generate professional prompts',
     heroDesc: 'Enter your creative idea, one-click generate high-quality Prompts for Midjourney, Flux, and Video AI models',
-    /* Input */
+    tagMultiModel: 'Multi-Model', tagBilingual: 'Bilingual', tagTheme: 'Dark/Light Theme',
+    tagResponsive: 'Responsive', tagZeroDep: 'Zero Deps',
+    ctaStart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Start Generating',
+    ctaGithub: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub',
     inputLabel: 'Describe your idea',
     inputPlaceholder: 'e.g. A cat wearing a spacesuit standing on the moon, blue Earth in the background, starry sky, surrealism style',
-    /* Controls */
-    aspectLabel: 'Aspect Ratio',
-    styleLabel: 'Art Style',
-    qualityLabel: 'Image Quality',
-    stylizeLabel: 'Stylize Intensity',
-    /* Aspect options */
+    aspectLabel: 'Aspect Ratio', styleLabel: 'Art Style', qualityLabel: 'Image Quality', stylizeLabel: 'Stylize Intensity',
     aspectOptions: [
-      { value: '1:1', text: '1:1 Square' },
-      { value: '16:9', text: '16:9 Widescreen' },
-      { value: '9:16', text: '9:16 Portrait' },
-      { value: '4:3', text: '4:3 Standard' },
-      { value: '3:2', text: '3:2 Classic' },
-      { value: '2:3', text: '2:3 Portrait' }
+      {value:'1:1',text:'1:1 Square'},{value:'16:9',text:'16:9 Widescreen'},{value:'9:16',text:'9:16 Portrait'},
+      {value:'4:3',text:'4:3 Standard'},{value:'3:2',text:'3:2 Classic'},{value:'2:3',text:'2:3 Portrait'}
     ],
-    /* Style options */
     styleOptions: [
-      { value: '写实摄影', text: 'Photorealistic' },
-      { value: '赛博朋克', text: 'Cyberpunk' },
-      { value: '动漫风格', text: 'Anime Style' },
-      { value: '油画质感', text: 'Oil Painting' },
-      { value: '水彩手绘', text: 'Watercolor' },
-      { value: '极简主义', text: 'Minimalist' },
-      { value: '科幻未来', text: 'Sci-Fi Futuristic' },
-      { value: '奇幻魔法', text: 'Fantasy Magical' },
-      { value: '暗黑哥特', text: 'Dark Gothic' },
-      { value: '复古胶片', text: 'Vintage Film' },
-      { value: '3D渲染', text: '3D Render' },
-      { value: '像素艺术', text: 'Pixel Art' }
+      {value:'写实摄影',text:'Photorealistic'},{value:'赛博朋克',text:'Cyberpunk'},{value:'动漫风格',text:'Anime Style'},
+      {value:'油画质感',text:'Oil Painting'},{value:'水彩手绘',text:'Watercolor'},{value:'极简主义',text:'Minimalist'},
+      {value:'科幻未来',text:'Sci-Fi Futuristic'},{value:'奇幻魔法',text:'Fantasy Magical'},{value:'暗黑哥特',text:'Dark Gothic'},
+      {value:'复古胶片',text:'Vintage Film'},{value:'3D渲染',text:'3D Render'},{value:'像素艺术',text:'Pixel Art'}
     ],
-    /* Quality options */
-    qualityOptions: [
-      { value: '1', text: 'Standard' },
-      { value: '2', text: 'High Quality' },
-      { value: '3', text: 'Ultra Quality' }
-    ],
-    /* Stylize options */
-    stylizeOptions: [
-      { value: '100', text: 'Low (100)' },
-      { value: '250', text: 'Medium (250)' },
-      { value: '500', text: 'High (500)' },
-      { value: '750', text: 'Very High (750)' },
-      { value: '1000', text: 'Max (1000)' }
-    ],
-    /* Buttons */
-    generateBtn: 'Generate Prompts',
-    regenBtn: 'Regenerate',
+    qualityOptions: [{value:'1',text:'Standard'},{value:'2',text:'High Quality'},{value:'3',text:'Ultra Quality'}],
+    stylizeOptions: [{value:'100',text:'Low (100)'},{value:'250',text:'Medium (250)'},{value:'500',text:'High (500)'},{value:'750',text:'Very High (750)'},{value:'1000',text:'Max (1000)'}],
+    generateBtn: 'Generate Prompts', regenBtn: 'Regenerate',
     generating: '<span class="spinner"></span> Generating...',
-    /* Results */
-    resultsTitle: 'Results',
-    resultsWaiting: 'Waiting',
-    resultsCount: '{n} prompts generated',
+    resultsTitle: 'Results', resultsWaiting: 'Waiting', resultsCount: '{n} prompts generated',
     emptyText: 'Enter a description above and click Generate',
-    /* Card model descriptions */
-    modelUniversal: 'All Image Models',
-    modelMj: 'AI Art · Professional',
-    modelFlux: 'AI Art · Open Source',
-    modelVideo: 'AI Video · Motion',
-    /* Copy */
-    copyBtn: 'Copy',
-    copiedBtn: 'Copied',
-    /* Toasts */
-    toastEmpty: 'Please enter a description',
-    toastSuccess: 'Prompts generated successfully!',
-    toastCopied: 'Copied to clipboard',
-    /* Footer */
+    modelUniversal: 'All Image Models', modelMj: 'AI Art · Professional', modelFlux: 'AI Art · Open Source', modelVideo: 'AI Video · Motion',
+    copyBtn: 'Copy', copiedBtn: 'Copied',
+    toastEmpty: 'Please enter a description', toastSuccess: 'Prompts generated successfully!', toastCopied: 'Copied to clipboard',
+    footerIssues: 'Report Issue',
     footerText: 'TSC AI Prompt Studio | Single-file deploy, GitHub Pages ready'
   }
 };
 
 /* ==================== 语言检测与状态管理 ==================== */
-
-/* 自动检测浏览器语言，优先使用存储的偏好 */
-let currentLang = localStorage.getItem('tsc-lang') ||
-  (navigator.language.startsWith('zh') ? 'zh' : 'en');
-
-/* 当前主题，默认深色 */
+let currentLang = localStorage.getItem('tsc-lang') || (navigator.language.startsWith('zh') ? 'zh' : 'en');
 let currentTheme = localStorage.getItem('tsc-theme') || 'dark';
 
-/* ==================== 语言切换功能 ==================== */
+/* ==================== 语言切换 ==================== */
 function toggleLang() {
   currentLang = currentLang === 'zh' ? 'en' : 'zh';
   localStorage.setItem('tsc-lang', currentLang);
   applyLocale();
 }
 
-/* 应用当前语言到页面所有文本 */
+/* 应用当前语言到页面 */
 function applyLocale() {
   const t = LOCALES[currentLang];
-
-  /* 更新 html lang 属性 */
   document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
-
-  /* 更新语言切换按钮文字 */
   document.getElementById('langBtn').textContent = t.langBtn;
 
   /* 更新 data-i18n 文本 */
@@ -810,11 +771,17 @@ function applyLocale() {
     if (t[key] !== undefined) el.textContent = t[key];
   });
 
-  /* 更新 data-i18n-html（含 HTML 标签的文本） */
+  /* 更新 data-i18n-html */
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
     const key = el.getAttribute('data-i18n-html');
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
+
+  /* 更新 CTA 按钮（含 SVG 图标） */
+  const ctaStart = document.querySelector('.btn-cta-primary');
+  const ctaGithub = document.querySelector('.btn-cta-secondary');
+  if (ctaStart) ctaStart.innerHTML = t.ctaStart;
+  if (ctaGithub) ctaGithub.innerHTML = t.ctaGithub;
 
   /* 更新 placeholder */
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
@@ -829,7 +796,6 @@ function applyLocale() {
   populateSelect('stylize', t.stylizeOptions, '250');
 }
 
-/* 填充 select 下拉选项 */
 function populateSelect(id, options, defaultVal) {
   const sel = document.getElementById(id);
   const currentVal = sel.value || defaultVal;
@@ -838,18 +804,15 @@ function populateSelect(id, options, defaultVal) {
   ).join('');
 }
 
-/* ==================== 主题切换功能 ==================== */
+/* ==================== 主题切换 ==================== */
 function toggleTheme() {
   currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
   localStorage.setItem('tsc-theme', currentTheme);
   applyTheme();
 }
 
-/* 应用主题到页面 */
 function applyTheme() {
   document.documentElement.setAttribute('data-theme', currentTheme);
-
-  /* 更新主题图标：深色显示太阳，浅色显示月亮 */
   const icon = document.getElementById('themeIcon');
   if (currentTheme === 'dark') {
     icon.innerHTML = '<circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
@@ -858,214 +821,119 @@ function applyTheme() {
   }
 }
 
+/* ==================== GitHub Star 计数 ==================== */
+function fetchStarCount() {
+  fetch('https://api.github.com/repos/pkokwho/tsc')
+    .then(r => r.json())
+    .then(data => {
+      if (data.stargazers_count !== undefined) {
+        document.getElementById('starCount').textContent = data.stargazers_count;
+      }
+    })
+    .catch(() => { /* 静默失败 */ });
+}
+
 /* ==================== 风格映射表 ==================== */
 const STYLE_MAP = {
-  '写实摄影': { mj: 'photorealistic, ultra detailed photography', flux: 'photorealistic, professional photography', video: 'photorealistic, cinematic', universal: 'photorealistic, professional photography, ultra detailed, sharp focus' },
-  '赛博朋克': { mj: 'cyberpunk, neon lights, futuristic city', flux: 'cyberpunk aesthetic, neon lighting, futuristic', video: 'cyberpunk, neon glow, futuristic atmosphere', universal: 'cyberpunk style, neon lights, futuristic cityscape, glowing elements' },
-  '动漫风格': { mj: 'anime style, cel shading, vibrant colors', flux: 'anime style, cel shaded, vibrant colors', video: 'anime style animation, cel shading', universal: 'anime art style, cel shading, vibrant colors, detailed illustration' },
-  '油画质感': { mj: 'oil painting style, rich textures, canvas', flux: 'oil painting style, thick brushstrokes, rich texture', video: 'oil painting animation, rich texture', universal: 'oil painting style, thick impasto brushstrokes, rich color palette, canvas texture' },
-  '水彩手绘': { mj: 'watercolor painting, soft edges, artistic', flux: 'watercolor style, soft washes, artistic', video: 'watercolor animation style, soft fluid motion', universal: 'watercolor painting style, soft washes, fluid edges, artistic' },
-  '极简主义': { mj: 'minimalist design, clean lines, negative space', flux: 'minimalist composition, clean and simple', video: 'minimalist aesthetic, clean motion', universal: 'minimalist composition, clean lines, generous negative space, simple forms' },
-  '科幻未来': { mj: 'sci-fi futuristic, advanced technology, space', flux: 'sci-fi futuristic, advanced technology', video: 'sci-fi cinematic, futuristic atmosphere', universal: 'sci-fi futuristic, advanced technology, space exploration, sleek design' },
-  '奇幻魔法': { mj: 'fantasy magical, ethereal, enchanted', flux: 'fantasy magical world, ethereal glow', video: 'fantasy cinematic, magical atmosphere', universal: 'fantasy magical world, ethereal glow, enchanted atmosphere, mystical elements' },
-  '暗黑哥特': { mj: 'dark gothic, moody atmosphere, dramatic shadows', flux: 'dark gothic style, dramatic lighting', video: 'dark gothic cinematic, moody atmosphere', universal: 'dark gothic style, dramatic lighting, moody atmosphere, ornate details' },
-  '复古胶片': { mj: 'vintage film photography, film grain, retro', flux: 'vintage film aesthetic, retro style, film grain', video: 'vintage film look, retro cinematic', universal: 'vintage film photography aesthetic, film grain, retro color grading, nostalgic mood' },
-  '3D渲染': { mj: '3D render, octane render, ray tracing', flux: '3D rendered, octane render, photorealistic 3D', video: '3D animation, octane render style', universal: '3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting' },
-  '像素艺术': { mj: 'pixel art, 16-bit style, retro gaming', flux: 'pixel art style, retro game aesthetic', video: 'pixel art animation, retro style', universal: 'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details' }
+  '写实摄影': {mj:'photorealistic, ultra detailed photography',flux:'photorealistic, professional photography',video:'photorealistic, cinematic',universal:'photorealistic, professional photography, ultra detailed, sharp focus'},
+  '赛博朋克': {mj:'cyberpunk, neon lights, futuristic city',flux:'cyberpunk aesthetic, neon lighting, futuristic',video:'cyberpunk, neon glow, futuristic atmosphere',universal:'cyberpunk style, neon lights, futuristic cityscape, glowing elements'},
+  '动漫风格': {mj:'anime style, cel shading, vibrant colors',flux:'anime style, cel shaded, vibrant colors',video:'anime style animation, cel shading',universal:'anime art style, cel shading, vibrant colors, detailed illustration'},
+  '油画质感': {mj:'oil painting style, rich textures, canvas',flux:'oil painting style, thick brushstrokes, rich texture',video:'oil painting animation, rich texture',universal:'oil painting style, thick impasto brushstrokes, rich color palette, canvas texture'},
+  '水彩手绘': {mj:'watercolor painting, soft edges, artistic',flux:'watercolor style, soft washes, artistic',video:'watercolor animation style, soft fluid motion',universal:'watercolor painting style, soft washes, fluid edges, artistic'},
+  '极简主义': {mj:'minimalist design, clean lines, negative space',flux:'minimalist composition, clean and simple',video:'minimalist aesthetic, clean motion',universal:'minimalist composition, clean lines, generous negative space, simple forms'},
+  '科幻未来': {mj:'sci-fi futuristic, advanced technology, space',flux:'sci-fi futuristic, advanced technology',video:'sci-fi cinematic, futuristic atmosphere',universal:'sci-fi futuristic, advanced technology, space exploration, sleek design'},
+  '奇幻魔法': {mj:'fantasy magical, ethereal, enchanted',flux:'fantasy magical world, ethereal glow',video:'fantasy cinematic, magical atmosphere',universal:'fantasy magical world, ethereal glow, enchanted atmosphere, mystical elements'},
+  '暗黑哥特': {mj:'dark gothic, moody atmosphere, dramatic shadows',flux:'dark gothic style, dramatic lighting',video:'dark gothic cinematic, moody atmosphere',universal:'dark gothic style, dramatic lighting, moody atmosphere, ornate details'},
+  '复古胶片': {mj:'vintage film photography, film grain, retro',flux:'vintage film aesthetic, retro style, film grain',video:'vintage film look, retro cinematic',universal:'vintage film photography aesthetic, film grain, retro color grading, nostalgic mood'},
+  '3D渲染': {mj:'3D render, octane render, ray tracing',flux:'3D rendered, octane render, photorealistic 3D',video:'3D animation, octane render style',universal:'3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting'},
+  '像素艺术': {mj:'pixel art, 16-bit style, retro gaming',flux:'pixel art style, retro game aesthetic',video:'pixel art animation, retro style',universal:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details'}
 };
-
-/* 质量映射表 */
-const QUALITY_MAP = { '1': '', '2': 'masterpiece, best quality', '3': 'masterpiece, best quality, ultra detailed, 8K UHD' };
+const QUALITY_MAP = {'1':'','2':'masterpiece, best quality','3':'masterpiece, best quality, ultra detailed, 8K UHD'};
 
 /* ==================== Prompt 生成函数 ==================== */
-
-/* 生成 Midjourney 格式 Prompt */
-function generateMidjourneyPrompt(desc, style, aspect, quality, stylize) {
-  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
-  const q = QUALITY_MAP[quality];
-  let prompt = desc;
-  if (q) prompt = q + ', ' + prompt;
-  prompt += ', ' + s.mj;
-  prompt += ' --v 6.0 --ar ' + aspect + ' --q 2 --style raw --s ' + stylize;
-  return prompt;
+function generateMidjourneyPrompt(desc,style,aspect,quality,stylize) {
+  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影']; const q=QUALITY_MAP[quality];
+  let p=desc; if(q) p=q+', '+p; p+=', '+s.mj; p+=' --v 6.0 --ar '+aspect+' --q 2 --style raw --s '+stylize; return p;
+}
+function generateFluxPrompt(desc,style) {
+  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
+  return desc+', '+s.flux+', ultra detailed, professional quality, sharp focus, cinematic composition';
+}
+function generateVideoPrompt(desc,style) {
+  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
+  return desc+', '+s.video+', smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion';
+}
+function generateUniversalPrompt(desc,style) {
+  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
+  return desc+', '+s.universal+', high quality, best quality, masterpiece, ultra detailed, professional composition, cinematic lighting';
 }
 
-/* 生成 Flux 格式 Prompt */
-function generateFluxPrompt(desc, style) {
-  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
-  return desc + ', ' + s.flux + ', ultra detailed, professional quality, sharp focus, cinematic composition';
-}
-
-/* 生成视频格式 Prompt */
-function generateVideoPrompt(desc, style) {
-  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
-  return desc + ', ' + s.video + ', smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion';
-}
-
-/* 生成通用格式 Prompt（适配所有生图模型） */
-function generateUniversalPrompt(desc, style) {
-  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
-  return desc + ', ' + s.universal + ', high quality, best quality, masterpiece, ultra detailed, professional composition, cinematic lighting';
-}
-
-/* ==================== 核心逻辑：生成提示词 ==================== */
+/* ==================== 核心逻辑 ==================== */
 function generatePrompts() {
-  const desc = document.getElementById('description').value.trim();
-  const t = LOCALES[currentLang];
-
-  /* 校验：描述不能为空 */
-  if (!desc) {
-    document.getElementById('description').focus();
-    showToast(t.toastEmpty, 'warning');
-    return;
-  }
-
-  /* 获取参数 */
-  const style = document.getElementById('style').value;
-  const aspect = document.getElementById('aspectRatio').value;
-  const quality = document.getElementById('quality').value;
-  const stylize = document.getElementById('stylize').value;
-  const btn = document.getElementById('generateBtn');
-  const btnText = document.getElementById('btnText');
-
-  /* 设置加载状态 */
-  btn.disabled = true;
-  btnText.innerHTML = t.generating;
-
-  /* 模拟生成延迟（实际为本地计算） */
-  setTimeout(() => {
-    /* 生成四种格式的 Prompt */
-    const mjPrompt = generateMidjourneyPrompt(desc, style, aspect, quality, stylize);
-    const fluxPrompt = generateFluxPrompt(desc, style);
-    const videoPrompt = generateVideoPrompt(desc, style);
-    const universalPrompt = generateUniversalPrompt(desc, style);
-
-    /* 渲染结果卡片 */
+  const desc=document.getElementById('description').value.trim(); const t=LOCALES[currentLang];
+  if(!desc){document.getElementById('description').focus();showToast(t.toastEmpty,'warning');return;}
+  const style=document.getElementById('style').value,aspect=document.getElementById('aspectRatio').value,
+    quality=document.getElementById('quality').value,stylize=document.getElementById('stylize').value,
+    btn=document.getElementById('generateBtn'),btnText=document.getElementById('btnText');
+  btn.disabled=true; btnText.innerHTML=t.generating;
+  setTimeout(()=>{
     renderResults([
-      { model: currentLang === 'zh' ? '通用模型' : 'Universal', icon: 'ALL', iconClass: 'universal', desc: t.modelUniversal, prompt: universalPrompt },
-      { model: 'Midjourney', icon: 'MJ', iconClass: 'mj', desc: t.modelMj, prompt: mjPrompt },
-      { model: 'Flux', icon: 'FL', iconClass: 'flux', desc: t.modelFlux, prompt: fluxPrompt },
-      { model: currentLang === 'zh' ? '视频生成' : 'Video', icon: 'VI', iconClass: 'video', desc: t.modelVideo, prompt: videoPrompt }
+      {model:currentLang==='zh'?'通用模型':'Universal',icon:'ALL',iconClass:'universal',desc:t.modelUniversal,prompt:generateUniversalPrompt(desc,style)},
+      {model:'Midjourney',icon:'MJ',iconClass:'mj',desc:t.modelMj,prompt:generateMidjourneyPrompt(desc,style,aspect,quality,stylize)},
+      {model:'Flux',icon:'FL',iconClass:'flux',desc:t.modelFlux,prompt:generateFluxPrompt(desc,style)},
+      {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,style)}
     ]);
-
-    /* 恢复按钮状态 */
-    btn.disabled = false;
-    btnText.textContent = t.regenBtn;
-    showToast(t.toastSuccess, 'success');
-  }, 800);
+    btn.disabled=false; btnText.textContent=t.regenBtn; showToast(t.toastSuccess,'success');
+  },800);
 }
 
-/* ==================== 渲染结果卡片 ==================== */
 function renderResults(cards) {
-  const grid = document.getElementById('resultsGrid');
-  const count = document.getElementById('resultsCount');
-  const t = LOCALES[currentLang];
-
-  /* 更新计数文字 */
-  count.textContent = t.resultsCount.replace('{n}', cards.length);
-
-  /* 生成卡片 HTML */
-  grid.innerHTML = cards.map((card, i) => `
-    <div class="prompt-card" style="animation-delay:${i * 0.1}s">
-      <div class="card-header">
-        <div class="card-model">
-          <div class="card-model-icon ${card.iconClass}">${card.icon}</div>
-          <div>
-            <div class="card-model-name">${card.model}</div>
-            <div class="card-model-desc">${card.desc}</div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-prompt" id="prompt-${i}">${card.prompt}</div>
-      </div>
-      <div class="card-footer">
-        <button class="btn-copy" onclick="copyPrompt(${i}, this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/>
-          </svg>
-          ${t.copyBtn}
-        </button>
-      </div>
-    </div>
-  `).join('');
+  const grid=document.getElementById('resultsGrid'),count=document.getElementById('resultsCount'),t=LOCALES[currentLang];
+  count.textContent=t.resultsCount.replace('{n}',cards.length);
+  grid.innerHTML=cards.map((c,i)=>`
+    <div class="prompt-card" style="animation-delay:${i*0.1}s">
+      <div class="card-header"><div class="card-model">
+        <div class="card-model-icon ${c.iconClass}">${c.icon}</div>
+        <div><div class="card-model-name">${c.model}</div><div class="card-model-desc">${c.desc}</div></div>
+      </div></div>
+      <div class="card-body"><div class="card-prompt" id="prompt-${i}">${c.prompt}</div></div>
+      <div class="card-footer"><button class="btn-copy" onclick="copyPrompt(${i},this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg>
+        ${t.copyBtn}
+      </button></div>
+    </div>`).join('');
 }
 
-/* ==================== 复制功能 ==================== */
-async function copyPrompt(index, btn) {
-  const text = document.getElementById('prompt-' + index).textContent;
-  const t = LOCALES[currentLang];
-
+async function copyPrompt(index,btn) {
+  const text=document.getElementById('prompt-'+index).textContent,t=LOCALES[currentLang];
   try {
-    /* 优先使用 Clipboard API */
     await navigator.clipboard.writeText(text);
     btn.classList.add('copied');
-    btn.innerHTML = `
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-        <polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      ${t.copiedBtn}
-    `;
-    showToast(t.toastCopied, 'success');
-
-    /* 2秒后恢复按钮状态 */
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.innerHTML = `
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
-          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        ${t.copyBtn}
-      `;
-    }, 2000);
-  } catch (err) {
-    /* 降级方案：使用 textarea + execCommand */
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast(t.toastCopied, 'success');
+    btn.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${t.copiedBtn}`;
+    showToast(t.toastCopied,'success');
+    setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg> ${t.copyBtn}`;},2000);
+  } catch(err) {
+    const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    showToast(t.toastCopied,'success');
   }
 }
 
-/* ==================== Toast 提示 ==================== */
-function showToast(msg, type) {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-
-  /* 警告类型使用黄色样式 */
-  if (type === 'warning') {
-    toast.style.background = 'rgba(234,179,8,0.15)';
-    toast.style.borderColor = 'rgba(234,179,8,0.3)';
-    toast.style.color = '#eab308';
-  }
-
-  toast.textContent = msg;
-  container.appendChild(toast);
-
-  /* 2.5秒后自动移除 */
-  setTimeout(() => toast.remove(), 2500);
+function showToast(msg,type) {
+  const c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';
+  if(type==='warning'){t.style.background='rgba(234,179,8,0.15)';t.style.borderColor='rgba(234,179,8,0.3)';t.style.color='#eab308';}
+  t.textContent=msg;c.appendChild(t);setTimeout(()=>t.remove(),2500);
 }
 
-/* ==================== 键盘快捷键：Ctrl+Enter 生成 ==================== */
-document.getElementById('description').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-    e.preventDefault();
-    generatePrompts();
-  }
+/* ==================== 键盘快捷键 ==================== */
+document.getElementById('description').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();generatePrompts();}
 });
 
-/* ==================== 初始化：应用语言和主题 ==================== */
+/* ==================== 初始化 ==================== */
 applyLocale();
 applyTheme();
+fetchStarCount();
 </script>
-
 </body>
 </html>
