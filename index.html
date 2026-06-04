@@ -447,6 +447,134 @@
     border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite;
   }
 
+  /* ==================== Tab Navigation ==================== */
+  .tab-nav {
+    display:flex; gap:4px; margin-bottom:32px;
+    background:var(--bg-card); border-radius:var(--radius-md);
+    padding:4px; border:1px solid var(--border-color);
+  }
+  .tab-btn {
+    flex:1; padding:12px 16px; border:none; border-radius:var(--radius-sm);
+    background:transparent; color:var(--text-secondary);
+    font-family:var(--font-stack); font-size:14px; font-weight:500;
+    cursor:pointer; transition:all var(--transition-fast); min-height:44px;
+  }
+  .tab-btn:hover { color:var(--text-primary); }
+  .tab-btn.active {
+    background:var(--accent-gradient); color:#fff;
+    box-shadow:0 2px 12px rgba(99,102,241,0.3);
+  }
+
+  /* ==================== Optimizer Section ==================== */
+  .optimizer-section { margin-bottom:48px; }
+  .optimizer-input-row {
+    display:flex; gap:12px; margin-bottom:20px;
+  }
+  .optimizer-input-row .input-textarea {
+    min-height:80px;
+  }
+  .optimizer-actions {
+    display:flex; gap:8px; flex-shrink:0; flex-direction:column;
+  }
+  .btn-optimize {
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 20px; height:44px; white-space:nowrap;
+    background:var(--accent-gradient); border:none; border-radius:var(--radius-sm);
+    color:#fff; font-family:var(--font-stack); font-size:14px; font-weight:600;
+    cursor:pointer; transition:all var(--transition-fast);
+    box-shadow:0 4px 16px rgba(99,102,241,0.25);
+  }
+  .btn-optimize:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(99,102,241,0.35); }
+  .btn-optimize:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+  .btn-clear-history {
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:12px 16px; height:44px;
+    background:var(--copy-bg); border:1px solid var(--border-color);
+    border-radius:var(--radius-sm); color:var(--text-secondary);
+    font-family:var(--font-stack); font-size:13px; font-weight:500;
+    cursor:pointer; transition:all var(--transition-fast);
+  }
+  .btn-clear-history:hover { background:var(--copy-hover-bg); color:var(--text-primary); }
+
+  /* Optimizer 结果对比 */
+  .opt-compare {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;
+  }
+  .opt-box {
+    background:var(--input-bg); border:1px solid var(--border-color);
+    border-radius:var(--radius-md); padding:16px;
+  }
+  .opt-box-label {
+    font-size:12px; font-weight:600; color:var(--text-tertiary);
+    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;
+  }
+  .opt-box-text {
+    font-size:14px; line-height:1.7; color:var(--text-secondary);
+    word-break:break-word; white-space:pre-wrap;
+  }
+  .opt-box-text.original { color:var(--text-tertiary); }
+
+  /* Optimizer 模型结果 */
+  .opt-results-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;
+  }
+  .opt-result-card {
+    background:var(--bg-card); border:1px solid var(--border-color);
+    border-radius:var(--radius-md); padding:16px;
+    transition:all var(--transition-fast);
+  }
+  .opt-result-card:hover { background:var(--bg-card-hover); border-color:rgba(99,102,241,0.15); }
+  .opt-result-header {
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;
+  }
+  .opt-result-model {
+    display:flex; align-items:center; gap:8px;
+  }
+  .opt-result-model-icon {
+    width:28px; height:28px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700; color:#fff;
+  }
+  .opt-result-model-icon.chatgpt { background:linear-gradient(135deg, #10a37f, #0d8c6d); }
+  .opt-result-model-icon.mj { background:linear-gradient(135deg, #5865f2, #4752c4); }
+  .opt-result-model-icon.flux { background:linear-gradient(135deg, #f97316, #ea580c); }
+  .opt-result-model-icon.video { background:linear-gradient(135deg, #ec4899, #db2777); }
+  .opt-result-name { font-size:13px; font-weight:600; }
+  .opt-result-text {
+    font-size:13px; line-height:1.7; color:var(--text-secondary);
+    word-break:break-word; white-space:pre-wrap; margin-bottom:12px;
+  }
+  .btn-copy-sm {
+    display:flex; align-items:center; gap:4px;
+    padding:6px 12px; background:var(--copy-bg);
+    border:1px solid var(--border-color); border-radius:8px;
+    color:var(--text-secondary); font-family:var(--font-stack);
+    font-size:12px; font-weight:500; cursor:pointer;
+    transition:all var(--transition-fast);
+  }
+  .btn-copy-sm:hover { background:var(--copy-hover-bg); color:var(--text-primary); }
+  .btn-copy-sm.copied { background:rgba(34,197,94,0.15); border-color:rgba(34,197,94,0.3); color:#22c55e; }
+
+  /* 历史记录 */
+  .history-section { margin-top:24px; }
+  .history-title {
+    font-size:14px; font-weight:600; color:var(--text-secondary); margin-bottom:12px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .history-list { display:flex; flex-direction:column; gap:8px; }
+  .history-item {
+    display:flex; align-items:center; gap:12px;
+    padding:12px 16px; background:var(--bg-card);
+    border:1px solid var(--border-color); border-radius:var(--radius-sm);
+    cursor:pointer; transition:all var(--transition-fast);
+  }
+  .history-item:hover { background:var(--bg-card-hover); border-color:var(--border-active); }
+  .history-item-input {
+    font-size:13px; color:var(--text-secondary); flex:1;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .history-item-time { font-size:11px; color:var(--text-tertiary); white-space:nowrap; }
+
   /* ==================== Responsive ==================== */
   @media (max-width:768px) {
     .hero { padding:40px 16px 28px; }
@@ -464,6 +592,10 @@
     .btn-star { padding:8px 12px; }
     .hero-features { gap:6px; }
     .hero-feature-tag { padding:5px 10px; font-size:11px; }
+    .opt-compare { grid-template-columns:1fr; }
+    .optimizer-input-row { flex-direction:column; }
+    .optimizer-actions { flex-direction:row; }
+    .btn-optimize, .btn-clear-history { flex:1; }
   }
   @media (max-width:480px) {
     .controls { grid-template-columns:1fr; }
@@ -602,6 +734,14 @@
   </div>
 </section>
 
+<!-- ==================== Tab Navigation ==================== -->
+<section class="container" style="margin-bottom:0;">
+  <div class="tab-nav">
+    <button class="tab-btn active" id="tabGenerator" onclick="switchTab('generator')" data-i18n="tabGenerator">Prompt 生成器</button>
+    <button class="tab-btn" id="tabOptimizer" onclick="switchTab('optimizer')" data-i18n="tabOptimizer">Prompt 优化器</button>
+  </div>
+</section>
+
 <!-- ==================== Input Section ==================== -->
 <section class="input-section container" id="inputSection">
   <div class="input-card">
@@ -652,6 +792,53 @@
         </svg>
       </div>
       <p data-i18n="emptyText">在上方输入描述，点击生成按钮开始</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Prompt Optimizer Section ==================== -->
+<section class="optimizer-section container" id="optimizerSection" style="display:none;">
+  <div class="input-card">
+    <label class="input-label" data-i18n="optInputLabel">输入简单描述，自动优化为专业 Prompt</label>
+    <div class="optimizer-input-row">
+      <textarea class="input-textarea" id="optInput" data-i18n-placeholder="optInputPlaceholder" placeholder="例如：帮我画一个机器人"></textarea>
+      <div class="optimizer-actions">
+        <button class="btn-optimize" id="optBtn" onclick="optimizePrompt()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="optBtnText" data-i18n="optBtnText">优化</span>
+        </button>
+        <button class="btn-clear-history" onclick="clearHistory()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/></svg>
+          <span data-i18n="optClearHistory">清除历史</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 优化结果区域 -->
+    <div id="optResults" style="display:none;">
+      <!-- 原文 vs 优化对比 -->
+      <div class="opt-compare">
+        <div class="opt-box">
+          <div class="opt-box-label" data-i18n="optOriginal">原始输入</div>
+          <div class="opt-box-text original" id="optOriginalText"></div>
+        </div>
+        <div class="opt-box">
+          <div class="opt-box-label" data-i18n="optEnhanced">优化增强</div>
+          <div class="opt-box-text" id="optEnhancedText"></div>
+        </div>
+      </div>
+
+      <!-- 各模型优化结果 -->
+      <div class="opt-results-grid" id="optResultsGrid"></div>
+    </div>
+
+    <!-- 历史记录 -->
+    <div class="history-section" id="historySection" style="display:none;">
+      <div class="history-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/></svg>
+        <span data-i18n="optHistory">优化历史</span>
+      </div>
+      <div class="history-list" id="historyList"></div>
     </div>
   </div>
 </section>
@@ -710,7 +897,20 @@ const LOCALES = {
     copyBtn: '复制', copiedBtn: '已复制',
     toastEmpty: '请输入描述内容', toastSuccess: '提示词生成成功！', toastCopied: '已复制到剪贴板',
     footerIssues: '反馈问题',
-    footerText: 'TSC AI Prompt Studio | 单文件部署，支持 GitHub Pages'
+    footerText: 'TSC AI Prompt Studio | 单文件部署，支持 GitHub Pages',
+    /* Optimizer */
+    tabGenerator: 'Prompt 生成器', tabOptimizer: 'Prompt 优化器',
+    optInputLabel: '输入简单描述，自动优化为专业 Prompt',
+    optInputPlaceholder: '例如：帮我画一个机器人',
+    optBtnText: '优化', optBtnLoading: '<span class="spinner"></span> 优化中...',
+    optOriginal: '原始输入', optEnhanced: '优化增强',
+    optChatGPT: 'ChatGPT', optChatGPTDesc: '对话式 AI',
+    optMj: 'Midjourney', optMjDesc: 'AI 绘画',
+    optFlux: 'Flux', optFluxDesc: '开源生图',
+    optVideo: 'Video AI', optVideoDesc: 'AI 视频',
+    optHistory: '优化历史', optClearHistory: '清除历史',
+    optToastEmpty: '请输入需要优化的描述', optToastSuccess: '优化完成！', optToastCopied: '已复制到剪贴板',
+    optToastHistoryCleared: '历史记录已清除'
   },
   en: {
     langBtn: '中',
@@ -744,7 +944,20 @@ const LOCALES = {
     copyBtn: 'Copy', copiedBtn: 'Copied',
     toastEmpty: 'Please enter a description', toastSuccess: 'Prompts generated successfully!', toastCopied: 'Copied to clipboard',
     footerIssues: 'Report Issue',
-    footerText: 'TSC AI Prompt Studio | Single-file deploy, GitHub Pages ready'
+    footerText: 'TSC AI Prompt Studio | Single-file deploy, GitHub Pages ready',
+    /* Optimizer */
+    tabGenerator: 'Prompt Generator', tabOptimizer: 'Prompt Optimizer',
+    optInputLabel: 'Enter a simple description, auto-optimize to professional Prompt',
+    optInputPlaceholder: 'e.g. Draw a robot for me',
+    optBtnText: 'Optimize', optBtnLoading: '<span class="spinner"></span> Optimizing...',
+    optOriginal: 'Original', optEnhanced: 'Enhanced',
+    optChatGPT: 'ChatGPT', optChatGPTDesc: 'Conversational AI',
+    optMj: 'Midjourney', optMjDesc: 'AI Art',
+    optFlux: 'Flux', optFluxDesc: 'Open Source',
+    optVideo: 'Video AI', optVideoDesc: 'AI Video',
+    optHistory: 'History', optClearHistory: 'Clear',
+    optToastEmpty: 'Please enter a description to optimize', optToastSuccess: 'Optimization complete!', optToastCopied: 'Copied to clipboard',
+    optToastHistoryCleared: 'History cleared'
   }
 };
 
@@ -934,6 +1147,233 @@ document.getElementById('description').addEventListener('keydown',function(e){
 applyLocale();
 applyTheme();
 fetchStarCount();
+
+/* ==================== Tab 切换 ==================== */
+function switchTab(tab) {
+  const genSection = document.getElementById('inputSection');
+  const resSection = document.getElementById('resultsSection');
+  const optSection = document.getElementById('optimizerSection');
+  const tabGen = document.getElementById('tabGenerator');
+  const tabOpt = document.getElementById('tabOptimizer');
+
+  if (tab === 'generator') {
+    genSection.style.display = ''; resSection.style.display = ''; optSection.style.display = 'none';
+    tabGen.classList.add('active'); tabOpt.classList.remove('active');
+  } else {
+    genSection.style.display = 'none'; resSection.style.display = 'none'; optSection.style.display = '';
+    tabGen.classList.remove('active'); tabOpt.classList.add('active');
+    renderHistory();
+  }
+}
+
+/* ==================== Prompt 优化器引擎 ==================== */
+
+/* 关键词增强映射：将简单中文词汇扩展为专业描述 */
+const ENHANCE_MAP = {
+  '机器人': 'futuristic humanoid robot with sleek metallic armor, glowing LED eyes, intricate mechanical joints, cybernetic details, holographic interface',
+  '猫': 'elegant cat with luminous eyes, soft fur texture, graceful posture, detailed whiskers',
+  '狗': 'loyal dog with expressive eyes, detailed fur, dynamic pose, natural lighting',
+  '女孩': 'beautiful young woman with detailed facial features, soft skin texture, expressive eyes, natural hair flow',
+  '男孩': 'handsome young man with defined features, natural skin texture, confident expression',
+  '城市': 'bustling metropolis with towering skyscrapers, neon-lit streets, atmospheric fog, urban landscape',
+  '森林': 'ancient enchanted forest with towering trees, dappled sunlight through canopy, moss-covered ground, mystical atmosphere',
+  '海洋': 'vast ocean with dynamic waves, sunlight reflecting on water surface, deep blue gradient, marine atmosphere',
+  '山': 'majestic mountain peaks with snow-capped summits, dramatic clouds, atmospheric perspective, golden hour lighting',
+  '花': 'delicate flowers with intricate petal details, morning dew drops, soft bokeh background, macro photography',
+  '龙': 'mythical dragon with iridescent scales, powerful wings spread wide, ancient wisdom in its eyes, elemental breath',
+  '城堡': 'grand medieval castle with towering spires, stone walls, dramatic sky, fantasy architecture',
+  '太空': 'deep space with swirling nebulae, distant galaxies, cosmic dust, stellar phenomena',
+  '日落': 'golden sunset with dramatic cloud formations, warm color palette, silhouetted horizon, atmospheric light rays',
+  '雨': 'atmospheric rain with glistening wet surfaces, reflections on pavement, moody lighting, water droplets',
+  '雪': 'pristine snowscape with crystalline snowflakes, soft winter light, frozen textures, serene atmosphere',
+  '星空': 'breathtaking starry night sky with milky way, countless stars, cosmic dust, long exposure photography style',
+  '宇宙': 'vast cosmic landscape with swirling galaxies, nebulae, stellar nurseries, deep space photography',
+  '未来': 'futuristic scene with advanced technology, sleek architecture, holographic displays, sci-fi atmosphere',
+  '古风': 'traditional Chinese aesthetic with flowing silk garments, jade ornaments, ink wash painting influence, classical elegance',
+  '赛博': 'cyberpunk aesthetic with neon lights, rain-soaked streets, holographic advertisements, dystopian future',
+  '梦幻': 'ethereal dreamlike atmosphere with soft glowing light, floating elements, pastel colors, surreal composition',
+  '恐怖': 'dark horror atmosphere with dramatic shadows, eerie lighting, unsettling details, gothic mood',
+  '可爱': 'adorable kawaii style with soft pastel colors, round shapes, sparkling eyes, warm and inviting mood',
+  '酷': 'cool and edgy aesthetic with bold contrasts, dynamic angles, modern design, striking visual impact',
+  '漂亮': 'stunningly beautiful with perfect composition, harmonious colors, elegant details, aesthetic perfection',
+  '大': 'grand and epic scale, sweeping vista, monumental presence, awe-inspiring magnitude',
+  '小': 'intimate and delicate, fine details, close-up perspective, charming miniature quality'
+};
+
+/* 优化核心函数：将简单描述扩展为专业 Prompt */
+function enhanceDescription(input) {
+  let enhanced = input;
+
+  /* 移除常见的中文前缀 */
+  enhanced = enhanced.replace(/^(帮我|请|给我|我想|画一个|画一只|画一个|生成|创建|制作|做)(一个|一只|一幅|一张|个|只)?/g, '').trim();
+
+  /* 关键词替换增强 */
+  for (const [key, value] of Object.entries(ENHANCE_MAP)) {
+    if (enhanced.includes(key)) {
+      enhanced = enhanced.replace(key, value);
+      break; /* 只替换第一个匹配的关键词 */
+    }
+  }
+
+  /* 如果没有匹配到任何关键词，添加通用增强 */
+  if (enhanced === input.replace(/^(帮我|请|给我|我想|画一个|画一只|画一个|生成|创建|制作|做)(一个|一只|一幅|一张|个|只)?/g, '').trim()) {
+    enhanced += ', highly detailed, professional quality, stunning composition, cinematic lighting, masterpiece';
+  }
+
+  return enhanced;
+}
+
+/* 为不同模型生成优化后的 Prompt */
+function optimizeForChatGPT(desc) {
+  const e = enhanceDescription(desc);
+  return `Create a detailed and vivid description of: ${e}. Include specific details about composition, lighting, color palette, mood, and artistic style. The result should be a comprehensive prompt suitable for high-quality image generation.`;
+}
+
+function optimizeForMidjourney(desc) {
+  const e = enhanceDescription(desc);
+  return `${e}, masterpiece, best quality, ultra detailed, professional photography --v 6.0 --q 2 --style raw --s 500`;
+}
+
+function optimizeForFlux(desc) {
+  const e = enhanceDescription(desc);
+  return `${e}, ultra detailed, professional quality, sharp focus, cinematic composition, 8K resolution`;
+}
+
+function optimizeForVideo(desc) {
+  const e = enhanceDescription(desc);
+  return `${e}, smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion, atmospheric`;
+}
+
+/* ==================== 优化器主逻辑 ==================== */
+function optimizePrompt() {
+  const input = document.getElementById('optInput').value.trim();
+  const t = LOCALES[currentLang];
+
+  if (!input) {
+    document.getElementById('optInput').focus();
+    showToast(t.optToastEmpty, 'warning');
+    return;
+  }
+
+  const btn = document.getElementById('optBtn');
+  const btnText = document.getElementById('optBtnText');
+  btn.disabled = true;
+  btnText.innerHTML = t.optBtnLoading;
+
+  setTimeout(() => {
+    /* 生成增强描述 */
+    const enhanced = enhanceDescription(input);
+
+    /* 显示对比区域 */
+    document.getElementById('optOriginalText').textContent = input;
+    document.getElementById('optEnhancedText').textContent = enhanced;
+    document.getElementById('optResults').style.display = '';
+
+    /* 生成各模型结果 */
+    const results = [
+      { model: t.optChatGPT, icon: 'GPT', iconClass: 'chatgpt', desc: t.optChatGPTDesc, prompt: optimizeForChatGPT(input) },
+      { model: t.optMj, icon: 'MJ', iconClass: 'mj', desc: t.optMjDesc, prompt: optimizeForMidjourney(input) },
+      { model: t.optFlux, icon: 'FL', iconClass: 'flux', desc: t.optFluxDesc, prompt: optimizeForFlux(input) },
+      { model: t.optVideo, icon: 'VI', iconClass: 'video', desc: t.optVideoDesc, prompt: optimizeForVideo(input) }
+    ];
+
+    const grid = document.getElementById('optResultsGrid');
+    grid.innerHTML = results.map((r, i) => `
+      <div class="opt-result-card">
+        <div class="opt-result-header">
+          <div class="opt-result-model">
+            <div class="opt-result-model-icon ${r.iconClass}">${r.icon}</div>
+            <div class="opt-result-name">${r.model}</div>
+          </div>
+          <button class="btn-copy-sm" onclick="copyOptResult(${i}, this)">${t.copyBtn}</button>
+        </div>
+        <div class="opt-result-text" id="opt-result-${i}">${r.prompt}</div>
+      </div>
+    `).join('');
+
+    /* 保存到历史记录 */
+    saveToHistory(input, enhanced);
+
+    /* 恢复按钮 */
+    btn.disabled = false;
+    btnText.textContent = t.optBtnText;
+    showToast(t.optToastSuccess, 'success');
+  }, 600);
+}
+
+/* 复制优化结果 */
+async function copyOptResult(index, btn) {
+  const text = document.getElementById('opt-result-' + index).textContent;
+  const t = LOCALES[currentLang];
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.classList.add('copied');
+    btn.textContent = t.copiedBtn;
+    showToast(t.optToastCopied, 'success');
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = t.copyBtn; }, 2000);
+  } catch (err) {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    showToast(t.optToastCopied, 'success');
+  }
+}
+
+/* ==================== 历史记录管理 ==================== */
+const HISTORY_KEY = 'tsc-opt-history';
+const MAX_HISTORY = 20;
+
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
+}
+
+function saveToHistory(input, enhanced) {
+  const history = getHistory();
+  history.unshift({ input, enhanced, time: new Date().toISOString() });
+  if (history.length > MAX_HISTORY) history.pop();
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  renderHistory();
+}
+
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  renderHistory();
+  const t = LOCALES[currentLang];
+  showToast(t.optToastHistoryCleared, 'success');
+}
+
+function renderHistory() {
+  const history = getHistory();
+  const section = document.getElementById('historySection');
+  const list = document.getElementById('historyList');
+
+  if (history.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = '';
+  list.innerHTML = history.map((h, i) => {
+    const date = new Date(h.time);
+    const timeStr = date.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    return `<div class="history-item" onclick="loadHistory(${i})">
+      <span class="history-item-input">${h.input}</span>
+      <span class="history-item-time">${timeStr}</span>
+    </div>`;
+  }).join('');
+}
+
+function loadHistory(index) {
+  const history = getHistory();
+  if (history[index]) {
+    document.getElementById('optInput').value = history[index].input;
+    document.getElementById('optInput').focus();
+  }
+}
+
+/* Optimizer 键盘快捷键 */
+document.getElementById('optInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); optimizePrompt(); }
+});
 </script>
 </body>
 </html>
