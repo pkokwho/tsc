@@ -2,7 +2,7 @@
 
 # TSC AI Prompt Studio
 
-**Modern AI Prompt Generator**
+**Modern AI Prompt Generator & Optimizer**
 
 Enter your creative idea in any language, and instantly generate professional prompts for Midjourney, Flux, Video AI, and all image generation models
 
@@ -23,12 +23,21 @@ Enter your creative idea in any language, and instantly generate professional pr
 
 ## Features
 
+### Prompt Generator
 - **Multi-Model Support** — Generate prompts for Universal, Midjourney, Flux, and Video AI
-- **Bilingual** — Chinese / English with auto browser language detection
-- **Dark & Light Theme** — Toggle with one click, preference saved locally
 - **12 Art Styles** — Photorealistic, Cyberpunk, Anime, Oil Painting, Watercolor, Minimalist, Sci-Fi, Fantasy, Dark Gothic, Vintage Film, 3D Render, Pixel Art
 - **Adjustable Parameters** — Aspect ratio, quality level, stylize intensity
 - **One-Click Copy** — Copy any prompt to clipboard instantly
+
+### Prompt Optimizer
+- **Smart Enhancement** — Enter a simple description (e.g. "Draw a robot") and get a professional prompt
+- **Multi-Model Output** — ChatGPT / Midjourney / Flux / Video AI optimized versions
+- **Before & After** — Original vs enhanced comparison view
+- **History** — Auto-save optimization history with recall and clear
+
+### General
+- **Bilingual** — Chinese / English with auto browser language detection
+- **Dark & Light Theme** — Toggle with one click, preference saved locally
 - **Responsive Design** — Works on desktop, tablet, and mobile
 - **Single File** — Zero dependencies, deploy anywhere
 - **SEO & Social** — Open Graph, Twitter Card, JSON-LD structured data
