@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🎨 Prompt 生成器
-- 多模型支持 — 通用 / Midjourney / Flux / 视频 AI
+- 多模型支持 — 通用 / Midjourney / Flux / 视频 AI / SeaDance 2.0
 - 12 种艺术风格 — 写实、赛博朋克、动漫、油画等
 - 可调参数 — 比例、质量、风格化强度
 - 导出功能 — 复制 / TXT / Markdown
@@ -53,7 +53,7 @@
 
 ### ⚡ Prompt 优化器
 - 智能增强 — 简单描述 → 专业 Prompt
-- 多模型适配 — ChatGPT / MJ / Flux / Video
+- 多模型适配 — ChatGPT / MJ / Flux / Video / SeaDance 2.0
 - 原文对比 — 直观展示优化效果
 - 历史记录 — 自动保存，支持回填
 
@@ -63,7 +63,7 @@
 <td width="50%">
 
 ### 📚 模板库
-- 8 大分类 — SEO / 博客 / YouTube / 编程 / 学习 / 营销 / MJ / Flux
+- 9 大分类 — SEO / 博客 / YouTube / 编程 / 学习 / 营销 / MJ / Flux / SeaDance
 - 一键插入 — 点击即用，自动填入生成器
 - 中英双语 — 每个模板均有中英文版本
 - 持续扩展 — 更多模板持续更新

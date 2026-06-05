@@ -43,7 +43,7 @@ Enter your creative idea in any language, and instantly generate professional pr
 <td width="50%">
 
 ### 🎨 Prompt Generator
-- Multi-Model — Universal / Midjourney / Flux / Video AI
+- Multi-Model — Universal / Midjourney / Flux / Video AI / SeaDance 2.0
 - 12 Art Styles — Photorealistic, Cyberpunk, Anime, Oil Painting, etc.
 - Adjustable Params — Aspect ratio, quality, stylize intensity
 - Export — Copy / TXT / Markdown download
@@ -53,7 +53,7 @@ Enter your creative idea in any language, and instantly generate professional pr
 
 ### ⚡ Prompt Optimizer
 - Smart Enhancement — Simple description → Professional prompt
-- Multi-Model — ChatGPT / MJ / Flux / Video optimized versions
+- Multi-Model — ChatGPT / MJ / Flux / Video / SeaDance 2.0 optimized versions
 - Before & After — Original vs enhanced comparison
 - History — Auto-save with recall and clear
 
@@ -63,7 +63,7 @@ Enter your creative idea in any language, and instantly generate professional pr
 <td width="50%">
 
 ### 📚 Template Library
-- 8 Categories — SEO / Blog / YouTube / Coding / Study / Marketing / MJ / Flux
+- 9 Categories — SEO / Blog / YouTube / Coding / Study / Marketing / MJ / Flux / SeaDance
 - One-Click Insert — Click to use, auto-fill into generator
 - Bilingual — Each template available in Chinese & English
 - Growing — More templates added regularly

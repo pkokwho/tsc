@@ -403,6 +403,7 @@
   .card-model-icon.flux { background:linear-gradient(135deg, #f97316, #ea580c); }
   .card-model-icon.video { background:linear-gradient(135deg, #ec4899, #db2777); }
   .card-model-icon.universal { background:linear-gradient(135deg, #10b981, #059669); }
+  .card-model-icon.seedance { background:linear-gradient(135deg, #0ea5e9, #0284c7); }
   .card-model-name { font-size:15px; font-weight:600; }
   .card-model-desc { font-size:12px; color:var(--text-tertiary); }
   .card-body { padding:20px 24px; }
@@ -544,6 +545,7 @@
   .opt-result-model-icon.mj { background:linear-gradient(135deg, #5865f2, #4752c4); }
   .opt-result-model-icon.flux { background:linear-gradient(135deg, #f97316, #ea580c); }
   .opt-result-model-icon.video { background:linear-gradient(135deg, #ec4899, #db2777); }
+  .opt-result-model-icon.seedance { background:linear-gradient(135deg, #0ea5e9, #0284c7); }
   .opt-result-name { font-size:13px; font-weight:600; }
   .opt-result-text {
     font-size:13px; line-height:1.7; color:var(--text-secondary);
@@ -954,6 +956,7 @@
       <button class="template-cat-btn" data-cat="marketing" onclick="filterTemplates('marketing')">📢 <span data-i18n="tplCatMarketing">营销文案</span></button>
       <button class="template-cat-btn" data-cat="midjourney" onclick="filterTemplates('midjourney')">🎨 <span data-i18n="tplCatMidjourney">Midjourney</span></button>
       <button class="template-cat-btn" data-cat="flux" onclick="filterTemplates('flux')">🔥 <span data-i18n="tplCatFlux">Flux</span></button>
+      <button class="template-cat-btn" data-cat="seedance" onclick="filterTemplates('seedance')">🎬 <span data-i18n="tplCatSeedance">SeaDance</span></button>
     </div>
     <div class="template-grid" id="templateGrid"></div>
   </div>
@@ -1010,7 +1013,7 @@ const LOCALES = {
     generating: '<span class="spinner"></span> 生成中...',
     resultsTitle: '生成结果', resultsWaiting: '等待生成', resultsCount: '已生成 {n} 条',
     emptyText: '在上方输入描述，点击生成按钮开始',
-    modelUniversal: '适配所有生图模型', modelMj: 'AI 绘画 · 专业级', modelFlux: 'AI 绘画 · 开源模型', modelVideo: 'AI 视频 · 动态效果',
+    modelUniversal: '适配所有生图模型', modelMj: 'AI 绘画 · 专业级', modelFlux: 'AI 绘画 · 开源模型', modelVideo: 'AI 视频 · 动态效果', modelSeedance: 'AI 视频 · SeaDance 2.0',
     copyBtn: '复制', copiedBtn: '已复制',
     toastEmpty: '请输入描述内容', toastSuccess: '提示词生成成功！', toastCopied: '已复制到剪贴板',
     footerIssues: '反馈问题',
@@ -1025,6 +1028,7 @@ const LOCALES = {
     optMj: 'Midjourney', optMjDesc: 'AI 绘画',
     optFlux: 'Flux', optFluxDesc: '开源生图',
     optVideo: 'Video AI', optVideoDesc: 'AI 视频',
+    optSeedance: 'SeaDance 2.0', optSeedanceDesc: '字节视频生成',
     optHistory: '优化历史', optClearHistory: '清除历史',
     optToastEmpty: '请输入需要优化的描述', optToastSuccess: '优化完成！', optToastCopied: '已复制到剪贴板',
     optToastHistoryCleared: '历史记录已清除',
@@ -1032,7 +1036,7 @@ const LOCALES = {
     tabTemplates: '模板库',
     tplCatSEO: 'SEO', tplCatBlog: '博客写作', tplCatYouTube: 'YouTube 脚本',
     tplCatCoding: '编程助手', tplCatStudy: '学习助手', tplCatMarketing: '营销文案',
-    tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux',
+    tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: '使用', tplToastInserted: '模板已插入',
     /* Quality Score */
     qualityTitle: '提示词质量评分', qualityClarity: '清晰度', qualityContext: '上下文',
@@ -1070,7 +1074,7 @@ const LOCALES = {
     generating: '<span class="spinner"></span> Generating...',
     resultsTitle: 'Results', resultsWaiting: 'Waiting', resultsCount: '{n} prompts generated',
     emptyText: 'Enter a description above and click Generate',
-    modelUniversal: 'All Image Models', modelMj: 'AI Art · Professional', modelFlux: 'AI Art · Open Source', modelVideo: 'AI Video · Motion',
+    modelUniversal: 'All Image Models', modelMj: 'AI Art · Professional', modelFlux: 'AI Art · Open Source', modelVideo: 'AI Video · Motion', modelSeedance: 'AI Video · SeaDance 2.0',
     copyBtn: 'Copy', copiedBtn: 'Copied',
     toastEmpty: 'Please enter a description', toastSuccess: 'Prompts generated successfully!', toastCopied: 'Copied to clipboard',
     footerIssues: 'Report Issue',
@@ -1085,6 +1089,7 @@ const LOCALES = {
     optMj: 'Midjourney', optMjDesc: 'AI Art',
     optFlux: 'Flux', optFluxDesc: 'Open Source',
     optVideo: 'Video AI', optVideoDesc: 'AI Video',
+    optSeedance: 'SeaDance 2.0', optSeedanceDesc: 'ByteDance Video',
     optHistory: 'History', optClearHistory: 'Clear',
     optToastEmpty: 'Please enter a description to optimize', optToastSuccess: 'Optimization complete!', optToastCopied: 'Copied to clipboard',
     optToastHistoryCleared: 'History cleared',
@@ -1092,7 +1097,7 @@ const LOCALES = {
     tabTemplates: 'Templates',
     tplCatSEO: 'SEO', tplCatBlog: 'Blog Writing', tplCatYouTube: 'YouTube Script',
     tplCatCoding: 'Coding Assistant', tplCatStudy: 'Study Assistant', tplCatMarketing: 'Marketing Copy',
-    tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux',
+    tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: 'Use', tplToastInserted: 'Template inserted',
     /* Quality Score */
     qualityTitle: 'Prompt Quality Score', qualityClarity: 'Clarity', qualityContext: 'Context',
@@ -1191,19 +1196,38 @@ function fetchStarCount() {
 
 /* ==================== 风格映射表 ==================== */
 const STYLE_MAP = {
-  '写实摄影': {mj:'photorealistic, ultra detailed photography',flux:'photorealistic, professional photography',video:'photorealistic, cinematic',universal:'photorealistic, professional photography, ultra detailed, sharp focus'},
-  '赛博朋克': {mj:'cyberpunk, neon lights, futuristic city',flux:'cyberpunk aesthetic, neon lighting, futuristic',video:'cyberpunk, neon glow, futuristic atmosphere',universal:'cyberpunk style, neon lights, futuristic cityscape, glowing elements'},
-  '动漫风格': {mj:'anime style, cel shading, vibrant colors',flux:'anime style, cel shaded, vibrant colors',video:'anime style animation, cel shading',universal:'anime art style, cel shading, vibrant colors, detailed illustration'},
-  '油画质感': {mj:'oil painting style, rich textures, canvas',flux:'oil painting style, thick brushstrokes, rich texture',video:'oil painting animation, rich texture',universal:'oil painting style, thick impasto brushstrokes, rich color palette, canvas texture'},
-  '水彩手绘': {mj:'watercolor painting, soft edges, artistic',flux:'watercolor style, soft washes, artistic',video:'watercolor animation style, soft fluid motion',universal:'watercolor painting style, soft washes, fluid edges, artistic'},
-  '极简主义': {mj:'minimalist design, clean lines, negative space',flux:'minimalist composition, clean and simple',video:'minimalist aesthetic, clean motion',universal:'minimalist composition, clean lines, generous negative space, simple forms'},
-  '科幻未来': {mj:'sci-fi futuristic, advanced technology, space',flux:'sci-fi futuristic, advanced technology',video:'sci-fi cinematic, futuristic atmosphere',universal:'sci-fi futuristic, advanced technology, space exploration, sleek design'},
-  '奇幻魔法': {mj:'fantasy magical, ethereal, enchanted',flux:'fantasy magical world, ethereal glow',video:'fantasy cinematic, magical atmosphere',universal:'fantasy magical world, ethereal glow, enchanted atmosphere, mystical elements'},
-  '暗黑哥特': {mj:'dark gothic, moody atmosphere, dramatic shadows',flux:'dark gothic style, dramatic lighting',video:'dark gothic cinematic, moody atmosphere',universal:'dark gothic style, dramatic lighting, moody atmosphere, ornate details'},
-  '复古胶片': {mj:'vintage film photography, film grain, retro',flux:'vintage film aesthetic, retro style, film grain',video:'vintage film look, retro cinematic',universal:'vintage film photography aesthetic, film grain, retro color grading, nostalgic mood'},
-  '3D渲染': {mj:'3D render, octane render, ray tracing',flux:'3D rendered, octane render, photorealistic 3D',video:'3D animation, octane render style',universal:'3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting'},
-  '像素艺术': {mj:'pixel art, 16-bit style, retro gaming',flux:'pixel art style, retro game aesthetic',video:'pixel art animation, retro style',universal:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details'}
+  '写实摄影': {mj:'photorealistic, ultra detailed photography',flux:'photorealistic, professional photography',video:'photorealistic, cinematic',universal:'photorealistic, professional photography, ultra detailed, sharp focus',seedance:'photorealistic, ultra detailed, professional cinematography, realistic skin texture, natural lighting'}, 
+  '赛博朋克': {mj:'cyberpunk, neon lights, futuristic city',flux:'cyberpunk aesthetic, neon lighting, futuristic',video:'cyberpunk, neon glow, futuristic atmosphere',universal:'cyberpunk style, neon lights, futuristic cityscape, glowing elements',seedance:'cyberpunk, neon lights, rain-soaked streets, holographic advertisements, dystopian future, neon glow reflections'}, 
+  '动漫风格': {mj:'anime style, cel shading, vibrant colors',flux:'anime style, cel shaded, vibrant colors',video:'anime style animation, cel shading',universal:'anime art style, cel shading, vibrant colors, detailed illustration',seedance:'anime style, cel shading, vibrant colors, dynamic camera movement, expressive character animation, fluid motion'}, 
+  '油画质感': {mj:'oil painting style, rich textures, canvas',flux:'oil painting style, thick brushstrokes, rich texture',video:'oil painting animation, rich texture',universal:'oil painting style, thick impasto brushstrokes, rich color palette, canvas texture',seedance:'oil painting style, rich textures, thick brushstrokes, canvas texture, painterly motion, artistic fluid movement'}, 
+  '水彩手绘': {mj:'watercolor painting, soft edges, artistic',flux:'watercolor style, soft washes, artistic',video:'watercolor animation style, soft fluid motion',universal:'watercolor painting style, soft washes, fluid edges, artistic',seedance:'watercolor style, soft washes, fluid edges, gentle color bleeding, dreamy atmosphere, soft diffused motion'}, 
+  '极简主义': {mj:'minimalist design, clean lines, negative space',flux:'minimalist composition, clean and simple',video:'minimalist aesthetic, clean motion',universal:'minimalist composition, clean lines, generous negative space, simple forms',seedance:'minimalist composition, clean lines, generous negative space, geometric precision, calm serene motion'}, 
+  '科幻未来': {mj:'sci-fi futuristic, advanced technology, space',flux:'sci-fi futuristic, advanced technology',video:'sci-fi cinematic, futuristic atmosphere',universal:'sci-fi futuristic, advanced technology, space exploration, sleek design',seedance:'sci-fi futuristic, advanced technology, holographic interfaces, sleek spacecraft, neon-lit corridors, atmospheric fog'}, 
+  '奇幻魔法': {mj:'fantasy magical, ethereal, enchanted',flux:'fantasy magical world, ethereal glow',video:'fantasy cinematic, magical atmosphere',universal:'fantasy magical world, ethereal glow, enchanted atmosphere, mystical elements',seedance:'fantasy magical world, ethereal glow, enchanted atmosphere, floating particles, magical energy trails, luminescent flora'}, 
+  '暗黑哥特': {mj:'dark gothic, moody atmosphere, dramatic shadows',flux:'dark gothic style, dramatic lighting',video:'dark gothic cinematic, moody atmosphere',universal:'dark gothic style, dramatic lighting, moody atmosphere, ornate details',seedance:'dark gothic, moody atmosphere, dramatic shadows, candlelit corridors, fog rolling in, ornate Victorian architecture'}, 
+  '复古胶片': {mj:'vintage film photography, film grain, retro',flux:'vintage film aesthetic, retro style, film grain',video:'vintage film look, retro cinematic',universal:'vintage film photography aesthetic, film grain, retro color grading, nostalgic mood',seedance:'vintage film look, film grain, retro color grading, nostalgic mood, warm tones, soft vignette, period-accurate costumes'}, 
+  '3D渲染': {mj:'3D render, octane render, ray tracing',flux:'3D rendered, octane render, photorealistic 3D',video:'3D animation, octane render style',universal:'3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting',seedance:'3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting, subsurface scattering, realistic material physics'}, 
+  '像素艺术': {mj:'pixel art, 16-bit style, retro gaming',flux:'pixel art style, retro game aesthetic',video:'pixel art animation, retro style',universal:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details',seedance:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details, vibrant colors, nostalgic game feel'}
 };
+
+/* ==================== SeaDance 2.0 专用提示词引擎 ==================== */
+const SEEDANCE_SHOTS = ['close-up','medium shot','wide shot','over-the-shoulder','low angle','POV','tracking shot','drone shot'];
+const SEEDANCE_MOVEMENTS = ['slow dolly in','tracking shot','panning','crane up','circling 360','handheld shaky','static','smooth push-in'];
+const SEEDANCE_LIGHTING = ['golden hour','neon glow','rim light','volumetric fog','god rays','soft diffused light','dramatic chiaroscuro','moonlight'];
+const SEEDANCE_MOODS = ['epic','melancholic','tense','dreamy','nostalgic','mysterious','romantic','energetic'];
+const SEEDANCE_PHYSICS = ['realistic physics','natural motion','accurate weight and momentum','fabric flowing naturally','hair swaying in wind','believable impacts','motion blur on fast action'];
+const SEEDANCE_AUDIO = ['intense orchestral buildup','pulsing electronic beat','emotional piano','diegetic ambient sound','sudden silence to explosion','synced to rhythmic cuts'];
+
+function generateSeedancePrompt(desc, style) {
+  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
+  const shot = SEEDANCE_SHOTS[Math.floor(Math.random() * SEEDANCE_SHOTS.length)];
+  const movement = SEEDANCE_MOVEMENTS[Math.floor(Math.random() * SEEDANCE_MOVEMENTS.length)];
+  const lighting = SEEDANCE_LIGHTING[Math.floor(Math.random() * SEEDANCE_LIGHTING.length)];
+  const mood = SEEDANCE_MOODS[Math.floor(Math.random() * SEEDANCE_MOODS.length)];
+  const physics = SEEDANCE_PHYSICS.slice(0, 3).join(', ');
+  const audio = SEEDANCE_AUDIO[Math.floor(Math.random() * SEEDANCE_AUDIO.length)];
+  return `${desc}, ${s.seedance}, ${shot}, ${movement}, ${lighting} lighting, ${mood} atmosphere, ${physics}, ${audio}, seamless transition, continuous motion, 2K cinematic quality, 24fps`;
+}
 const QUALITY_MAP = {'1':'','2':'masterpiece, best quality','3':'masterpiece, best quality, ultra detailed, 8K UHD'};
 
 /* ==================== Prompt 生成函数 ==================== */
@@ -1223,6 +1247,16 @@ function generateUniversalPrompt(desc,style) {
   const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
   return desc+', '+s.universal+', high quality, best quality, masterpiece, ultra detailed, professional composition, cinematic lighting';
 }
+function generateSeedancePrompt(desc,style) {
+  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
+  const shot=SEEDANCE_SHOTS[Math.floor(Math.random()*SEEDANCE_SHOTS.length)];
+  const movement=SEEDANCE_MOVEMENTS[Math.floor(Math.random()*SEEDANCE_MOVEMENTS.length)];
+  const lighting=SEEDANCE_LIGHTING[Math.floor(Math.random()*SEEDANCE_LIGHTING.length)];
+  const mood=SEEDANCE_MOODS[Math.floor(Math.random()*SEEDANCE_MOODS.length)];
+  const physics=SEEDANCE_PHYSICS.slice(0,3).join(', ');
+  const audio=SEEDANCE_AUDIO[Math.floor(Math.random()*SEEDANCE_AUDIO.length)];
+  return desc+', '+s.seedance+', '+shot+', '+movement+', '+lighting+' lighting, '+mood+' atmosphere, '+physics+', '+audio+', seamless transition, continuous motion, 2K cinematic quality, 24fps';
+}
 
 /* ==================== 核心逻辑 ==================== */
 function generatePrompts() {
@@ -1237,7 +1271,8 @@ function generatePrompts() {
       {model:currentLang==='zh'?'通用模型':'Universal',icon:'ALL',iconClass:'universal',desc:t.modelUniversal,prompt:generateUniversalPrompt(desc,style)},
       {model:'Midjourney',icon:'MJ',iconClass:'mj',desc:t.modelMj,prompt:generateMidjourneyPrompt(desc,style,aspect,quality,stylize)},
       {model:'Flux',icon:'FL',iconClass:'flux',desc:t.modelFlux,prompt:generateFluxPrompt(desc,style)},
-      {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,style)}
+      {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,style)},
+      {model:'SeaDance 2.0',icon:'SD',iconClass:'seedance',desc:t.modelSeedance,prompt:generateSeedancePrompt(desc,style)}
     ]);
     renderQualityScore(generateUniversalPrompt(desc,style));
     btn.disabled=false; btnText.textContent=t.regenBtn; showToast(t.toastSuccess,'success');
@@ -1430,8 +1465,16 @@ const TEMPLATE_DATA = {
       { zh: { title: '概念设计', preview: '生成 Flux 模型概念设计提示词', template: 'Concept design of [设计描述], [设计风格], clean lines, modern aesthetic, functional details, [材质], professional industrial design, blueprint quality, technical precision, ultra detailed, 8K resolution' }, en: { title: 'Concept Design', preview: 'Generate Flux model concept design prompts', template: 'Concept design of [design description], [design style], clean lines, modern aesthetic, functional details, [material], professional industrial design, blueprint quality, technical precision, ultra detailed, 8K resolution' } },
       { zh: { title: '写实摄影', preview: '生成 Flux 模型写实摄影提示词', template: '[场景描述], photorealistic, natural lighting, [拍摄时间] golden hour, [镜头效果], shallow depth of field, RAW photo quality, professional photography, sharp focus, cinematic color grading, ultra detailed, 8K UHD' }, en: { title: 'Photorealistic', preview: 'Generate Flux model photorealistic photography prompts', template: '[scene description], photorealistic, natural lighting, [time of day] golden hour, [lens effect], shallow depth of field, RAW photo quality, professional photography, sharp focus, cinematic color grading, ultra detailed, 8K UHD' } }
     ]
+  },
+  seedance: {
+    icon: '🎬',
+    templates: [
+      { zh: { title: '电影级短片', preview: '生成 SeaDance 2.0 电影级视频提示词', template: '[主体描述] is [动作], [镜头类型], [运镜方式], in [场景+光影+天气], [风格/导演参考], realistic physics, natural motion, synced to [音频描述], seamless transition, continuous motion, 2K cinematic quality, 24fps' }, en: { title: 'Cinematic Short', preview: 'Generate SeaDance 2.0 cinematic video prompt', template: '[subject description] is [action], [shot type], [camera movement], in [scene+lighting+weather], [style/director reference], realistic physics, natural motion, synced to [audio description], seamless transition, continuous motion, 2K cinematic quality, 24fps' } },
+      { zh: { title: '角色一致多镜头', preview: 'SeaDance 2.0 多镜头叙事，保持角色一致性', template: 'Using character @[角色名] consistently, maintain same face/body proportions. Shot 1 wide: [场景1描述], [运镜1]. Shot 2 close-up: [场景2描述], [运镜2]. Shot 3 medium: [场景3描述], [运镜3]. seamless transition between shots, realistic physics, natural motion, 2K cinematic quality, 24fps' }, en: { title: 'Character Consistency', preview: 'SeaDance 2.0 multi-shot narrative with character consistency', template: 'Using character @[character name] consistently, maintain same face/body proportions. Shot 1 wide: [scene 1 description], [camera movement 1]. Shot 2 close-up: [scene 2 description], [camera movement 2]. Shot 3 medium: [scene 3 description], [camera movement 3]. seamless transition between shots, realistic physics, natural motion, 2K cinematic quality, 24fps' } },
+      { zh: { title: '一镜到底', preview: 'SeaDance 2.0 一镜到底沉浸式视频', template: 'Slow continuous [运镜方式] from [起始场景], smoothly [运动描述] to [目标场景], [环境细节], [光影], [氛围], ultra realistic details, [导演风格] style, seamless one-take feel, no cuts, continuous motion, 2K cinematic quality, 24fps' }, en: { title: 'One-Take Shot', preview: 'SeaDance 2.0 seamless one-take immersive video', template: 'Slow continuous [camera movement] from [starting scene], smoothly [motion description] to [target scene], [environment details], [lighting], [atmosphere], ultra realistic details, [director style] style, seamless one-take feel, no cuts, continuous motion, 2K cinematic quality, 24fps' } }
+    ]
   }
- };
+};
 
 let currentTemplateCat = 'seo';
 
@@ -1665,6 +1708,17 @@ function optimizeForVideo(desc) {
   return `${e}, smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion, atmospheric`;
 }
 
+function optimizeForSeedance(desc) {
+  const e = enhanceDescription(desc);
+  const shot = SEEDANCE_SHOTS[Math.floor(Math.random() * SEEDANCE_SHOTS.length)];
+  const movement = SEEDANCE_MOVEMENTS[Math.floor(Math.random() * SEEDANCE_MOVEMENTS.length)];
+  const lighting = SEEDANCE_LIGHTING[Math.floor(Math.random() * SEEDANCE_LIGHTING.length)];
+  const mood = SEEDANCE_MOODS[Math.floor(Math.random() * SEEDANCE_MOODS.length)];
+  const physics = SEEDANCE_PHYSICS.slice(0, 3).join(', ');
+  const audio = SEEDANCE_AUDIO[Math.floor(Math.random() * SEEDANCE_AUDIO.length)];
+  return `${e}, ${shot}, ${movement}, ${lighting} lighting, ${mood} atmosphere, ${physics}, ${audio}, seamless transition, continuous motion, 2K cinematic quality, 24fps`;
+}
+
 /* ==================== 优化器主逻辑 ==================== */
 function optimizePrompt() {
   const input = document.getElementById('optInput').value.trim();
@@ -1695,7 +1749,8 @@ function optimizePrompt() {
       { model: t.optChatGPT, icon: 'GPT', iconClass: 'chatgpt', desc: t.optChatGPTDesc, prompt: optimizeForChatGPT(input) },
       { model: t.optMj, icon: 'MJ', iconClass: 'mj', desc: t.optMjDesc, prompt: optimizeForMidjourney(input) },
       { model: t.optFlux, icon: 'FL', iconClass: 'flux', desc: t.optFluxDesc, prompt: optimizeForFlux(input) },
-      { model: t.optVideo, icon: 'VI', iconClass: 'video', desc: t.optVideoDesc, prompt: optimizeForVideo(input) }
+      { model: t.optVideo, icon: 'VI', iconClass: 'video', desc: t.optVideoDesc, prompt: optimizeForVideo(input) },
+      { model: t.optSeedance, icon: 'SD', iconClass: 'seedance', desc: t.optSeedanceDesc, prompt: optimizeForSeedance(input) }
     ];
 
     const grid = document.getElementById('optResultsGrid');

@@ -5,6 +5,16 @@ All notable changes to TSC AI Prompt Studio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-06-05
+
+### Added
+
+- SeaDance 2.0 (ByteDance) video generation model support
+- SeaDance 2.0 dedicated prompt engine with cinematic shot types, camera movements, lighting, mood, physics, and audio sync
+- SeaDance 2.0 optimizer with professional video prompt structure
+- SeaDance 2.0 template category with 3 bilingual templates (Cinematic Short, Character Consistency, One-Take Shot)
+- SeaDance 2.0 style mappings for all 12 art styles
+
 ## [3.0.0] - 2026-06-05
 
 ### Added
