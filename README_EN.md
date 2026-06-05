@@ -1,8 +1,10 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="TSC Logo" width="120" />
+
 # TSC AI Prompt Studio
 
-**Modern AI Prompt Generator & Optimizer**
+**Modern AI Prompt Generator · Optimizer · Template Library**
 
 Enter your creative idea in any language, and instantly generate professional prompts for Midjourney, Flux, Video AI, and all image generation models
 
@@ -13,6 +15,10 @@ Enter your creative idea in any language, and instantly generate professional pr
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 </div>
+
+<p align="center">
+  <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=TSC%20AI%20Prompt%20Studio%20banner%2C%20dark%20purple%20gradient%20background%2C%20modern%20UI%20interface%20mockup%20floating%20cards%2C%20AI%20prompt%20generation%20tool%2C%20sleek%20glassmorphism%20design%2C%20purple%20and%20indigo%20color%20scheme%2C%20professional%20tech%20product%20banner&image_size=landscape_16_9" alt="TSC AI Prompt Studio Banner" width="100%" />
+</p>
 
 ## Demo
 
@@ -32,17 +38,48 @@ Enter your creative idea in any language, and instantly generate professional pr
 
 ## Features
 
-### Prompt Generator
-- **Multi-Model Support** — Generate prompts for Universal, Midjourney, Flux, and Video AI
-- **12 Art Styles** — Photorealistic, Cyberpunk, Anime, Oil Painting, Watercolor, Minimalist, Sci-Fi, Fantasy, Dark Gothic, Vintage Film, 3D Render, Pixel Art
-- **Adjustable Parameters** — Aspect ratio, quality level, stylize intensity
-- **One-Click Copy** — Copy any prompt to clipboard instantly
+<table>
+<tr>
+<td width="50%">
 
-### Prompt Optimizer
-- **Smart Enhancement** — Enter a simple description (e.g. "Draw a robot") and get a professional prompt
-- **Multi-Model Output** — ChatGPT / Midjourney / Flux / Video AI optimized versions
-- **Before & After** — Original vs enhanced comparison view
-- **History** — Auto-save optimization history with recall and clear
+### 🎨 Prompt Generator
+- Multi-Model — Universal / Midjourney / Flux / Video AI
+- 12 Art Styles — Photorealistic, Cyberpunk, Anime, Oil Painting, etc.
+- Adjustable Params — Aspect ratio, quality, stylize intensity
+- Export — Copy / TXT / Markdown download
+
+</td>
+<td width="50%">
+
+### ⚡ Prompt Optimizer
+- Smart Enhancement — Simple description → Professional prompt
+- Multi-Model — ChatGPT / MJ / Flux / Video optimized versions
+- Before & After — Original vs enhanced comparison
+- History — Auto-save with recall and clear
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 📚 Template Library
+- 8 Categories — SEO / Blog / YouTube / Coding / Study / Marketing / MJ / Flux
+- One-Click Insert — Click to use, auto-fill into generator
+- Bilingual — Each template available in Chinese & English
+- Growing — More templates added regularly
+
+</td>
+<td width="50%">
+
+### 📊 Quality Score
+- 4 Dimensions — Clarity / Context / Specificity / Structure
+- 0-100 Score — Quantified prompt quality
+- Suggestions — Targeted improvement directions
+- Real-time — Scored instantly on generation
+
+</td>
+</tr>
+</table>
 
 ### General
 - **Bilingual** — Chinese / English with auto browser language detection
@@ -90,7 +127,12 @@ tsc/
 ├── .github/
 │   ├── ISSUE_TEMPLATE/    # Issue templates
 │   └── PULL_REQUEST_TEMPLATE.md
-├── assets/                # Screenshots and static assets
+├── assets/                # Logo, screenshots, and static assets
+│   ├── logo.svg           # SVG Logo
+│   ├── banner.png         # Banner image
+│   ├── demo.gif           # Demo animation
+│   ├── dark-theme.png     # Dark theme screenshot
+│   └── light-theme.png    # Light theme screenshot
 ├── index.html             # Complete single-file application
 ├── CHANGELOG.md           # Changelog
 ├── CODE_OF_CONDUCT.md     # Code of Conduct
@@ -102,6 +144,26 @@ tsc/
 └── SUPPORT.md             # Support channels
 ```
 
+## Roadmap
+
+- [ ] AI-powered prompt auto-completion
+- [ ] Prompt favorites / bookmark system
+- [ ] More template categories (DALL-E, Stable Diffusion, Sora)
+- [ ] Prompt version diff view
+- [ ] Custom user templates
+- [ ] PWA offline support
+- [ ] More languages (Japanese, Korean)
+
+## Releases
+
+| Version | Date | Description |
+|---------|------|-------------|
+| [v3.0.0] | 2026-06-05 | Template Library, Quality Score, Export features |
+| [v2.0.0] | 2026-06-03 | Bilingual system, theme toggle, SEO, open source standards |
+| [v1.0.0] | 2026-06-03 | Initial release — Generator, Optimizer |
+
+See [CHANGELOG.md](CHANGELOG.md) for details.
+
 ## Contributing
 
 Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md) for details.
@@ -109,10 +171,6 @@ Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md)
 ## Code of Conduct
 
 This project adopts the [Contributor Covenant](CODE_OF_CONDUCT.md) as its code of conduct. By participating, you are expected to uphold this code.
-
-## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## License
 

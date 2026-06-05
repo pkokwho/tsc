@@ -1,8 +1,10 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="TSC Logo" width="120" />
+
 # TSC AI Prompt Studio
 
-**现代化 AI 提示词生成器 & 优化器**
+**现代化 AI 提示词生成器 · 优化器 · 模板库**
 
 输入中文描述，一键生成适配 Midjourney、Flux、视频 AI 及通用模型的专业 Prompt
 
@@ -13,6 +15,10 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 </div>
+
+<p align="center">
+  <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=TSC%20AI%20Prompt%20Studio%20banner%2C%20dark%20purple%20gradient%20background%2C%20modern%20UI%20interface%20mockup%20floating%20cards%2C%20AI%20prompt%20generation%20tool%2C%20sleek%20glassmorphism%20design%2C%20purple%20and%20indigo%20color%20scheme%2C%20professional%20tech%20product%20banner&image_size=landscape_16_9" alt="TSC AI Prompt Studio Banner" width="100%" />
+</p>
 
 ## 演示
 
@@ -32,17 +38,48 @@
 
 ## 功能特性
 
-### Prompt 生成器
-- **多模型支持** — 通用模型、Midjourney、Flux、视频 AI 四种格式
-- **12 种艺术风格** — 写实摄影、赛博朋克、动漫风格、油画质感、水彩手绘、极简主义、科幻未来、奇幻魔法、暗黑哥特、复古胶片、3D渲染、像素艺术
-- **可调参数** — 画面比例、质量等级、风格化强度
-- **一键复制** — 即时复制任意 Prompt 到剪贴板
+<table>
+<tr>
+<td width="50%">
 
-### Prompt 优化器
-- **智能增强** — 输入简单描述（如"帮我画一个机器人"），自动优化为专业 Prompt
-- **多模型适配** — ChatGPT / Midjourney / Flux / Video AI 各生成优化版
-- **原文对比** — 原始输入 vs 优化增强，直观展示效果
-- **历史记录** — 自动保存优化历史，支持回填和清除
+### 🎨 Prompt 生成器
+- 多模型支持 — 通用 / Midjourney / Flux / 视频 AI
+- 12 种艺术风格 — 写实、赛博朋克、动漫、油画等
+- 可调参数 — 比例、质量、风格化强度
+- 导出功能 — 复制 / TXT / Markdown
+
+</td>
+<td width="50%">
+
+### ⚡ Prompt 优化器
+- 智能增强 — 简单描述 → 专业 Prompt
+- 多模型适配 — ChatGPT / MJ / Flux / Video
+- 原文对比 — 直观展示优化效果
+- 历史记录 — 自动保存，支持回填
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 📚 模板库
+- 8 大分类 — SEO / 博客 / YouTube / 编程 / 学习 / 营销 / MJ / Flux
+- 一键插入 — 点击即用，自动填入生成器
+- 中英双语 — 每个模板均有中英文版本
+- 持续扩展 — 更多模板持续更新
+
+</td>
+<td width="50%">
+
+### 📊 质量评分
+- 四维评估 — 清晰度 / 上下文 / 具体性 / 结构性
+- 0-100 评分 — 量化提示词质量
+- 改进建议 — 针对性优化方向
+- 实时反馈 — 生成即评分
+
+</td>
+</tr>
+</table>
 
 ### 通用特性
 - **中英双语** — 自动检测浏览器语言，一键切换
@@ -90,7 +127,12 @@ tsc/
 ├── .github/
 │   ├── ISSUE_TEMPLATE/    # Issue 模板
 │   └── PULL_REQUEST_TEMPLATE.md
-├── assets/                # 截图等静态资源
+├── assets/                # Logo、截图等静态资源
+│   ├── logo.svg           # SVG Logo
+│   ├── banner.png         # Banner 图片
+│   ├── demo.gif           # 演示动画
+│   ├── dark-theme.png     # 深色主题截图
+│   └── light-theme.png    # 浅色主题截图
 ├── index.html             # 完整单文件应用
 ├── CHANGELOG.md           # 更新日志
 ├── CODE_OF_CONDUCT.md     # 行为准则
@@ -102,6 +144,26 @@ tsc/
 └── SUPPORT.md             # 支持渠道
 ```
 
+## 路线图
+
+- [ ] AI 驱动的提示词自动补全
+- [ ] 提示词收藏夹 / 书签系统
+- [ ] 更多模板分类（DALL-E、Stable Diffusion、Sora）
+- [ ] 提示词版本对比 (Diff View)
+- [ ] 用户自定义模板
+- [ ] PWA 离线支持
+- [ ] 多语言扩展（日语、韩语）
+
+## 发布历史
+
+| 版本 | 日期 | 说明 |
+|------|------|------|
+| [v3.0.0] | 2026-06-05 | 模板库、质量评分、导出功能 |
+| [v2.0.0] | 2026-06-03 | 双语系统、主题切换、SEO、开源规范 |
+| [v1.0.0] | 2026-06-03 | 初始发布 — 生成器、优化器 |
+
+详见 [CHANGELOG.md](CHANGELOG.md)。
+
 ## 贡献
 
 欢迎贡献！请阅读 [贡献指南](CONTRIBUTING.md) 了解详情。
@@ -109,10 +171,6 @@ tsc/
 ## 行为准则
 
 本项目采用 [贡献者公约](CODE_OF_CONDUCT.md) 作为行为准则，参与本项目即表示你同意遵守其条款。
-
-## 更新日志
-
-详见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 许可证
 

@@ -5,6 +5,28 @@ All notable changes to TSC AI Prompt Studio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-06-05
+
+### Added
+
+- Prompt Template Library with 8 categories (SEO, Blog Writing, YouTube Script, Coding Assistant, Study Assistant, Marketing Copy, Midjourney, Flux)
+- One-click template insertion into Generator textarea
+- Bilingual templates (Chinese & English) for all categories
+- Prompt Quality Score with 4 metrics: Clarity, Context, Specificity, Structure
+- 0-100 quality score with improvement suggestions
+- Export features: Copy, Download TXT, Download Markdown
+- SVG Logo (assets/logo.svg)
+- Banner image (assets/banner.png)
+- README feature cards layout
+- Roadmap section in README
+- Release history table in README
+
+### Changed
+
+- Tab navigation now supports 3 tabs: Generator, Optimizer, Templates
+- Prompt cards now show 3 export buttons instead of single copy button
+- Both READMEs redesigned with logo, banner, feature cards, roadmap, and release sections
+
 ## [2.0.0] - 2026-06-03
 
 ### Added

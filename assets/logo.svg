@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="128" y1="128" x2="384" y2="384" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- Inner glow -->
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+  <!-- Layer 1 - Top -->
+  <path d="M256 108L128 180v72l128 72 128-72v-72L256 108z" stroke="white" stroke-width="6" fill="none" stroke-linejoin="round" opacity="0.95"/>
+  <!-- Layer 2 - Middle -->
+  <path d="M128 252l128 72 128-72" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+  <!-- Layer 3 - Bottom -->
+  <path d="M128 324l128 72 128-72" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+  <!-- Spark node -->
+  <circle cx="256" cy="180" r="16" fill="white" opacity="0.95"/>
+  <!-- Spark rays -->
+  <line x1="256" y1="148" x2="256" y2="136" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <line x1="284" y1="164" x2="294" y2="156" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <line x1="228" y1="164" x2="218" y2="156" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <!-- TSC text -->
+  <text x="256" y="440" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="56" font-weight="700" fill="white" letter-spacing="8" opacity="0.9">TSC</text>
+</svg>

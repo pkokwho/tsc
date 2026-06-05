@@ -623,6 +623,94 @@
   footer a:hover { text-decoration:underline; }
   .footer-links { display:flex; justify-content:center; gap:20px; margin-bottom:12px; flex-wrap:wrap; }
   .footer-links a { display:inline-flex; align-items:center; gap:5px; }
+
+/* ==================== Template Library ==================== */
+.template-section { margin-bottom: 48px; }
+.template-categories {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+}
+.template-cat-btn {
+  padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 100px;
+  background: var(--bg-card); color: var(--text-secondary);
+  font-family: var(--font-stack); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all var(--transition-fast); white-space: nowrap;
+}
+.template-cat-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); border-color: var(--border-active); }
+.template-cat-btn.active {
+  background: var(--accent-gradient); color: #fff; border-color: transparent;
+  box-shadow: 0 2px 12px rgba(99,102,241,0.3);
+}
+.template-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
+}
+.template-card {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); padding: 20px;
+  transition: all var(--transition-fast); cursor: default;
+}
+.template-card:hover { background: var(--bg-card-hover); border-color: rgba(99,102,241,0.15); transform: translateY(-2px); }
+.template-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.template-card-preview { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.template-card-footer { display: flex; justify-content: flex-end; }
+.btn-use-template {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; background: var(--accent-gradient); border: none;
+  border-radius: 8px; color: #fff; font-family: var(--font-stack);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btn-use-template:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(99,102,241,0.3); }
+
+/* ==================== Quality Score ==================== */
+.quality-section {
+  margin-top: 24px; padding: 24px;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+.quality-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.quality-title { font-size: 16px; font-weight: 600; }
+.quality-total {
+  font-size: 28px; font-weight: 700;
+  background: var(--accent-gradient); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+}
+.quality-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+.quality-metric { text-align: center; }
+.quality-metric-label { font-size: 12px; color: var(--text-tertiary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.quality-metric-bar { height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+.quality-metric-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease-out; }
+.quality-metric-fill.high { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.quality-metric-fill.medium { background: linear-gradient(90deg, #eab308, #ca8a04); }
+.quality-metric-fill.low { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.quality-metric-score { font-size: 14px; font-weight: 600; }
+.quality-suggestions { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+.quality-suggestion-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.quality-suggestion-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-1); margin-top: 7px; flex-shrink: 0; }
+
+/* ==================== Export Buttons ==================== */
+.export-group { display: flex; gap: 8px; }
+.btn-export {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  flex: 1; padding: 10px 12px; background: var(--copy-bg);
+  border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  color: var(--text-secondary); font-family: var(--font-stack);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all var(--transition-fast); min-height: 44px;
+}
+.btn-export:hover { background: var(--copy-hover-bg); color: var(--text-primary); border-color: var(--copy-border); }
+.btn-export.copied { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3); color: #22c55e; }
+
+@media (max-width:768px) {
+  .quality-metrics { grid-template-columns: repeat(2, 1fr); }
+  .template-grid { grid-template-columns: 1fr; }
+  .export-group { flex-wrap: wrap; }
+  .btn-export { font-size: 12px; padding: 8px 10px; }
+}
+@media (max-width:480px) {
+  .quality-metrics { grid-template-columns: 1fr 1fr; }
+  .template-categories { gap: 6px; }
+  .template-cat-btn { padding: 6px 12px; font-size: 12px; }
+}
 </style>
 </head>
 <body>
@@ -744,6 +832,7 @@
   <div class="tab-nav">
     <button class="tab-btn active" id="tabGenerator" onclick="switchTab('generator')" data-i18n="tabGenerator">Prompt 生成器</button>
     <button class="tab-btn" id="tabOptimizer" onclick="switchTab('optimizer')" data-i18n="tabOptimizer">Prompt 优化器</button>
+    <button class="tab-btn" id="tabTemplates" onclick="switchTab('templates')" data-i18n="tabTemplates">模板库</button>
   </div>
 </section>
 
@@ -801,6 +890,9 @@
   </div>
 </section>
 
+<!-- ==================== Quality Score Section ==================== -->
+<div class="container" id="qualitySection" style="display:none;"></div>
+
 <!-- ==================== Prompt Optimizer Section ==================== -->
 <section class="optimizer-section container" id="optimizerSection" style="display:none;">
   <div class="input-card">
@@ -845,6 +937,23 @@
       </div>
       <div class="history-list" id="historyList"></div>
     </div>
+  </div>
+</section>
+
+<!-- ==================== Template Library Section ==================== -->
+<section class="template-section container" id="templateSection" style="display:none;">
+  <div class="input-card">
+    <div class="template-categories" id="templateCategories">
+      <button class="template-cat-btn active" data-cat="seo" onclick="filterTemplates('seo')">🔍 <span data-i18n="tplCatSEO">SEO</span></button>
+      <button class="template-cat-btn" data-cat="blog" onclick="filterTemplates('blog')">✍️ <span data-i18n="tplCatBlog">博客写作</span></button>
+      <button class="template-cat-btn" data-cat="youtube" onclick="filterTemplates('youtube')">🎬 <span data-i18n="tplCatYouTube">YouTube 脚本</span></button>
+      <button class="template-cat-btn" data-cat="coding" onclick="filterTemplates('coding')">💻 <span data-i18n="tplCatCoding">编程助手</span></button>
+      <button class="template-cat-btn" data-cat="study" onclick="filterTemplates('study')">📚 <span data-i18n="tplCatStudy">学习助手</span></button>
+      <button class="template-cat-btn" data-cat="marketing" onclick="filterTemplates('marketing')">📢 <span data-i18n="tplCatMarketing">营销文案</span></button>
+      <button class="template-cat-btn" data-cat="midjourney" onclick="filterTemplates('midjourney')">🎨 <span data-i18n="tplCatMidjourney">Midjourney</span></button>
+      <button class="template-cat-btn" data-cat="flux" onclick="filterTemplates('flux')">🔥 <span data-i18n="tplCatFlux">Flux</span></button>
+    </div>
+    <div class="template-grid" id="templateGrid"></div>
   </div>
 </section>
 
@@ -915,7 +1024,20 @@ const LOCALES = {
     optVideo: 'Video AI', optVideoDesc: 'AI 视频',
     optHistory: '优化历史', optClearHistory: '清除历史',
     optToastEmpty: '请输入需要优化的描述', optToastSuccess: '优化完成！', optToastCopied: '已复制到剪贴板',
-    optToastHistoryCleared: '历史记录已清除'
+    optToastHistoryCleared: '历史记录已清除',
+    /* Templates */
+    tabTemplates: '模板库',
+    tplCatSEO: 'SEO', tplCatBlog: '博客写作', tplCatYouTube: 'YouTube 脚本',
+    tplCatCoding: '编程助手', tplCatStudy: '学习助手', tplCatMarketing: '营销文案',
+    tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux',
+    tplUseBtn: '使用', tplToastInserted: '模板已插入',
+    /* Quality Score */
+    qualityTitle: '提示词质量评分', qualityClarity: '清晰度', qualityContext: '上下文',
+    qualitySpecificity: '具体性', qualityStructure: '结构性',
+    qualitySuggestionTitle: '改进建议',
+    /* Export */
+    exportCopy: '复制', exportTxt: 'TXT', exportMd: 'Markdown',
+    exportCopied: '已复制'
   },
   en: {
     langBtn: '中',
@@ -962,7 +1084,20 @@ const LOCALES = {
     optVideo: 'Video AI', optVideoDesc: 'AI Video',
     optHistory: 'History', optClearHistory: 'Clear',
     optToastEmpty: 'Please enter a description to optimize', optToastSuccess: 'Optimization complete!', optToastCopied: 'Copied to clipboard',
-    optToastHistoryCleared: 'History cleared'
+    optToastHistoryCleared: 'History cleared',
+    /* Templates */
+    tabTemplates: 'Templates',
+    tplCatSEO: 'SEO', tplCatBlog: 'Blog Writing', tplCatYouTube: 'YouTube Script',
+    tplCatCoding: 'Coding Assistant', tplCatStudy: 'Study Assistant', tplCatMarketing: 'Marketing Copy',
+    tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux',
+    tplUseBtn: 'Use', tplToastInserted: 'Template inserted',
+    /* Quality Score */
+    qualityTitle: 'Prompt Quality Score', qualityClarity: 'Clarity', qualityContext: 'Context',
+    qualitySpecificity: 'Specificity', qualityStructure: 'Structure',
+    qualitySuggestionTitle: 'Improvement Suggestions',
+    /* Export */
+    exportCopy: 'Copy', exportTxt: 'TXT', exportMd: 'Markdown',
+    exportCopied: 'Copied'
   }
 };
 
@@ -1101,6 +1236,7 @@ function generatePrompts() {
       {model:'Flux',icon:'FL',iconClass:'flux',desc:t.modelFlux,prompt:generateFluxPrompt(desc,style)},
       {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,style)}
     ]);
+    renderQualityScore(generateUniversalPrompt(desc,style));
     btn.disabled=false; btnText.textContent=t.regenBtn; showToast(t.toastSuccess,'success');
   },800);
 }
@@ -1115,10 +1251,20 @@ function renderResults(cards) {
         <div><div class="card-model-name">${c.model}</div><div class="card-model-desc">${c.desc}</div></div>
       </div></div>
       <div class="card-body"><div class="card-prompt" id="prompt-${i}">${c.prompt}</div></div>
-      <div class="card-footer"><button class="btn-copy" onclick="copyPrompt(${i},this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg>
-        ${t.copyBtn}
-      </button></div>
+      <div class="card-footer"><div class="export-group">
+        <button class="btn-export" onclick="exportCopy(${i},this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg>
+          ${t.exportCopy}
+        </button>
+        <button class="btn-export" onclick="exportTxt(${i})">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/></svg>
+          ${t.exportTxt}
+        </button>
+        <button class="btn-export" onclick="exportMd(${i})">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/><path d="M9 15l3-3 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ${t.exportMd}
+        </button>
+      </div></div>
     </div>`).join('');
 }
 
@@ -1158,16 +1304,27 @@ function switchTab(tab) {
   const genSection = document.getElementById('inputSection');
   const resSection = document.getElementById('resultsSection');
   const optSection = document.getElementById('optimizerSection');
+  const tplSection = document.getElementById('templateSection');
   const tabGen = document.getElementById('tabGenerator');
   const tabOpt = document.getElementById('tabOptimizer');
+  const tabTpl = document.getElementById('tabTemplates');
+
+  /* 隐藏所有 */
+  genSection.style.display = 'none'; resSection.style.display = 'none';
+  optSection.style.display = 'none'; tplSection.style.display = 'none';
+  tabGen.classList.remove('active'); tabOpt.classList.remove('active'); tabTpl.classList.remove('active');
 
   if (tab === 'generator') {
-    genSection.style.display = ''; resSection.style.display = ''; optSection.style.display = 'none';
-    tabGen.classList.add('active'); tabOpt.classList.remove('active');
-  } else {
-    genSection.style.display = 'none'; resSection.style.display = 'none'; optSection.style.display = '';
-    tabGen.classList.remove('active'); tabOpt.classList.add('active');
+    genSection.style.display = ''; resSection.style.display = '';
+    tabGen.classList.add('active');
+  } else if (tab === 'optimizer') {
+    optSection.style.display = '';
+    tabOpt.classList.add('active');
     renderHistory();
+  } else if (tab === 'templates') {
+    tplSection.style.display = '';
+    tabTpl.classList.add('active');
+    renderTemplates();
   }
 }
 
@@ -1205,7 +1362,263 @@ const ENHANCE_MAP = {
   '小': 'intimate and delicate, fine details, close-up perspective, charming miniature quality'
 };
 
-/* 优化核心函数：将简单描述扩展为专业 Prompt */
+/* ==================== 模板库数据 ==================== */
+const TEMPLATE_DATA = {
+  seo: {
+    icon: '🔍',
+    templates: [
+      { zh: { title: 'SEO 文章优化', preview: '优化现有文章的 SEO 表现，包括关键词密度、标题结构、元描述等', template: '请分析并优化以下文章的 SEO 表现。目标关键词：[关键词]。要求：1) 优化标题包含主关键词 2) 添加 meta description（155字符内）3) 确保 H2/H3 标题包含相关长尾词 4) 关键词密度控制在 1-2% 5) 添加内链建议 6) 优化首段包含核心关键词' }, en: { title: 'SEO Article Optimization', preview: 'Optimize article SEO performance including keyword density, heading structure, meta description', template: 'Analyze and optimize the following article for SEO. Target keyword: [keyword]. Requirements: 1) Optimize title to include primary keyword 2) Add meta description (under 155 chars) 3) Ensure H2/H3 headings include related long-tail keywords 4) Keep keyword density at 1-2% 5) Suggest internal links 6) Optimize intro paragraph to include core keyword' } },
+      { zh: { title: '关键词研究分析', preview: '深入分析目标关键词的搜索意图、竞争度和相关词', template: '请对关键词"[关键词]"进行全面分析：1) 搜索意图分类（信息型/导航型/交易型）2) 月搜索量和竞争度评估 3) 推荐 10 个长尾关键词 4) 相关问题和 PAA 机会 5) SERP 竞争对手分析 6) 内容策略建议' }, en: { title: 'Keyword Research Analysis', preview: 'Deep analysis of target keyword search intent, competition, and related terms', template: 'Conduct a comprehensive analysis of keyword "[keyword]": 1) Search intent classification (informational/navigational/transactional) 2) Monthly search volume and competition assessment 3) Recommend 10 long-tail keywords 4) Related questions and PAA opportunities 5) SERP competitor analysis 6) Content strategy recommendations' } },
+      { zh: { title: 'SEO 元标签生成', preview: '为网页生成完整的 SEO 元标签，包括 title、description、OG 标签', template: '请为以下网页内容生成完整的 SEO 元标签：[网页内容摘要]。要求：1) Title 标签（60字符内，含主关键词）2) Meta Description（155字符内，含行动号召）3) Open Graph 标题和描述 4) OG 图片建议 5) Canonical URL 建议 6) Schema.org 结构化数据建议' }, en: { title: 'SEO Meta Tags Generator', preview: 'Generate complete SEO meta tags including title, description, OG tags', template: 'Generate complete SEO meta tags for the following webpage content: [content summary]. Requirements: 1) Title tag (under 60 chars, with primary keyword) 2) Meta Description (under 155 chars, with CTA) 3) Open Graph title and description 4) OG image suggestion 5) Canonical URL recommendation 6) Schema.org structured data suggestion' } }
+    ]
+  },
+  blog: {
+    icon: '✍️',
+    templates: [
+      { zh: { title: '博客文章大纲', preview: '生成结构化的博客文章大纲，包含 SEO 友好的标题和段落', template: '请为主题"[主题]"生成一篇详细的博客文章大纲。要求：1) 吸引人的标题（含数字或疑问句）2) 引言段（引发共鸣+痛点+解决方案预告）3) 5-8 个 H2 标题，每个下含 2-3 个 H3 4) 每段核心观点摘要 5) 结论段（总结+行动号召）6) 建议字数：2000-3000字' }, en: { title: 'Blog Post Outline', preview: 'Generate structured blog post outline with SEO-friendly headings', template: 'Generate a detailed blog post outline for topic "[topic]". Requirements: 1) Catchy title (with numbers or question) 2) Introduction (empathy + pain point + solution preview) 3) 5-8 H2 headings, each with 2-3 H3 subheadings 4) Core point summary for each section 5) Conclusion (summary + CTA) 6) Suggested word count: 2000-3000 words' } },
+      { zh: { title: '技术博客写作', preview: '撰写技术教程类博客，代码示例和步骤说明', template: '请撰写一篇关于"[技术主题]"的技术教程博客。要求：1) 前置知识说明 2) 循序渐进的步骤（每步含代码示例）3) 常见错误和解决方案 4) 最佳实践建议 5) 性能优化提示 6) 延伸阅读资源' }, en: { title: 'Technical Blog Writing', preview: 'Write a technical tutorial blog with code examples and step-by-step instructions', template: 'Write a technical tutorial blog about "[tech topic]". Requirements: 1) Prerequisites 2) Step-by-step instructions (with code examples for each step) 3) Common errors and solutions 4) Best practice recommendations 5) Performance optimization tips 6) Further reading resources' } },
+      { zh: { title: '列表式文章', preview: '生成列表式博客文章，适合快速阅读和社交分享', template: '请为主题"[主题]"撰写一篇列表式文章。要求：1) 标题格式："X 个[主题]技巧/方法/工具" 2) 每个列表项包含：标题+简短描述+具体示例 3) 开头简述为什么这个主题重要 4) 结尾总结最推荐的 3 个 5) 适合社交媒体分享的格式' }, en: { title: 'Listicle Article', preview: 'Generate a listicle blog post optimized for quick reading and social sharing', template: 'Write a listicle article about "[topic]". Requirements: 1) Title format: "X [topic] tips/methods/tools" 2) Each item includes: heading + brief description + specific example 3) Opening explaining why this topic matters 4) Closing with top 3 recommendations 5) Social media-friendly format' } }
+    ]
+  },
+  youtube: {
+    icon: '🎬',
+    templates: [
+      { zh: { title: 'YouTube 视频脚本', preview: '生成完整的 YouTube 视频脚本，包含开场、主体和结尾', template: '请为"[视频主题]"生成 YouTube 视频脚本。要求：1) 前 5 秒 Hook（引发好奇心）2) 开场白（自我介绍+视频价值预告，15秒内）3) 主体内容分 3-5 个章节 4) 每章节含关键点和过渡语 5) CTA（点赞/订阅/评论，自然融入）6) 结尾总结+下期预告 7) 总时长：8-12 分钟' }, en: { title: 'YouTube Video Script', preview: 'Generate complete YouTube video script with intro, body, and outro', template: 'Generate a YouTube video script for "[video topic]". Requirements: 1) First 5 seconds Hook (spark curiosity) 2) Intro (self-intro + value preview, under 15 sec) 3) Main content in 3-5 chapters 4) Key points and transitions for each chapter 5) CTA (like/subscribe/comment, naturally integrated) 6) Closing summary + next video teaser 7) Total duration: 8-12 minutes' } },
+      { zh: { title: 'Shorts 脚本', preview: '生成 YouTube Shorts 短视频脚本，60秒内完成', template: '请为"[主题]"生成 YouTube Shorts 脚本（60秒内）。要求：1) 前 2 秒强 Hook 2) 快速切入核心内容 3) 每 5-8 秒一个节奏点 4) 视觉提示标注 5) 结尾 CTA 6) 字数控制在 150 字以内' }, en: { title: 'Shorts Script', preview: 'Generate YouTube Shorts script, complete within 60 seconds', template: 'Generate a YouTube Shorts script for "[topic]" (under 60 seconds). Requirements: 1) Strong hook in first 2 seconds 2) Quick entry to core content 3) Rhythm point every 5-8 seconds 4) Visual cue annotations 5) Closing CTA 6) Word count under 150 words' } },
+      { zh: { title: '视频标题和描述', preview: '生成 SEO 优化的 YouTube 视频标题和描述', template: '请为"[视频主题]"生成 YouTube 优化内容：1) 5 个标题选项（含关键词，60字符内）2) 视频描述（前 2 行最重要，含关键词）3) 时间戳章节标记 4) 10 个相关标签 5) 评论区置顶评论建议 6) 缩略图文字建议' }, en: { title: 'Video Title & Description', preview: 'Generate SEO-optimized YouTube video title and description', template: 'Generate YouTube optimized content for "[video topic]": 1) 5 title options (with keywords, under 60 chars) 2) Video description (first 2 lines most important, with keywords) 3) Timestamp chapter markers 4) 10 relevant tags 5) Pinned comment suggestion 6) Thumbnail text suggestion' } }
+    ]
+  },
+  coding: {
+    icon: '💻',
+    templates: [
+      { zh: { title: '代码审查助手', preview: '对代码进行全面审查，包括性能、安全和可维护性', template: '请对以下代码进行全面审查：[粘贴代码]。审查维度：1) 代码质量（命名规范、可读性）2) 潜在 Bug 和边界情况 3) 性能优化建议 4) 安全漏洞检查 5) 设计模式建议 6) 测试覆盖建议 7) 重构建议（附代码示例）' }, en: { title: 'Code Review Assistant', preview: 'Comprehensive code review covering performance, security, and maintainability', template: 'Conduct a comprehensive code review of: [paste code]. Review dimensions: 1) Code quality (naming conventions, readability) 2) Potential bugs and edge cases 3) Performance optimization suggestions 4) Security vulnerability check 5) Design pattern recommendations 6) Test coverage suggestions 7) Refactoring suggestions (with code examples)' } },
+      { zh: { title: 'API 设计文档', preview: '生成 RESTful API 设计文档，包含端点、参数和示例', template: '请为"[功能描述]"设计 RESTful API 文档。要求：1) API 端点列表（路径、方法、描述）2) 请求参数（Query/Body/Path）3) 响应格式（成功/失败示例）4) 认证方式 5) 速率限制说明 6) 版本控制策略 7) 错误码定义' }, en: { title: 'API Design Document', preview: 'Generate RESTful API design doc with endpoints, parameters, and examples', template: 'Design RESTful API documentation for "[feature description]". Requirements: 1) API endpoint list (path, method, description) 2) Request parameters (Query/Body/Path) 3) Response format (success/error examples) 4) Authentication method 5) Rate limiting details 6) Versioning strategy 7) Error code definitions' } },
+      { zh: { title: 'Debug 排错助手', preview: '系统化排查代码错误，定位问题根因', template: '请帮我排查以下代码问题：[错误描述/代码]。排查步骤：1) 错误现象复现条件 2) 可能的根因分析（按概率排序）3) 逐个验证的方法 4) 修复方案（附代码）5) 预防措施 6) 相关文档链接' }, en: { title: 'Debug Troubleshooter', preview: 'Systematically debug code errors and identify root causes', template: 'Help me debug the following issue: [error description/code]. Troubleshooting steps: 1) Error reproduction conditions 2) Possible root cause analysis (ranked by probability) 3) Verification methods for each 4) Fix solution (with code) 5) Prevention measures 6) Related documentation links' } }
+    ]
+  },
+  study: {
+    icon: '📚',
+    templates: [
+      { zh: { title: '概念解释器', preview: '用简单易懂的方式解释复杂概念，适合不同层次', template: '请用简单易懂的方式解释"[概念]"。要求：1) 一句话核心定义 2) 5岁小孩能懂的类比 3) 详细技术解释（含关键术语）4) 实际应用场景 5) 常见误解澄清 6) 延伸学习路径' }, en: { title: 'Concept Explainer', preview: 'Explain complex concepts in simple terms, suitable for different levels', template: 'Explain "[concept]" in simple, understandable terms. Requirements: 1) One-sentence core definition 2) Analogy a 5-year-old could understand 3) Detailed technical explanation (with key terms) 4) Real-world application scenarios 5) Common misconceptions clarified 6) Extended learning path' } },
+      { zh: { title: '学习计划生成', preview: '制定系统化的学习计划，包含里程碑和检验点', template: '请为学习"[技能/主题]"制定学习计划。要求：1) 前置知识检查清单 2) 分阶段学习目标（初级/中级/高级）3) 每阶段推荐资源（书/课程/项目）4) 实践项目建议 5) 自测检验点 6) 预计学习时间 7) 常见学习陷阱提醒' }, en: { title: 'Study Plan Generator', preview: 'Create a systematic study plan with milestones and checkpoints', template: 'Create a study plan for learning "[skill/topic]". Requirements: 1) Prerequisite checklist 2) Phased learning goals (beginner/intermediate/advanced) 3) Recommended resources per phase (books/courses/projects) 4) Practice project suggestions 5) Self-assessment checkpoints 6) Estimated learning time 7) Common learning pitfalls' } },
+      { zh: { title: '考试复习助手', preview: '高效复习策略和重点知识梳理', template: '请帮我复习"[科目/考试]"。要求：1) 核心知识点思维导图 2) 高频考点清单（按重要性排序）3) 每个考点的记忆技巧 4) 模拟练习题（含解析）5) 易混淆概念对比表 6) 考试时间分配建议 7) 考前 3 天冲刺计划' }, en: { title: 'Exam Review Assistant', preview: 'Efficient review strategy and key knowledge organization', template: 'Help me review for "[subject/exam]". Requirements: 1) Core knowledge mind map 2) High-frequency exam points (ranked by importance) 3) Memory techniques for each point 4) Practice questions with explanations 5) Commonly confused concepts comparison table 6) Exam time allocation advice 7) 3-day crash study plan' } }
+    ]
+  },
+  marketing: {
+    icon: '📢',
+    templates: [
+      { zh: { title: '产品文案', preview: '撰写吸引人的产品描述和营销文案', template: '请为"[产品名称]"撰写营销文案。产品特点：[特点]。要求：1) 标语（10字以内，突出核心卖点）2) 一段话产品描述（痛点+解决方案+差异化）3) 3 个核心卖点展开 4) 使用场景描述 5) 用户证言模板 6) CTA 文案' }, en: { title: 'Product Copywriting', preview: 'Write compelling product descriptions and marketing copy', template: 'Write marketing copy for "[product name]". Product features: [features]. Requirements: 1) Tagline (under 10 words, highlighting core selling point) 2) One-paragraph product description (pain point + solution + differentiation) 3) 3 core selling points expanded 4) Use case descriptions 5) User testimonial template 6) CTA copy' } },
+      { zh: { title: '社交媒体帖子', preview: '生成适合各平台的社交媒体营销内容', template: '请为"[产品/活动]"生成社交媒体内容。要求：1) 微博版（140字内，含话题标签）2) 小红书版（标题+正文+标签，种草风格）3) 朋友圈版（简短走心）4) 抖音文案版（Hook+卖点+CTA）5) LinkedIn 版（专业商务风格）6) 每版配图建议' }, en: { title: 'Social Media Posts', preview: 'Generate social media marketing content for various platforms', template: 'Generate social media content for "[product/event]". Requirements: 1) Twitter version (under 280 chars, with hashtags) 2) Instagram version (caption + hashtags, lifestyle tone) 3) Facebook version (engaging story format) 4) TikTok version (Hook + selling point + CTA) 5) LinkedIn version (professional business tone) 6) Image suggestion for each' } },
+      { zh: { title: '邮件营销', preview: '撰写高转化率的营销邮件，从标题到正文', template: '请为"[产品/活动]"撰写营销邮件。要求：1) 5 个邮件标题选项（A/B 测试用）2) 预览文本（40字内）3) 邮件正文（个性化开头+价值主张+社会证明+CTA）4) P.S. 补充（二次转化）5) 发送时间建议 6) 跟进邮件草稿' }, en: { title: 'Email Marketing', preview: 'Write high-conversion marketing emails from subject to body', template: 'Write a marketing email for "[product/event]". Requirements: 1) 5 subject line options (for A/B testing) 2) Preview text (under 40 chars) 3) Email body (personalized opening + value proposition + social proof + CTA) 4) P.S. addition (secondary conversion) 5) Send time recommendation 6) Follow-up email draft' } }
+    ]
+  },
+  midjourney: {
+    icon: '🎨',
+    templates: [
+      { zh: { title: '人物肖像', preview: '生成专业级人物肖像 Midjourney 提示词', template: 'A portrait of [人物描述], detailed facial features, [表情/情绪], [光线类型] lighting, [背景], shot on [镜头], [摄影风格], masterpiece, best quality, ultra detailed --v 6.0 --ar 2:3 --q 2 --style raw --s 500' }, en: { title: 'Portrait', preview: 'Generate professional portrait Midjourney prompts', template: 'A portrait of [person description], detailed facial features, [expression/mood], [lighting type] lighting, [background], shot on [lens], [photography style], masterpiece, best quality, ultra detailed --v 6.0 --ar 2:3 --q 2 --style raw --s 500' } },
+      { zh: { title: '风景场景', preview: '生成壮观的风景和场景 Midjourney 提示词', template: '[场景描述], [时间/天气], [氛围], [色彩风格], dramatic composition, [视角], atmospheric perspective, volumetric lighting, ray tracing, ultra detailed landscape, 8K resolution, professional photography --v 6.0 --ar 16:9 --q 2 --style raw --s 750' }, en: { title: 'Landscape Scene', preview: 'Generate spectacular landscape Midjourney prompts', template: '[scene description], [time/weather], [atmosphere], [color style], dramatic composition, [perspective], atmospheric perspective, volumetric lighting, ray tracing, ultra detailed landscape, 8K resolution, professional photography --v 6.0 --ar 16:9 --q 2 --style raw --s 750' } },
+      { zh: { title: '产品展示', preview: '生成电商级产品展示图 Midjourney 提示词', template: 'Professional product photography of [产品描述], [材质细节], [背景/场景], studio lighting, soft shadows, [色彩方案], commercial quality, high-end advertising style, sharp focus, 8K UHD --v 6.0 --ar 4:3 --q 2 --style raw --s 250' }, en: { title: 'Product Showcase', preview: 'Generate e-commerce product display Midjourney prompts', template: 'Professional product photography of [product description], [material details], [background/scene], studio lighting, soft shadows, [color scheme], commercial quality, high-end advertising style, sharp focus, 8K UHD --v 6.0 --ar 4:3 --q 2 --style raw --s 250' } }
+    ]
+  },
+  flux: {
+    icon: '🔥',
+    templates: [
+      { zh: { title: '艺术创作', preview: '生成 Flux 模型艺术创作提示词', template: '[创作描述], artistic interpretation, [艺术风格] style, rich color palette, expressive brushwork, detailed composition, emotional depth, gallery quality, fine art aesthetic, ultra detailed, professional quality' }, en: { title: 'Artistic Creation', preview: 'Generate Flux model artistic creation prompts', template: '[creation description], artistic interpretation, [art style] style, rich color palette, expressive brushwork, detailed composition, emotional depth, gallery quality, fine art aesthetic, ultra detailed, professional quality' } },
+      { zh: { title: '概念设计', preview: '生成 Flux 模型概念设计提示词', template: 'Concept design of [设计描述], [设计风格], clean lines, modern aesthetic, functional details, [材质], professional industrial design, blueprint quality, technical precision, ultra detailed, 8K resolution' }, en: { title: 'Concept Design', preview: 'Generate Flux model concept design prompts', template: 'Concept design of [design description], [design style], clean lines, modern aesthetic, functional details, [material], professional industrial design, blueprint quality, technical precision, ultra detailed, 8K resolution' } },
+      { zh: { title: '写实摄影', preview: '生成 Flux 模型写实摄影提示词', template: '[场景描述], photorealistic, natural lighting, [拍摄时间] golden hour, [镜头效果], shallow depth of field, RAW photo quality, professional photography, sharp focus, cinematic color grading, ultra detailed, 8K UHD' }, en: { title: 'Photorealistic', preview: 'Generate Flux model photorealistic photography prompts', template: '[scene description], photorealistic, natural lighting, [time of day] golden hour, [lens effect], shallow depth of field, RAW photo quality, professional photography, sharp focus, cinematic color grading, ultra detailed, 8K UHD' } }
+    ]
+  }
+ };
+
+let currentTemplateCat = 'seo';
+
+function renderTemplates() {
+  const t = LOCALES[currentLang];
+  const cat = TEMPLATE_DATA[currentTemplateCat];
+  const grid = document.getElementById('templateGrid');
+  
+  grid.innerHTML = cat.templates.map((tpl, i) => {
+    const lang = currentLang === 'zh' ? 'zh' : 'en';
+    const data = tpl[lang];
+    return `<div class="template-card">
+      <div class="template-card-title">${data.title}</div>
+      <div class="template-card-preview">${data.preview}</div>
+      <div class="template-card-footer">
+        <button class="btn-use-template" onclick="useTemplate('${currentTemplateCat}', ${i})">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          ${t.tplUseBtn}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterTemplates(cat) {
+  currentTemplateCat = cat;
+  /* 更新分类按钮状态 */
+  document.querySelectorAll('.template-cat-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
+  });
+  renderTemplates();
+}
+
+function useTemplate(cat, index) {
+  const lang = currentLang === 'zh' ? 'zh' : 'en';
+  const template = TEMPLATE_DATA[cat].templates[index][lang].template;
+  /* 切换到生成器 tab 并填入模板 */
+  document.getElementById('description').value = template;
+  switchTab('generator');
+  document.getElementById('description').focus();
+  showToast(LOCALES[currentLang].tplToastInserted, 'success');
+}
+
+/* ==================== 提示词质量评分 ==================== */
+function calculateQualityScore(prompt) {
+  if (!prompt || prompt.length < 10) return { total: 0, clarity: 0, context: 0, specificity: 0, structure: 0, suggestions: [] };
+  
+  const suggestions = [];
+  
+  /* 清晰度：检查是否有明确的主语、动词、描述词 */
+  let clarity = 30;
+  if (prompt.length > 30) clarity += 15;
+  if (prompt.length > 80) clarity += 10;
+  if (/[a-zA-Z]/.test(prompt) && /[\u4e00-\u9fff]/.test(prompt)) clarity += 5; /* 中英混合 */
+  if (/\b(detailed|specific|clear|precise)\b/i.test(prompt) || /详细|具体|清晰|精确/.test(prompt)) clarity += 10;
+  if (prompt.includes(',')) clarity += 10; /* 有分隔描述 */
+  if (clarity > 100) clarity = 100;
+  if (clarity < 60) suggestions.push(currentLang === 'zh' ? '添加更明确的主体描述和动作' : 'Add clearer subject description and action');
+  
+  /* 上下文：检查是否有场景、环境、背景信息 */
+  let context = 20;
+  const contextWords = /\b(in|on|at|with|surrounded|background|scene|environment|setting|context)\b/i;
+  const contextWordsZh = /在|背景|场景|环境|周围|之中|里面|上面|下面/;
+  if (contextWords.test(prompt) || contextWordsZh.test(prompt)) context += 25;
+  if (/\b(lighting|light|shadow|glow|illuminat)\b/i.test(prompt) || /光|影|灯|照|明暗/.test(prompt)) context += 20;
+  if (/\b(mood|atmosphere|feeling|emotion|vibe)\b/i.test(prompt) || /氛围|情绪|感觉|意境|气氛/.test(prompt)) context += 15;
+  if (/\b(color|palette|tone|hue|warm|cool)\b/i.test(prompt) || /色彩|色调|暖色|冷色|配色/.test(prompt)) context += 10;
+  if (context > 100) context = 100;
+  if (context < 50) suggestions.push(currentLang === 'zh' ? '添加场景、光线和氛围描述' : 'Add scene, lighting, and atmosphere descriptions');
+  
+  /* 具体性：检查是否有具体细节、数字、专业术语 */
+  let specificity = 15;
+  if (prompt.length > 50) specificity += 10;
+  if (prompt.length > 100) specificity += 10;
+  if (/\d/.test(prompt)) specificity += 10; /* 含数字 */
+  if (/\b(8K|4K|UHD|HD|mm|f\/)\b/i.test(prompt)) specificity += 15; /* 技术参数 */
+  if (/\b(professional|masterpiece|ultra|highly|cinematic)\b/i.test(prompt) || /专业|杰作|超高|极致|电影级/.test(prompt)) specificity += 15;
+  if (prompt.split(',').length > 5) specificity += 10; /* 多个描述维度 */
+  if (/\b(lens|camera|shot|angle|perspective)\b/i.test(prompt) || /镜头|相机|视角|透视|焦距/.test(prompt)) specificity += 10;
+  if (specificity > 100) specificity = 100;
+  if (specificity < 50) suggestions.push(currentLang === 'zh' ? '添加具体的技术参数和细节描述' : 'Add specific technical parameters and detail descriptions');
+  
+  /* 结构性：检查是否有层次、分隔符、参数标记 */
+  let structure = 15;
+  if (prompt.includes(',')) structure += 10;
+  if (prompt.includes('--')) structure += 20; /* MJ 参数 */
+  if (prompt.includes('::') || prompt.includes(':')) structure += 10;
+  if (prompt.split(',').length > 3) structure += 15;
+  if (/\b(and|or|with|while|during)\b/i.test(prompt)) structure += 10;
+  if (prompt.match(/--\w+/g)) structure += 15; /* 多个参数 */
+  if (structure > 100) structure = 100;
+  if (structure < 50) suggestions.push(currentLang === 'zh' ? '使用逗号分隔不同描述维度，添加模型参数' : 'Use commas to separate description dimensions, add model parameters');
+  
+  const total = Math.round((clarity + context + specificity + structure) / 4);
+  
+  return { total, clarity, context, specificity, structure, suggestions };
+}
+
+function renderQualityScore(prompt) {
+  const t = LOCALES[currentLang];
+  const score = calculateQualityScore(prompt);
+  const section = document.getElementById('qualitySection');
+  
+  if (score.total === 0) { section.style.display = 'none'; return; }
+  section.style.display = '';
+  
+  const getLevel = (v) => v >= 70 ? 'high' : v >= 40 ? 'medium' : 'low';
+  
+  section.innerHTML = `
+    <div class="quality-section">
+      <div class="quality-header">
+        <div class="quality-title">${t.qualityTitle}</div>
+        <div class="quality-total">${score.total}/100</div>
+      </div>
+      <div class="quality-metrics">
+        <div class="quality-metric">
+          <div class="quality-metric-label">${t.qualityClarity}</div>
+          <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.clarity)}" style="width:${score.clarity}%"></div></div>
+          <div class="quality-metric-score">${score.clarity}</div>
+        </div>
+        <div class="quality-metric">
+          <div class="quality-metric-label">${t.qualityContext}</div>
+          <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.context)}" style="width:${score.context}%"></div></div>
+          <div class="quality-metric-score">${score.context}</div>
+        </div>
+        <div class="quality-metric">
+          <div class="quality-metric-label">${t.qualitySpecificity}</div>
+          <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.specificity)}" style="width:${score.specificity}%"></div></div>
+          <div class="quality-metric-score">${score.specificity}</div>
+        </div>
+        <div class="quality-metric">
+          <div class="quality-metric-label">${t.qualityStructure}</div>
+          <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.structure)}" style="width:${score.structure}%"></div></div>
+          <div class="quality-metric-score">${score.structure}</div>
+        </div>
+      </div>
+      ${score.suggestions.length > 0 ? `
+      <div class="quality-suggestions">
+        <div style="font-weight:600;margin-bottom:8px;">${t.qualitySuggestionTitle}</div>
+        ${score.suggestions.map(s => `<div class="quality-suggestion-item"><span class="quality-suggestion-dot"></span><span>${s}</span></div>`).join('')}
+      </div>` : ''}
+    </div>
+  `;
+}
+
+/* ==================== 导出功能 ==================== */
+function downloadTxt(text, filename) {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function downloadMarkdown(text, filename) {
+  const content = `# TSC AI Prompt Studio\n\n## Prompt\n\n${text}\n\n---\n*Generated by [TSC AI Prompt Studio](https://pkokwho.github.io/tsc/)*`;
+  const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function exportCopy(index, btn) {
+  const text = document.getElementById('prompt-' + index).textContent;
+  const t = LOCALES[currentLang];
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${t.exportCopied}`;
+    showToast(t.toastCopied, 'success');
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg> ${t.exportCopy}`; }, 2000);
+  } catch (err) {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    showToast(t.toastCopied, 'success');
+  }
+}
+
+function exportTxt(index) {
+  const text = document.getElementById('prompt-' + index).textContent;
+  downloadTxt(text, 'tsc-prompt-' + (index + 1) + '.txt');
+}
+
+function exportMd(index) {
+  const text = document.getElementById('prompt-' + index).textContent;
+  downloadMarkdown(text, 'tsc-prompt-' + (index + 1) + '.md');
+}
+
+ /* 优化核心函数：将简单描述扩展为专业 Prompt */
 function enhanceDescription(input) {
   let enhanced = input;
 
