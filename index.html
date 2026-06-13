@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
@@ -212,7 +212,7 @@
 
   /* ==================== Hero Section ==================== */
   .hero {
-    text-align:center; padding:64px 24px 40px;
+    text-align:center; padding:48px 24px 28px;
     animation:fadeUp 0.8s ease-out both;
   }
 
@@ -252,7 +252,7 @@
   /* Hero 特性标签 */
   .hero-features {
     display:flex; flex-wrap:wrap; justify-content:center; gap:8px;
-    margin-bottom:32px;
+    margin-bottom:18px;
   }
   .hero-feature-tag {
     display:inline-flex; align-items:center; gap:5px;
@@ -261,6 +261,24 @@
     font-size:12px; color:var(--text-secondary); white-space:nowrap;
   }
   .hero-feature-tag svg { flex-shrink:0; opacity:0.6; }
+
+  .hero-stats {
+    display:grid; grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:10px; max-width:720px; margin:0 auto 28px;
+  }
+  .hero-stat {
+    padding:12px 14px; border:1px solid var(--border-color);
+    border-radius:var(--radius-md); background:linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+    box-shadow:0 10px 30px rgba(0,0,0,0.16);
+  }
+  .hero-stat-value {
+    display:block; font-size:18px; font-weight:700; line-height:1.1;
+    background:var(--accent-gradient); -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .hero-stat-label {
+    display:block; margin-top:4px; font-size:12px; color:var(--text-tertiary);
+  }
 
   /* Hero CTA 按钮 */
   .hero-cta {
@@ -294,13 +312,34 @@
 
   /* ==================== Input Section ==================== */
   .input-section {
-    animation:fadeUp 0.8s ease-out 0.2s both; margin-bottom:48px;
+    animation:fadeUp 0.8s ease-out 0.2s both; margin-bottom:36px;
   }
   .input-card {
     background:var(--bg-card); border:1px solid var(--border-color);
     border-radius:var(--radius-lg); padding:32px;
     backdrop-filter:blur(20px); box-shadow:var(--shadow-card);
+    position:relative; overflow:hidden;
     transition:border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-medium);
+  }
+  .input-card::before {
+    content:""; position:absolute; inset:0 0 auto 0; height:3px;
+    background:linear-gradient(90deg, #22c55e, #06b6d4, #6366f1, #f97316);
+    opacity:0.9;
+  }
+  .input-card-header {
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:16px; margin-bottom:20px;
+  }
+  .input-card-title {
+    font-size:18px; font-weight:700; letter-spacing:0; line-height:1.3;
+  }
+  .input-card-subtitle {
+    margin-top:4px; color:var(--text-secondary); font-size:13px; line-height:1.5;
+  }
+  .input-card-pill {
+    flex-shrink:0; padding:7px 12px; border-radius:100px;
+    background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.24);
+    color:#22c55e; font-size:12px; font-weight:600; white-space:nowrap;
   }
   .input-card:focus-within {
     border-color:var(--border-active);
@@ -379,8 +418,17 @@
   .prompt-card {
     background:var(--bg-card); border:1px solid var(--border-color);
     border-radius:var(--radius-lg); overflow:hidden;
+    position:relative;
     transition:all var(--transition-medium); animation:cardIn 0.5s ease-out both;
   }
+  .prompt-card::before {
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, #22c55e, #06b6d4);
+  }
+  .prompt-card.mj::before { background:linear-gradient(90deg, #5865f2, #a855f7); }
+  .prompt-card.flux::before { background:linear-gradient(90deg, #f97316, #facc15); }
+  .prompt-card.video::before { background:linear-gradient(90deg, #ec4899, #f97316); }
+  .prompt-card.seedance::before { background:linear-gradient(90deg, #0ea5e9, #22c55e); }
   .prompt-card:nth-child(1) { animation-delay:0.05s; }
   .prompt-card:nth-child(2) { animation-delay:0.15s; }
   .prompt-card:nth-child(3) { animation-delay:0.25s; }
@@ -466,6 +514,24 @@
     cursor:pointer; transition:all var(--transition-fast); min-height:44px;
   }
   .tab-btn:hover { color:var(--text-primary); }
+  .tab-btn:focus-visible,
+  .nav-btn:focus-visible,
+  .btn-star:focus-visible,
+  .btn-cta-primary:focus-visible,
+  .btn-cta-secondary:focus-visible,
+  .btn-generate:focus-visible,
+  .btn-optimize:focus-visible,
+  .btn-clear-history:focus-visible,
+  .btn-use-template:focus-visible,
+  .btn-export:focus-visible,
+  .btn-copy-sm:focus-visible,
+  .template-cat-btn:focus-visible,
+  .history-item:focus-visible,
+  .control-select:focus-visible,
+  .input-textarea:focus-visible {
+    outline:2px solid var(--accent-1);
+    outline-offset:3px;
+  }
   .tab-btn.active {
     background:var(--accent-gradient); color:#fff;
     box-shadow:0 2px 12px rgba(99,102,241,0.3);
@@ -571,6 +637,7 @@
   .history-list { display:flex; flex-direction:column; gap:8px; }
   .history-item {
     display:flex; align-items:center; gap:12px;
+    width:100%; text-align:left; font-family:var(--font-stack);
     padding:12px 16px; background:var(--bg-card);
     border:1px solid var(--border-color); border-radius:var(--radius-sm);
     cursor:pointer; transition:all var(--transition-fast);
@@ -599,6 +666,10 @@
     .btn-star { padding:8px 12px; }
     .hero-features { gap:6px; }
     .hero-feature-tag { padding:5px 10px; font-size:11px; }
+    .hero-stats { grid-template-columns:1fr; max-width:360px; }
+    .hero-stat { padding:10px 12px; }
+    .input-card-header { flex-direction:column; align-items:stretch; gap:10px; }
+    .input-card-pill { align-self:flex-start; }
     .opt-compare { grid-template-columns:1fr; }
     .optimizer-input-row { flex-direction:column; }
     .optimizer-actions { flex-direction:row; }
@@ -612,6 +683,25 @@
     .nav-actions { gap:6px; }
     .hero-cta { flex-direction:column; }
     .btn-cta-primary, .btn-cta-secondary { width:100%; justify-content:center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    *, *::before, *::after {
+      animation-duration:0.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.001ms !important;
+    }
+    .bg-orb { animation:none; filter:blur(80px); }
+    .btn-generate:hover,
+    .btn-cta-primary:hover,
+    .btn-cta-secondary:hover,
+    .prompt-card:hover,
+    .template-card:hover,
+    .btn-use-template:hover,
+    .btn-optimize:hover {
+      transform:none;
+    }
   }
 
   /* ==================== Footer ==================== */
@@ -647,11 +737,15 @@
 .template-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
 }
-.template-card {
-  background: var(--bg-card); border: 1px solid var(--border-color);
-  border-radius: var(--radius-md); padding: 20px;
-  transition: all var(--transition-fast); cursor: default;
-}
+  .template-card {
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 20px;
+    transition: all var(--transition-fast); cursor: default; position:relative; overflow:hidden;
+  }
+  .template-card::before {
+    content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background:linear-gradient(180deg, #06b6d4, #6366f1);
+  }
 .template-card:hover { background: var(--bg-card-hover); border-color: rgba(99,102,241,0.15); transform: translateY(-2px); }
 .template-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
 .template-card-preview { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -668,8 +762,10 @@
 /* ==================== Quality Score ==================== */
 .quality-section {
   margin-top: 24px; padding: 24px;
-  background: var(--bg-card); border: 1px solid var(--border-color);
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 .quality-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .quality-title { font-size: 16px; font-weight: 600; }
@@ -866,6 +962,21 @@
     </span>
   </div>
 
+  <div class="hero-stats" aria-label="Studio capabilities">
+    <div class="hero-stat">
+      <span class="hero-stat-value">5</span>
+      <span class="hero-stat-label" data-i18n="statModels">模型输出</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">9</span>
+      <span class="hero-stat-label" data-i18n="statTemplates">模板分类</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">0</span>
+      <span class="hero-stat-label" data-i18n="statServer">后端依赖</span>
+    </div>
+  </div>
+
   <!-- CTA 按钮 -->
   <div class="hero-cta">
     <a class="btn-cta-primary" href="#inputSection" data-i18n="ctaStart">
@@ -881,16 +992,23 @@
 
 <!-- ==================== Tab Navigation ==================== -->
 <section class="container" style="margin-bottom:0;">
-  <div class="tab-nav">
-    <button class="tab-btn active" id="tabGenerator" onclick="switchTab('generator')" data-i18n="tabGenerator">Prompt 生成器</button>
-    <button class="tab-btn" id="tabOptimizer" onclick="switchTab('optimizer')" data-i18n="tabOptimizer">Prompt 优化器</button>
-    <button class="tab-btn" id="tabTemplates" onclick="switchTab('templates')" data-i18n="tabTemplates">模板库</button>
+  <div class="tab-nav" role="tablist" aria-label="Prompt Studio sections">
+    <button class="tab-btn active" id="tabGenerator" role="tab" aria-selected="true" aria-controls="inputSection" tabindex="0" onclick="switchTab('generator')" data-i18n="tabGenerator">Prompt 生成器</button>
+    <button class="tab-btn" id="tabOptimizer" role="tab" aria-selected="false" aria-controls="optimizerSection" tabindex="-1" onclick="switchTab('optimizer')" data-i18n="tabOptimizer">Prompt 优化器</button>
+    <button class="tab-btn" id="tabTemplates" role="tab" aria-selected="false" aria-controls="templateSection" tabindex="-1" onclick="switchTab('templates')" data-i18n="tabTemplates">模板库</button>
   </div>
 </section>
 
 <!-- ==================== Input Section ==================== -->
 <section class="input-section container" id="inputSection">
   <div class="input-card">
+    <div class="input-card-header">
+      <div>
+        <div class="input-card-title" data-i18n="workspaceTitle">Prompt 工作台</div>
+        <div class="input-card-subtitle" data-i18n="workspaceSubtitle">输入一句想法，立即得到图像、视频和通用模型的可用提示词。</div>
+      </div>
+      <div class="input-card-pill" data-i18n="workspacePill">本地生成</div>
+    </div>
     <label class="input-label" data-i18n="inputLabel">描述你的创意</label>
     <textarea class="input-textarea" id="description" data-i18n-placeholder="inputPlaceholder" placeholder="例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格"></textarea>
 
@@ -1039,15 +1157,15 @@
   </div>
   <div class="input-card">
     <div class="template-categories" id="templateCategories">
-      <button class="template-cat-btn active" data-cat="seo" onclick="filterTemplates('seo')">🔍 <span data-i18n="tplCatSEO">SEO</span></button>
-      <button class="template-cat-btn" data-cat="blog" onclick="filterTemplates('blog')">✍️ <span data-i18n="tplCatBlog">博客写作</span></button>
-      <button class="template-cat-btn" data-cat="youtube" onclick="filterTemplates('youtube')">🎬 <span data-i18n="tplCatYouTube">YouTube 脚本</span></button>
-      <button class="template-cat-btn" data-cat="coding" onclick="filterTemplates('coding')">💻 <span data-i18n="tplCatCoding">编程助手</span></button>
-      <button class="template-cat-btn" data-cat="study" onclick="filterTemplates('study')">📚 <span data-i18n="tplCatStudy">学习助手</span></button>
-      <button class="template-cat-btn" data-cat="marketing" onclick="filterTemplates('marketing')">📢 <span data-i18n="tplCatMarketing">营销文案</span></button>
-      <button class="template-cat-btn" data-cat="midjourney" onclick="filterTemplates('midjourney')">🎨 <span data-i18n="tplCatMidjourney">Midjourney</span></button>
-      <button class="template-cat-btn" data-cat="flux" onclick="filterTemplates('flux')">🔥 <span data-i18n="tplCatFlux">Flux</span></button>
-      <button class="template-cat-btn" data-cat="seedance" onclick="filterTemplates('seedance')">🎬 <span data-i18n="tplCatSeedance">SeaDance</span></button>
+      <button class="template-cat-btn active" data-cat="seo" aria-pressed="true" onclick="filterTemplates('seo')">🔍 <span data-i18n="tplCatSEO">SEO</span></button>
+      <button class="template-cat-btn" data-cat="blog" aria-pressed="false" onclick="filterTemplates('blog')">✍️ <span data-i18n="tplCatBlog">博客写作</span></button>
+      <button class="template-cat-btn" data-cat="youtube" aria-pressed="false" onclick="filterTemplates('youtube')">🎬 <span data-i18n="tplCatYouTube">YouTube 脚本</span></button>
+      <button class="template-cat-btn" data-cat="coding" aria-pressed="false" onclick="filterTemplates('coding')">💻 <span data-i18n="tplCatCoding">编程助手</span></button>
+      <button class="template-cat-btn" data-cat="study" aria-pressed="false" onclick="filterTemplates('study')">📚 <span data-i18n="tplCatStudy">学习助手</span></button>
+      <button class="template-cat-btn" data-cat="marketing" aria-pressed="false" onclick="filterTemplates('marketing')">📢 <span data-i18n="tplCatMarketing">营销文案</span></button>
+      <button class="template-cat-btn" data-cat="midjourney" aria-pressed="false" onclick="filterTemplates('midjourney')">🎨 <span data-i18n="tplCatMidjourney">Midjourney</span></button>
+      <button class="template-cat-btn" data-cat="flux" aria-pressed="false" onclick="filterTemplates('flux')">🔥 <span data-i18n="tplCatFlux">Flux</span></button>
+      <button class="template-cat-btn" data-cat="seedance" aria-pressed="false" onclick="filterTemplates('seedance')">🎬 <span data-i18n="tplCatSeedance">SeaDance</span></button>
     </div>
     <div class="template-grid" id="templateGrid"></div>
   </div>
@@ -1083,8 +1201,14 @@ const LOCALES = {
     tagTheme: '深色/浅色主题',
     tagResponsive: '响应式设计',
     tagZeroDep: '零依赖部署',
+    statModels: '模型输出',
+    statTemplates: '模板分类',
+    statServer: '后端依赖',
     ctaStart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 开始生成',
     ctaGithub: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub',
+    workspaceTitle: 'Prompt 工作台',
+    workspaceSubtitle: '输入一句想法，立即得到图像、视频和通用模型的可用提示词。',
+    workspacePill: '本地生成',
     inputLabel: '描述你的创意',
     inputPlaceholder: '例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格',
     aspectLabel: '画面比例', styleLabel: '艺术风格', qualityLabel: '画面质量', stylizeLabel: '风格化强度',
@@ -1151,8 +1275,12 @@ const LOCALES = {
     heroDesc: 'Enter your creative idea, one-click generate high-quality Prompts for Midjourney, Flux, and Video AI models',
     tagMultiModel: 'Multi-Model', tagBilingual: 'Bilingual', tagTheme: 'Dark/Light Theme',
     tagResponsive: 'Responsive', tagZeroDep: 'Zero Deps',
+    statModels: 'Model outputs', statTemplates: 'Template groups', statServer: 'Backend dependency',
     ctaStart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Start Generating',
     ctaGithub: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub',
+    workspaceTitle: 'Prompt Workspace',
+    workspaceSubtitle: 'Turn one idea into ready-to-use prompts for image, video, and universal models.',
+    workspacePill: 'Local only',
     inputLabel: 'Describe your idea',
     inputPlaceholder: 'e.g. A cat wearing a spacesuit standing on the moon, blue Earth in the background, starry sky, surrealism style',
     aspectLabel: 'Aspect Ratio', styleLabel: 'Art Style', qualityLabel: 'Image Quality', stylizeLabel: 'Stylize Intensity',
@@ -1214,14 +1342,44 @@ const LOCALES = {
   }
 };
 
-/* ==================== 语言检测与状态管理 ==================== */
-let currentLang = localStorage.getItem('tsc-lang') || (navigator.language.startsWith('zh') ? 'zh' : 'en');
-let currentTheme = localStorage.getItem('tsc-theme') || 'dark';
+/* ==================== 工具函数与状态管理 ==================== */
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+}
+
+function safeStorageGet(key, fallback = null) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  } catch (err) {
+    return fallback;
+  }
+}
+
+function safeStorageSet(key, value) {
+  try { localStorage.setItem(key, value); } catch (err) { /* 本地存储不可用时静默降级 */ }
+}
+
+function safeStorageRemove(key) {
+  try { localStorage.removeItem(key); } catch (err) { /* 本地存储不可用时静默降级 */ }
+}
+
+const browserLang = navigator.language && navigator.language.startsWith('zh') ? 'zh' : 'en';
+let currentLang = safeStorageGet('tsc-lang', browserLang);
+let currentTheme = safeStorageGet('tsc-theme', 'dark');
+if (!LOCALES[currentLang]) currentLang = browserLang;
+if (!['dark', 'light'].includes(currentTheme)) currentTheme = 'dark';
 
 /* ==================== 语言切换 ==================== */
 function toggleLang() {
   currentLang = currentLang === 'zh' ? 'en' : 'zh';
-  localStorage.setItem('tsc-lang', currentLang);
+  safeStorageSet('tsc-lang', currentLang);
   applyLocale();
 }
 
@@ -1260,20 +1418,22 @@ function applyLocale() {
   populateSelect('style', t.styleOptions, '写实摄影');
   populateSelect('quality', t.qualityOptions, '2');
   populateSelect('stylize', t.stylizeOptions, '250');
+
+  refreshVisibleDynamicContent();
 }
 
 function populateSelect(id, options, defaultVal) {
   const sel = document.getElementById(id);
   const currentVal = sel.value || defaultVal;
   sel.innerHTML = options.map(o =>
-    `<option value="${o.value}"${o.value === currentVal ? ' selected' : ''}>${o.text}</option>`
+    `<option value="${escapeHTML(o.value)}"${o.value === currentVal ? ' selected' : ''}>${escapeHTML(o.text)}</option>`
   ).join('');
 }
 
 /* ==================== 主题切换 ==================== */
 function toggleTheme() {
   currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('tsc-theme', currentTheme);
+  safeStorageSet('tsc-theme', currentTheme);
   applyTheme();
 }
 
@@ -1322,17 +1482,6 @@ const SEEDANCE_LIGHTING = ['golden hour','neon glow','rim light','volumetric fog
 const SEEDANCE_MOODS = ['epic','melancholic','tense','dreamy','nostalgic','mysterious','romantic','energetic'];
 const SEEDANCE_PHYSICS = ['realistic physics','natural motion','accurate weight and momentum','fabric flowing naturally','hair swaying in wind','believable impacts','motion blur on fast action'];
 const SEEDANCE_AUDIO = ['intense orchestral buildup','pulsing electronic beat','emotional piano','diegetic ambient sound','sudden silence to explosion','synced to rhythmic cuts'];
-
-function generateSeedancePrompt(desc, style) {
-  const s = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
-  const shot = SEEDANCE_SHOTS[Math.floor(Math.random() * SEEDANCE_SHOTS.length)];
-  const movement = SEEDANCE_MOVEMENTS[Math.floor(Math.random() * SEEDANCE_MOVEMENTS.length)];
-  const lighting = SEEDANCE_LIGHTING[Math.floor(Math.random() * SEEDANCE_LIGHTING.length)];
-  const mood = SEEDANCE_MOODS[Math.floor(Math.random() * SEEDANCE_MOODS.length)];
-  const physics = SEEDANCE_PHYSICS.slice(0, 3).join(', ');
-  const audio = SEEDANCE_AUDIO[Math.floor(Math.random() * SEEDANCE_AUDIO.length)];
-  return `${desc}, ${s.seedance}, ${shot}, ${movement}, ${lighting} lighting, ${mood} atmosphere, ${physics}, ${audio}, seamless transition, continuous motion, 2K cinematic quality, 24fps`;
-}
 const QUALITY_MAP = {'1':'','2':'masterpiece, best quality','3':'masterpiece, best quality, ultra detailed, 8K UHD'};
 
 /* ==================== Prompt 生成函数 ==================== */
@@ -1363,6 +1512,17 @@ function generateSeedancePrompt(desc,style) {
   return desc+', '+s.seedance+', '+shot+', '+movement+', '+lighting+' lighting, '+mood+' atmosphere, '+physics+', '+audio+', seamless transition, continuous motion, 2K cinematic quality, 24fps';
 }
 
+function buildPromptCards(desc, style, aspect, quality, stylize) {
+  const t = LOCALES[currentLang];
+  return [
+    {model:currentLang==='zh'?'通用模型':'Universal',icon:'ALL',iconClass:'universal',desc:t.modelUniversal,prompt:generateUniversalPrompt(desc,style)},
+    {model:'Midjourney',icon:'MJ',iconClass:'mj',desc:t.modelMj,prompt:generateMidjourneyPrompt(desc,style,aspect,quality,stylize)},
+    {model:'Flux',icon:'FL',iconClass:'flux',desc:t.modelFlux,prompt:generateFluxPrompt(desc,style)},
+    {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,style)},
+    {model:'SeaDance 2.0',icon:'SD',iconClass:'seedance',desc:t.modelSeedance,prompt:generateSeedancePrompt(desc,style)}
+  ];
+}
+
 /* ==================== 核心逻辑 ==================== */
 function generatePrompts() {
   const desc=document.getElementById('description').value.trim(); const t=LOCALES[currentLang];
@@ -1372,13 +1532,7 @@ function generatePrompts() {
     btn=document.getElementById('generateBtn'),btnText=document.getElementById('btnText');
   btn.disabled=true; btnText.innerHTML=t.generating;
   setTimeout(()=>{
-    renderResults([
-      {model:currentLang==='zh'?'通用模型':'Universal',icon:'ALL',iconClass:'universal',desc:t.modelUniversal,prompt:generateUniversalPrompt(desc,style)},
-      {model:'Midjourney',icon:'MJ',iconClass:'mj',desc:t.modelMj,prompt:generateMidjourneyPrompt(desc,style,aspect,quality,stylize)},
-      {model:'Flux',icon:'FL',iconClass:'flux',desc:t.modelFlux,prompt:generateFluxPrompt(desc,style)},
-      {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,style)},
-      {model:'SeaDance 2.0',icon:'SD',iconClass:'seedance',desc:t.modelSeedance,prompt:generateSeedancePrompt(desc,style)}
-    ]);
+    renderResults(buildPromptCards(desc,style,aspect,quality,stylize));
     renderQualityScore(generateUniversalPrompt(desc,style));
     btn.disabled=false; btnText.textContent=t.regenBtn; showToast(t.toastSuccess,'success');
   },800);
@@ -1388,12 +1542,12 @@ function renderResults(cards) {
   const grid=document.getElementById('resultsGrid'),count=document.getElementById('resultsCount'),t=LOCALES[currentLang];
   count.textContent=t.resultsCount.replace('{n}',cards.length);
   grid.innerHTML=cards.map((c,i)=>`
-    <div class="prompt-card" style="animation-delay:${i*0.1}s">
+    <div class="prompt-card ${escapeHTML(c.iconClass)}" style="animation-delay:${i*0.1}s">
       <div class="card-header"><div class="card-model">
-        <div class="card-model-icon ${c.iconClass}">${c.icon}</div>
-        <div><div class="card-model-name">${c.model}</div><div class="card-model-desc">${c.desc}</div></div>
+        <div class="card-model-icon ${escapeHTML(c.iconClass)}">${escapeHTML(c.icon)}</div>
+        <div><div class="card-model-name">${escapeHTML(c.model)}</div><div class="card-model-desc">${escapeHTML(c.desc)}</div></div>
       </div></div>
-      <div class="card-body"><div class="card-prompt" id="prompt-${i}">${c.prompt}</div></div>
+      <div class="card-body"><div class="card-prompt" id="prompt-${i}">${escapeHTML(c.prompt)}</div></div>
       <div class="card-footer"><div class="export-group">
         <button class="btn-export" onclick="exportCopy(${i},this)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg>
@@ -1441,34 +1595,89 @@ document.getElementById('description').addEventListener('keydown',function(e){
 applyLocale();
 applyTheme();
 fetchStarCount();
+setupTabKeyboard();
+switchTab('generator');
 
 /* ==================== Tab 切换 ==================== */
 function switchTab(tab) {
   const genSection = document.getElementById('inputSection');
   const resSection = document.getElementById('resultsSection');
+  const qualitySection = document.getElementById('qualitySection');
   const optSection = document.getElementById('optimizerSection');
   const tplSection = document.getElementById('templateSection');
-  const tabGen = document.getElementById('tabGenerator');
-  const tabOpt = document.getElementById('tabOptimizer');
-  const tabTpl = document.getElementById('tabTemplates');
+  const tabs = {
+    generator: document.getElementById('tabGenerator'),
+    optimizer: document.getElementById('tabOptimizer'),
+    templates: document.getElementById('tabTemplates')
+  };
 
   /* 隐藏所有 */
   genSection.style.display = 'none'; resSection.style.display = 'none';
   optSection.style.display = 'none'; tplSection.style.display = 'none';
-  tabGen.classList.remove('active'); tabOpt.classList.remove('active'); tabTpl.classList.remove('active');
+  if (qualitySection) qualitySection.style.display = 'none';
+  Object.entries(tabs).forEach(([key, btn]) => {
+    const active = key === tab;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    btn.tabIndex = active ? 0 : -1;
+  });
 
   if (tab === 'generator') {
     genSection.style.display = ''; resSection.style.display = '';
-    tabGen.classList.add('active');
+    if (qualitySection && qualitySection.innerHTML.trim()) qualitySection.style.display = '';
   } else if (tab === 'optimizer') {
     optSection.style.display = '';
-    tabOpt.classList.add('active');
     renderHistory();
   } else if (tab === 'templates') {
     tplSection.style.display = '';
-    tabTpl.classList.add('active');
     renderTemplates();
   }
+}
+
+function setupTabKeyboard() {
+  const order = ['generator', 'optimizer', 'templates'];
+  const buttons = order.map(key => ({
+    key,
+    button: document.getElementById(key === 'generator' ? 'tabGenerator' : key === 'optimizer' ? 'tabOptimizer' : 'tabTemplates')
+  }));
+  buttons.forEach(({ key, button }, index) => {
+    button.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let nextIndex = index;
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % buttons.length;
+      if (event.key === 'ArrowLeft') nextIndex = (index - 1 + buttons.length) % buttons.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = buttons.length - 1;
+      switchTab(buttons[nextIndex].key);
+      buttons[nextIndex].button.focus();
+    });
+  });
+}
+
+function refreshVisibleDynamicContent() {
+  const desc = document.getElementById('description').value.trim();
+  const hasPromptCards = document.querySelectorAll('.prompt-card').length > 0;
+  if (hasPromptCards && desc) {
+    const style = document.getElementById('style').value;
+    const aspect = document.getElementById('aspectRatio').value;
+    const quality = document.getElementById('quality').value;
+    const stylize = document.getElementById('stylize').value;
+    renderResults(buildPromptCards(desc, style, aspect, quality, stylize));
+    renderQualityScore(generateUniversalPrompt(desc, style));
+  }
+
+  const optInput = document.getElementById('optInput').value.trim();
+  const optResults = document.getElementById('optResults');
+  if (optInput && optResults.style.display !== 'none') {
+    const enhanced = enhanceDescription(optInput);
+    document.getElementById('optOriginalText').textContent = optInput;
+    document.getElementById('optEnhancedText').textContent = enhanced;
+    renderOptimizeResults(buildOptimizeResults(optInput));
+  }
+
+  if (document.getElementById('templateGrid').children.length > 0) renderTemplates();
+  if (document.getElementById('historySection').style.display !== 'none') renderHistory();
 }
 
 /* ==================== Prompt 优化器引擎 ==================== */
@@ -1592,12 +1801,12 @@ function renderTemplates() {
     const lang = currentLang === 'zh' ? 'zh' : 'en';
     const data = tpl[lang];
     return `<div class="template-card">
-      <div class="template-card-title">${data.title}</div>
-      <div class="template-card-preview">${data.preview}</div>
+      <div class="template-card-title">${escapeHTML(data.title)}</div>
+      <div class="template-card-preview">${escapeHTML(data.preview)}</div>
       <div class="template-card-footer">
         <button class="btn-use-template" onclick="useTemplate('${currentTemplateCat}', ${i})">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          ${t.tplUseBtn}
+          ${escapeHTML(t.tplUseBtn)}
         </button>
       </div>
     </div>`;
@@ -1608,7 +1817,9 @@ function filterTemplates(cat) {
   currentTemplateCat = cat;
   /* 更新分类按钮状态 */
   document.querySelectorAll('.template-cat-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.cat === cat);
+    const active = btn.dataset.cat === cat;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
   renderTemplates();
 }
@@ -1691,35 +1902,35 @@ function renderQualityScore(prompt) {
   section.innerHTML = `
     <div class="quality-section">
       <div class="quality-header">
-        <div class="quality-title">${t.qualityTitle}</div>
+        <div class="quality-title">${escapeHTML(t.qualityTitle)}</div>
         <div class="quality-total">${score.total}/100</div>
       </div>
       <div class="quality-metrics">
         <div class="quality-metric">
-          <div class="quality-metric-label">${t.qualityClarity}</div>
+          <div class="quality-metric-label">${escapeHTML(t.qualityClarity)}</div>
           <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.clarity)}" style="width:${score.clarity}%"></div></div>
           <div class="quality-metric-score">${score.clarity}</div>
         </div>
         <div class="quality-metric">
-          <div class="quality-metric-label">${t.qualityContext}</div>
+          <div class="quality-metric-label">${escapeHTML(t.qualityContext)}</div>
           <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.context)}" style="width:${score.context}%"></div></div>
           <div class="quality-metric-score">${score.context}</div>
         </div>
         <div class="quality-metric">
-          <div class="quality-metric-label">${t.qualitySpecificity}</div>
+          <div class="quality-metric-label">${escapeHTML(t.qualitySpecificity)}</div>
           <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.specificity)}" style="width:${score.specificity}%"></div></div>
           <div class="quality-metric-score">${score.specificity}</div>
         </div>
         <div class="quality-metric">
-          <div class="quality-metric-label">${t.qualityStructure}</div>
+          <div class="quality-metric-label">${escapeHTML(t.qualityStructure)}</div>
           <div class="quality-metric-bar"><div class="quality-metric-fill ${getLevel(score.structure)}" style="width:${score.structure}%"></div></div>
           <div class="quality-metric-score">${score.structure}</div>
         </div>
       </div>
       ${score.suggestions.length > 0 ? `
       <div class="quality-suggestions">
-        <div style="font-weight:600;margin-bottom:8px;">${t.qualitySuggestionTitle}</div>
-        ${score.suggestions.map(s => `<div class="quality-suggestion-item"><span class="quality-suggestion-dot"></span><span>${s}</span></div>`).join('')}
+        <div style="font-weight:600;margin-bottom:8px;">${escapeHTML(t.qualitySuggestionTitle)}</div>
+        ${score.suggestions.map(s => `<div class="quality-suggestion-item"><span class="quality-suggestion-dot"></span><span>${escapeHTML(s)}</span></div>`).join('')}
       </div>` : ''}
     </div>
   `;
@@ -1850,27 +2061,8 @@ function optimizePrompt() {
     document.getElementById('optResults').style.display = '';
 
     /* 生成各模型结果 */
-    const results = [
-      { model: t.optChatGPT, icon: 'GPT', iconClass: 'chatgpt', desc: t.optChatGPTDesc, prompt: optimizeForChatGPT(input) },
-      { model: t.optMj, icon: 'MJ', iconClass: 'mj', desc: t.optMjDesc, prompt: optimizeForMidjourney(input) },
-      { model: t.optFlux, icon: 'FL', iconClass: 'flux', desc: t.optFluxDesc, prompt: optimizeForFlux(input) },
-      { model: t.optVideo, icon: 'VI', iconClass: 'video', desc: t.optVideoDesc, prompt: optimizeForVideo(input) },
-      { model: t.optSeedance, icon: 'SD', iconClass: 'seedance', desc: t.optSeedanceDesc, prompt: optimizeForSeedance(input) }
-    ];
-
-    const grid = document.getElementById('optResultsGrid');
-    grid.innerHTML = results.map((r, i) => `
-      <div class="opt-result-card">
-        <div class="opt-result-header">
-          <div class="opt-result-model">
-            <div class="opt-result-model-icon ${r.iconClass}">${r.icon}</div>
-            <div class="opt-result-name">${r.model}</div>
-          </div>
-          <button class="btn-copy-sm" onclick="copyOptResult(${i}, this)">${t.copyBtn}</button>
-        </div>
-        <div class="opt-result-text" id="opt-result-${i}">${r.prompt}</div>
-      </div>
-    `).join('');
+    const results = buildOptimizeResults(input);
+    renderOptimizeResults(results);
 
     /* 保存到历史记录 */
     saveToHistory(input, enhanced);
@@ -1880,6 +2072,34 @@ function optimizePrompt() {
     btnText.textContent = t.optBtnText;
     showToast(t.optToastSuccess, 'success');
   }, 600);
+}
+
+function buildOptimizeResults(input) {
+  const t = LOCALES[currentLang];
+  return [
+    { model: t.optChatGPT, icon: 'GPT', iconClass: 'chatgpt', desc: t.optChatGPTDesc, prompt: optimizeForChatGPT(input) },
+    { model: t.optMj, icon: 'MJ', iconClass: 'mj', desc: t.optMjDesc, prompt: optimizeForMidjourney(input) },
+    { model: t.optFlux, icon: 'FL', iconClass: 'flux', desc: t.optFluxDesc, prompt: optimizeForFlux(input) },
+    { model: t.optVideo, icon: 'VI', iconClass: 'video', desc: t.optVideoDesc, prompt: optimizeForVideo(input) },
+    { model: t.optSeedance, icon: 'SD', iconClass: 'seedance', desc: t.optSeedanceDesc, prompt: optimizeForSeedance(input) }
+  ];
+}
+
+function renderOptimizeResults(results) {
+  const t = LOCALES[currentLang];
+  const grid = document.getElementById('optResultsGrid');
+  grid.innerHTML = results.map((r, i) => `
+    <div class="opt-result-card">
+      <div class="opt-result-header">
+        <div class="opt-result-model">
+          <div class="opt-result-model-icon ${escapeHTML(r.iconClass)}">${escapeHTML(r.icon)}</div>
+          <div class="opt-result-name">${escapeHTML(r.model)}</div>
+        </div>
+        <button class="btn-copy-sm" onclick="copyOptResult(${i}, this)">${escapeHTML(t.copyBtn)}</button>
+      </div>
+      <div class="opt-result-text" id="opt-result-${i}">${escapeHTML(r.prompt)}</div>
+    </div>
+  `).join('');
 }
 
 /* 复制优化结果 */
@@ -1904,19 +2124,24 @@ const HISTORY_KEY = 'tsc-opt-history';
 const MAX_HISTORY = 20;
 
 function getHistory() {
-  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
+  try {
+    const value = JSON.parse(safeStorageGet(HISTORY_KEY, '[]'));
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
 }
 
 function saveToHistory(input, enhanced) {
   const history = getHistory();
   history.unshift({ input, enhanced, time: new Date().toISOString() });
   if (history.length > MAX_HISTORY) history.pop();
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  safeStorageSet(HISTORY_KEY, JSON.stringify(history));
   renderHistory();
 }
 
 function clearHistory() {
-  localStorage.removeItem(HISTORY_KEY);
+  safeStorageRemove(HISTORY_KEY);
   renderHistory();
   const t = LOCALES[currentLang];
   showToast(t.optToastHistoryCleared, 'success');
@@ -1936,10 +2161,10 @@ function renderHistory() {
   list.innerHTML = history.map((h, i) => {
     const date = new Date(h.time);
     const timeStr = date.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
-    return `<div class="history-item" onclick="loadHistory(${i})">
-      <span class="history-item-input">${h.input}</span>
-      <span class="history-item-time">${timeStr}</span>
-    </div>`;
+    return `<button type="button" class="history-item" onclick="loadHistory(${i})">
+      <span class="history-item-input">${escapeHTML(h.input)}</span>
+      <span class="history-item-time">${escapeHTML(timeStr)}</span>
+    </button>`;
   }).join('');
 }
 

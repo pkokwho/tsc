@@ -16,22 +16,18 @@ Enter your creative idea in any language, and instantly generate professional pr
 
 </div>
 
-<p align="center">
-  <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=TSC%20AI%20Prompt%20Studio%20banner%2C%20dark%20purple%20gradient%20background%2C%20modern%20UI%20interface%20mockup%20floating%20cards%2C%20AI%20prompt%20generation%20tool%2C%20sleek%20glassmorphism%20design%2C%20purple%20and%20indigo%20color%20scheme%2C%20professional%20tech%20product%20banner&image_size=landscape_16_9" alt="TSC AI Prompt Studio Banner" width="100%" />
-</p>
-
 ## Demo
 
 <p align="center">
-  <img src="assets/demo.gif" alt="TSC AI Prompt Studio Demo" width="100%" />
+  <img src="assets/dark-theme.png" alt="TSC AI Prompt Studio dark theme screenshot" width="48%" />
+  <img src="assets/light-theme.png" alt="TSC AI Prompt Studio light theme screenshot" width="48%" />
 </p>
 
 <details>
-<summary>Screenshots</summary>
+<summary>View demo GIF (about 45MB)</summary>
 
 <p align="center">
-  <img src="assets/dark-theme.png" alt="Dark Theme" width="48%" />
-  <img src="assets/light-theme.png" alt="Light Theme" width="48%" />
+  <img src="assets/demo.gif" alt="TSC AI Prompt Studio Demo" width="100%" />
 </p>
 
 </details>
@@ -87,6 +83,7 @@ Enter your creative idea in any language, and instantly generate professional pr
 - **Responsive Design** — Works on desktop, tablet, and mobile
 - **Single File** — Zero dependencies, deploy anywhere
 - **SEO & Social** — Open Graph, Twitter Card, JSON-LD structured data
+- **Local-first** — User input is never uploaded; runtime network access is limited to GitHub star count
 
 ## Quick Start
 
@@ -129,7 +126,6 @@ tsc/
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── assets/                # Logo, screenshots, and static assets
 │   ├── logo.svg           # SVG Logo
-│   ├── banner.png         # Banner image
 │   ├── demo.gif           # Demo animation
 │   ├── dark-theme.png     # Dark theme screenshot
 │   └── light-theme.png    # Light theme screenshot
@@ -158,6 +154,8 @@ tsc/
 
 | Version | Date | Description |
 |---------|------|-------------|
+| [v3.1.1] | 2026-06-13 | Stability polish, docs sync, safe rendering |
+| [v3.1.0] | 2026-06-05 | SeaDance 2.0 support |
 | [v3.0.0] | 2026-06-05 | Template Library, Quality Score, Export features |
 | [v2.0.0] | 2026-06-03 | Bilingual system, theme toggle, SEO, open source standards |
 | [v1.0.0] | 2026-06-03 | Initial release — Generator, Optimizer |

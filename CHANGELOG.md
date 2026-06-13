@@ -5,6 +5,21 @@ All notable changes to TSC AI Prompt Studio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.1] - 2026-06-13
+
+### Changed
+
+- Updated product and architecture planning docs to match the current v3.1 feature set
+- Improved README performance by showing static screenshots before the large demo GIF
+- Documented local-first runtime behavior and GitHub star count network access
+- Polished the workspace UI with capability stats, stronger generator framing, model color accents, and clearer result/template cards
+
+### Fixed
+
+- Removed stale missing banner asset references from documentation and changelog
+- Hardened the single-file app against unsafe dynamic rendering paths
+- Improved tab accessibility, keyboard navigation, and reduced-motion behavior
+
 ## [3.1.0] - 2026-06-05
 
 ### Added
@@ -26,7 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 0-100 quality score with improvement suggestions
 - Export features: Copy, Download TXT, Download Markdown
 - SVG Logo (assets/logo.svg)
-- Banner image (assets/banner.png)
 - README feature cards layout
 - Roadmap section in README
 - Release history table in README
@@ -35,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tab navigation now supports 3 tabs: Generator, Optimizer, Templates
 - Prompt cards now show 3 export buttons instead of single copy button
-- Both READMEs redesigned with logo, banner, feature cards, roadmap, and release sections
+- Both READMEs redesigned with logo, feature cards, roadmap, and release sections
 
 ## [2.0.0] - 2026-06-03
 

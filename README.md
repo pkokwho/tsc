@@ -16,22 +16,18 @@
 
 </div>
 
-<p align="center">
-  <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=TSC%20AI%20Prompt%20Studio%20banner%2C%20dark%20purple%20gradient%20background%2C%20modern%20UI%20interface%20mockup%20floating%20cards%2C%20AI%20prompt%20generation%20tool%2C%20sleek%20glassmorphism%20design%2C%20purple%20and%20indigo%20color%20scheme%2C%20professional%20tech%20product%20banner&image_size=landscape_16_9" alt="TSC AI Prompt Studio Banner" width="100%" />
-</p>
-
 ## 演示
 
 <p align="center">
-  <img src="assets/demo.gif" alt="TSC AI Prompt Studio Demo" width="100%" />
+  <img src="assets/dark-theme.png" alt="TSC AI Prompt Studio 深色主题截图" width="48%" />
+  <img src="assets/light-theme.png" alt="TSC AI Prompt Studio 浅色主题截图" width="48%" />
 </p>
 
 <details>
-<summary>截图预览</summary>
+<summary>查看演示动图（约 45MB）</summary>
 
 <p align="center">
-  <img src="assets/dark-theme.png" alt="深色主题" width="48%" />
-  <img src="assets/light-theme.png" alt="浅色主题" width="48%" />
+  <img src="assets/demo.gif" alt="TSC AI Prompt Studio Demo" width="100%" />
 </p>
 
 </details>
@@ -87,6 +83,7 @@
 - **响应式设计** — 适配桌面、平板、手机
 - **单文件部署** — 零依赖，随处部署
 - **SEO & 社交** — Open Graph、Twitter Card、JSON-LD 结构化数据
+- **本地优先** — 用户输入不上传服务器，仅请求 GitHub Star 数
 
 ## 快速开始
 
@@ -129,7 +126,6 @@ tsc/
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── assets/                # Logo、截图等静态资源
 │   ├── logo.svg           # SVG Logo
-│   ├── banner.png         # Banner 图片
 │   ├── demo.gif           # 演示动画
 │   ├── dark-theme.png     # 深色主题截图
 │   └── light-theme.png    # 浅色主题截图
@@ -158,6 +154,8 @@ tsc/
 
 | 版本 | 日期 | 说明 |
 |------|------|------|
+| [v3.1.1] | 2026-06-13 | 稳态优化、文档同步、安全渲染 |
+| [v3.1.0] | 2026-06-05 | SeaDance 2.0 支持 |
 | [v3.0.0] | 2026-06-05 | 模板库、质量评分、导出功能 |
 | [v2.0.0] | 2026-06-03 | 双语系统、主题切换、SEO、开源规范 |
 | [v1.0.0] | 2026-06-03 | 初始发布 — 生成器、优化器 |
