@@ -580,6 +580,8 @@
   .btn-optimize:focus-visible,
   .btn-clear-history:focus-visible,
   .btn-use-template:focus-visible,
+  .btn-template-tool:focus-visible,
+  .template-field-input:focus-visible,
   .btn-export:focus-visible,
   .btn-vault:focus-visible,
   .btn-copy-sm:focus-visible,
@@ -803,6 +805,29 @@
   background: var(--accent-gradient); color: #fff; border-color: transparent;
   box-shadow: 0 2px 12px rgba(99,102,241,0.3);
 }
+.template-composer {
+  margin-bottom:18px; padding:18px; background:var(--bg-secondary);
+  border:1px solid var(--border-color); border-radius:var(--radius-md);
+}
+.template-composer-header {
+  display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:14px;
+}
+.template-composer-title { font-size:16px; font-weight:700; line-height:1.35; }
+.template-composer-subtitle { margin-top:4px; color:var(--text-secondary); font-size:12px; line-height:1.5; }
+.template-fields { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:14px; }
+.template-field-label { display:block; margin-bottom:6px; color:var(--text-secondary); font-size:12px; font-weight:600; }
+.template-field-input {
+  width:100%; min-height:40px; padding:10px 12px; background:var(--input-bg);
+  border:1px solid var(--border-color); border-radius:var(--radius-sm);
+  color:var(--text-primary); font-family:var(--font-stack); font-size:14px; outline:none;
+}
+.template-field-input:focus { background:var(--input-focus-bg); border-color:var(--border-active); }
+.template-preview {
+  max-height:220px; overflow:auto; padding:14px; background:var(--input-bg);
+  border:1px solid var(--border-color); border-radius:var(--radius-sm);
+  color:var(--text-secondary); font-size:13px; line-height:1.7; white-space:pre-wrap; word-break:break-word;
+}
+.template-composer-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
 .template-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
 }
@@ -816,7 +841,21 @@
     background:linear-gradient(180deg, #06b6d4, #6366f1);
   }
 .template-card:hover { background: var(--bg-card-hover); border-color: rgba(99,102,241,0.15); transform: translateY(-2px); }
-.template-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.template-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:8px; }
+.template-card-title { font-size: 15px; font-weight: 600; }
+.template-card-tools { display:flex; gap:6px; flex-shrink:0; }
+.btn-template-tool {
+  width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center;
+  background:var(--copy-bg); border:1px solid var(--border-color); border-radius:8px;
+  color:var(--text-secondary); cursor:pointer; transition:all var(--transition-fast);
+}
+.btn-template-tool:hover { background:var(--copy-hover-bg); color:var(--text-primary); border-color:var(--copy-border); }
+.btn-template-tool.active { color:#facc15; border-color:rgba(250,204,21,0.35); background:rgba(250,204,21,0.1); }
+.template-card-meta { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.template-card-tag {
+  padding:3px 8px; border-radius:999px; background:var(--bg-secondary);
+  border:1px solid var(--border-color); color:var(--text-tertiary); font-size:11px; line-height:1.4;
+}
 .template-card-preview { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .template-card-footer { display: flex; justify-content: flex-end; }
 .template-empty {
@@ -878,6 +917,7 @@
   .vault-header { flex-direction:column; align-items:stretch; }
   .vault-actions { justify-content:flex-start; }
   .vault-grid { grid-template-columns:1fr; }
+  .template-composer-header { flex-direction:column; align-items:stretch; }
   .quality-metrics { grid-template-columns: repeat(2, 1fr); }
   .template-grid { grid-template-columns: 1fr; }
   .export-group { flex-wrap: wrap; }
@@ -1256,7 +1296,9 @@
       <input class="template-search" id="templateSearch" type="search" data-i18n-placeholder="tplSearchPlaceholder" placeholder="搜索当前分类的模板" autocomplete="off">
     </div>
     <div class="template-categories" id="templateCategories">
-      <button class="template-cat-btn active" data-cat="seo" aria-pressed="true" onclick="filterTemplates('seo')">🔍 <span data-i18n="tplCatSEO">SEO</span></button>
+      <button class="template-cat-btn active" data-cat="all" aria-pressed="true" onclick="filterTemplates('all')">▦ <span data-i18n="tplCatAll">全部</span></button>
+      <button class="template-cat-btn" data-cat="favorites" aria-pressed="false" onclick="filterTemplates('favorites')">★ <span data-i18n="tplCatFavorites">收藏</span></button>
+      <button class="template-cat-btn" data-cat="seo" aria-pressed="false" onclick="filterTemplates('seo')">🔍 <span data-i18n="tplCatSEO">SEO</span></button>
       <button class="template-cat-btn" data-cat="blog" aria-pressed="false" onclick="filterTemplates('blog')">✍️ <span data-i18n="tplCatBlog">博客写作</span></button>
       <button class="template-cat-btn" data-cat="youtube" aria-pressed="false" onclick="filterTemplates('youtube')">🎬 <span data-i18n="tplCatYouTube">YouTube 脚本</span></button>
       <button class="template-cat-btn" data-cat="coding" aria-pressed="false" onclick="filterTemplates('coding')">💻 <span data-i18n="tplCatCoding">编程助手</span></button>
@@ -1266,6 +1308,7 @@
       <button class="template-cat-btn" data-cat="flux" aria-pressed="false" onclick="filterTemplates('flux')">🔥 <span data-i18n="tplCatFlux">Flux</span></button>
       <button class="template-cat-btn" data-cat="seedance" aria-pressed="false" onclick="filterTemplates('seedance')">🎬 <span data-i18n="tplCatSeedance">SeaDance</span></button>
     </div>
+    <div class="template-composer" id="templateComposer" style="display:none;"></div>
     <div class="template-grid" id="templateGrid"></div>
   </div>
 </section>
@@ -1369,13 +1412,28 @@ const LOCALES = {
     optToastHistoryCleared: '历史记录已清除',
     /* Templates */
     tabTemplates: '模板库',
+    tplCatAll: '全部', tplCatFavorites: '收藏',
     tplCatSEO: 'SEO', tplCatBlog: '博客写作', tplCatYouTube: 'YouTube 脚本',
     tplCatCoding: '编程助手', tplCatStudy: '学习助手', tplCatMarketing: '营销文案',
     tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: '使用', tplToastInserted: '模板已插入',
+    tplFavorite: '收藏模板',
+    tplFavorited: '取消收藏',
+    tplShare: '复制模板链接',
+    tplToastFavorited: '模板已收藏',
+    tplToastUnfavorited: '已取消收藏',
+    tplToastShared: '模板链接已复制',
+    tplComposerSubtitle: '填写占位符后生成可直接使用的 Prompt。',
+    tplPreview: '预览',
+    tplInsertComposed: '插入生成器',
+    tplCopyComposed: '复制结果',
+    tplCloseComposer: '关闭',
+    tplFieldCount: '{n} 个占位符',
+    tplNoFields: '无占位符',
+    tplFavoriteEmpty: '还没有收藏模板。点击模板卡片右上角星标即可收藏。',
     tplSearchLabel: '搜索模板',
-    tplSearchPlaceholder: '搜索当前分类的模板',
-    tplSearchEmpty: '当前分类没有匹配的模板',
+    tplSearchPlaceholder: '搜索全部模板或当前分类',
+    tplSearchEmpty: '没有匹配的模板',
     tplGuideTitle: '📖 模板库使用教程',
     tplGuideStep1Title: '选择分类', tplGuideStep1Desc: '点击上方标签切换不同场景分类',
     tplGuideStep2Title: '挑选模板', tplGuideStep2Desc: '浏览卡片找到合适的提示词模板',
@@ -1464,13 +1522,28 @@ const LOCALES = {
     optToastHistoryCleared: 'History cleared',
     /* Templates */
     tabTemplates: 'Templates',
+    tplCatAll: 'All', tplCatFavorites: 'Favorites',
     tplCatSEO: 'SEO', tplCatBlog: 'Blog Writing', tplCatYouTube: 'YouTube Script',
     tplCatCoding: 'Coding Assistant', tplCatStudy: 'Study Assistant', tplCatMarketing: 'Marketing Copy',
     tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: 'Use', tplToastInserted: 'Template inserted',
+    tplFavorite: 'Favorite template',
+    tplFavorited: 'Remove favorite',
+    tplShare: 'Copy template link',
+    tplToastFavorited: 'Template favorited',
+    tplToastUnfavorited: 'Removed from favorites',
+    tplToastShared: 'Template link copied',
+    tplComposerSubtitle: 'Fill placeholders to generate a ready-to-use prompt.',
+    tplPreview: 'Preview',
+    tplInsertComposed: 'Insert into generator',
+    tplCopyComposed: 'Copy result',
+    tplCloseComposer: 'Close',
+    tplFieldCount: '{n} fields',
+    tplNoFields: 'No fields',
+    tplFavoriteEmpty: 'No favorite templates yet. Click the star on a template card to save it.',
     tplSearchLabel: 'Search templates',
-    tplSearchPlaceholder: 'Search templates in this category',
-    tplSearchEmpty: 'No matching templates in this category',
+    tplSearchPlaceholder: 'Search all templates or the current category',
+    tplSearchEmpty: 'No matching templates',
     tplGuideTitle: '📖 Template Library Guide',
     tplGuideStep1Title: 'Choose Category', tplGuideStep1Desc: 'Click tabs above to switch between categories',
     tplGuideStep2Title: 'Pick a Template', tplGuideStep2Desc: 'Browse cards to find the right prompt template',
@@ -1521,9 +1594,11 @@ let currentLang = safeStorageGet('tsc-lang', browserLang);
 let currentTheme = safeStorageGet('tsc-theme', 'dark');
 const VAULT_KEY = 'tsc-prompt-vault';
 const MAX_VAULT_ITEMS = 80;
+const TEMPLATE_FAVORITES_KEY = 'tsc-template-favorites';
 let lastGeneratedCards = [];
 let templateSearchQuery = '';
 let activeTab = 'generator';
+let activeTemplateDraft = null;
 if (!LOCALES[currentLang]) currentLang = browserLang;
 if (!['dark', 'light'].includes(currentTheme)) currentTheme = 'dark';
 
@@ -2035,6 +2110,10 @@ function refreshVisibleDynamicContent() {
   }
 
   if (document.getElementById('templateGrid').children.length > 0) renderTemplates();
+  if (activeTemplateDraft) {
+    const entry = getTemplateEntry(activeTemplateDraft.cat, activeTemplateDraft.index);
+    if (entry) renderTemplateComposer(entry, activeTemplateDraft.values);
+  }
   if (document.getElementById('historySection').style.display !== 'none') renderHistory();
   renderVault();
 }
@@ -2149,34 +2228,110 @@ const TEMPLATE_DATA = {
   }
 };
 
-let currentTemplateCat = 'seo';
+let currentTemplateCat = 'all';
+
+function templateKey(cat, index) {
+  return `${cat}:${index}`;
+}
+
+function getTemplateFavorites() {
+  try {
+    const value = JSON.parse(safeStorageGet(TEMPLATE_FAVORITES_KEY, '[]'));
+    return Array.isArray(value) ? value.filter(key => typeof key === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveTemplateFavorites(keys) {
+  safeStorageSet(TEMPLATE_FAVORITES_KEY, JSON.stringify([...new Set(keys)]));
+}
+
+function isTemplateFavorite(cat, index) {
+  return getTemplateFavorites().includes(templateKey(cat, index));
+}
+
+function parseTemplatePlaceholders(template) {
+  const matches = [...String(template || '').matchAll(/\[([^\]]+)\]/g)].map(match => match[1].trim()).filter(Boolean);
+  return [...new Set(matches)];
+}
+
+function getTemplateCategoryLabel(cat) {
+  const t = LOCALES[currentLang];
+  const keyMap = {
+    seo: 'tplCatSEO', blog: 'tplCatBlog', youtube: 'tplCatYouTube', coding: 'tplCatCoding',
+    study: 'tplCatStudy', marketing: 'tplCatMarketing', midjourney: 'tplCatMidjourney',
+    flux: 'tplCatFlux', seedance: 'tplCatSeedance'
+  };
+  return t[keyMap[cat]] || cat;
+}
+
+function getTemplateEntries(scope = currentTemplateCat) {
+  const lang = currentLang === 'zh' ? 'zh' : 'en';
+  const favorites = new Set(getTemplateFavorites());
+  const entries = [];
+  Object.entries(TEMPLATE_DATA).forEach(([cat, group]) => {
+    group.templates.forEach((tpl, index) => {
+      const key = templateKey(cat, index);
+      if (scope !== 'all' && scope !== 'favorites' && scope !== cat) return;
+      if (scope === 'favorites' && !favorites.has(key)) return;
+      const data = tpl[lang];
+      entries.push({
+        cat,
+        index,
+        key,
+        data,
+        favorite: favorites.has(key),
+        fields: parseTemplatePlaceholders(data.template)
+      });
+    });
+  });
+  return entries;
+}
+
+function getFilteredTemplateEntries() {
+  const query = templateSearchQuery.trim().toLowerCase();
+  return getTemplateEntries().filter(entry => {
+    if (!query) return true;
+    return [
+      entry.data.title,
+      entry.data.preview,
+      entry.data.template,
+      getTemplateCategoryLabel(entry.cat)
+    ].join(' ').toLowerCase().includes(query);
+  });
+}
 
 function renderTemplates() {
   const t = LOCALES[currentLang];
-  const cat = TEMPLATE_DATA[currentTemplateCat];
   const grid = document.getElementById('templateGrid');
   const searchInput = document.getElementById('templateSearch');
   if (searchInput && searchInput.value !== templateSearchQuery) searchInput.value = templateSearchQuery;
-  const lang = currentLang === 'zh' ? 'zh' : 'en';
-  const query = templateSearchQuery.trim().toLowerCase();
-  const entries = cat.templates
-    .map((tpl, i) => ({ i, data: tpl[lang] }))
-    .filter(({ data }) => {
-      if (!query) return true;
-      return [data.title, data.preview, data.template].join(' ').toLowerCase().includes(query);
-    });
-  
+
+  const entries = getFilteredTemplateEntries();
   if (entries.length === 0) {
-    grid.innerHTML = `<div class="template-empty">${escapeHTML(t.tplSearchEmpty)}</div>`;
+    const empty = currentTemplateCat === 'favorites' && !templateSearchQuery.trim() ? t.tplFavoriteEmpty : t.tplSearchEmpty;
+    grid.innerHTML = `<div class="template-empty">${escapeHTML(empty)}</div>`;
     return;
   }
 
-  grid.innerHTML = entries.map(({ i, data }) => {
+  grid.innerHTML = entries.map(entry => {
+    const fieldText = entry.fields.length ? t.tplFieldCount.replace('{n}', entry.fields.length) : t.tplNoFields;
     return `<div class="template-card">
-      <div class="template-card-title">${escapeHTML(data.title)}</div>
-      <div class="template-card-preview">${escapeHTML(data.preview)}</div>
+      <div class="template-card-top">
+        <div class="template-card-title">${escapeHTML(entry.data.title)}</div>
+        <div class="template-card-tools">
+          <button class="btn-template-tool ${entry.favorite ? 'active' : ''}" type="button" title="${escapeHTML(entry.favorite ? t.tplFavorited : t.tplFavorite)}" aria-label="${escapeHTML(entry.favorite ? t.tplFavorited : t.tplFavorite)}" onclick="toggleTemplateFavorite('${escapeHTML(entry.cat)}', ${entry.index})">★</button>
+          <button class="btn-template-tool" type="button" title="${escapeHTML(t.tplShare)}" aria-label="${escapeHTML(t.tplShare)}" onclick="copyTemplateLink('${escapeHTML(entry.cat)}', ${entry.index})">↗</button>
+        </div>
+      </div>
+      <div class="template-card-meta">
+        <span class="template-card-tag">${escapeHTML(getTemplateCategoryLabel(entry.cat))}</span>
+        <span class="template-card-tag">${escapeHTML(fieldText)}</span>
+      </div>
+      <div class="template-card-preview">${escapeHTML(entry.data.preview)}</div>
       <div class="template-card-footer">
-        <button class="btn-use-template" onclick="useTemplate('${currentTemplateCat}', ${i})">
+        <button class="btn-use-template" onclick="useTemplate('${escapeHTML(entry.cat)}', ${entry.index})">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           ${escapeHTML(t.tplUseBtn)}
         </button>
@@ -2187,23 +2342,150 @@ function renderTemplates() {
 
 function filterTemplates(cat) {
   currentTemplateCat = cat;
-  /* 更新分类按钮状态 */
   document.querySelectorAll('.template-cat-btn').forEach(btn => {
     const active = btn.dataset.cat === cat;
     btn.classList.toggle('active', active);
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
+  closeTemplateComposer();
   renderTemplates();
 }
 
-function useTemplate(cat, index) {
+function getTemplateEntry(cat, index) {
   const lang = currentLang === 'zh' ? 'zh' : 'en';
-  const template = TEMPLATE_DATA[cat].templates[index][lang].template;
-  /* 切换到生成器 tab 并填入模板 */
-  document.getElementById('description').value = template;
+  const group = TEMPLATE_DATA[cat];
+  if (!group || !group.templates[index]) return null;
+  const data = group.templates[index][lang];
+  return { cat, index, key: templateKey(cat, index), data, fields: parseTemplatePlaceholders(data.template) };
+}
+
+function useTemplate(cat, index) {
+  const entry = getTemplateEntry(cat, index);
+  if (!entry) return;
+  if (entry.fields.length > 0) {
+    renderTemplateComposer(entry);
+    return;
+  }
+  insertTemplatePrompt(entry.data.template);
+}
+
+function renderTemplateComposer(entry, values = {}) {
+  const t = LOCALES[currentLang];
+  activeTemplateDraft = { ...entry, values };
+  const composer = document.getElementById('templateComposer');
+  const fields = entry.fields.map((field, i) => `
+    <div class="template-field">
+      <label class="template-field-label" for="templateField-${i}">${escapeHTML(field)}</label>
+      <input class="template-field-input" id="templateField-${i}" value="${escapeHTML(values[field] || '')}" placeholder="${escapeHTML(field)}" oninput="updateTemplateDraftField(${i}, this.value)">
+    </div>
+  `).join('');
+
+  composer.style.display = '';
+  composer.innerHTML = `
+    <div class="template-composer-header">
+      <div>
+        <div class="template-composer-title">${escapeHTML(entry.data.title)}</div>
+        <div class="template-composer-subtitle">${escapeHTML(t.tplComposerSubtitle)}</div>
+      </div>
+      <button class="btn-vault" type="button" onclick="closeTemplateComposer()">${escapeHTML(t.tplCloseComposer)}</button>
+    </div>
+    <div class="template-fields">${fields}</div>
+    <div class="template-field-label">${escapeHTML(t.tplPreview)}</div>
+    <div class="template-preview" id="templatePreview">${escapeHTML(composeTemplatePrompt())}</div>
+    <div class="template-composer-actions">
+      <button class="btn-use-template" type="button" onclick="insertComposedTemplate()">${escapeHTML(t.tplInsertComposed)}</button>
+      <button class="btn-vault" type="button" onclick="copyComposedTemplate()">${escapeHTML(t.tplCopyComposed)}</button>
+      <button class="btn-vault" type="button" onclick="copyTemplateLink('${escapeHTML(entry.cat)}', ${entry.index})">${escapeHTML(t.tplShare)}</button>
+    </div>
+  `;
+  composer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function updateTemplateDraftField(index, value) {
+  if (!activeTemplateDraft) return;
+  const field = activeTemplateDraft.fields[index];
+  if (!field) return;
+  activeTemplateDraft.values[field] = value;
+  const preview = document.getElementById('templatePreview');
+  if (preview) preview.textContent = composeTemplatePrompt();
+}
+
+function composeTemplatePrompt() {
+  if (!activeTemplateDraft) return '';
+  let prompt = activeTemplateDraft.data.template;
+  activeTemplateDraft.fields.forEach(field => {
+    const value = String(activeTemplateDraft.values[field] || '').trim();
+    prompt = prompt.replaceAll(`[${field}]`, value || `[${field}]`);
+  });
+  return prompt;
+}
+
+function insertTemplatePrompt(prompt) {
+  document.getElementById('description').value = prompt;
   switchTab('generator');
   document.getElementById('description').focus();
   showToast(LOCALES[currentLang].tplToastInserted, 'success');
+}
+
+function insertComposedTemplate() {
+  insertTemplatePrompt(composeTemplatePrompt());
+}
+
+async function copyComposedTemplate() {
+  const t = LOCALES[currentLang];
+  const prompt = composeTemplatePrompt();
+  try {
+    await navigator.clipboard.writeText(prompt);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = prompt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  showToast(t.toastCopied, 'success');
+}
+
+function closeTemplateComposer() {
+  const composer = document.getElementById('templateComposer');
+  if (composer) {
+    composer.style.display = 'none';
+    composer.innerHTML = '';
+  }
+  activeTemplateDraft = null;
+}
+
+function toggleTemplateFavorite(cat, index) {
+  const t = LOCALES[currentLang];
+  const key = templateKey(cat, index);
+  const favorites = getTemplateFavorites();
+  const next = favorites.includes(key) ? favorites.filter(item => item !== key) : [key, ...favorites];
+  saveTemplateFavorites(next);
+  showToast(favorites.includes(key) ? t.tplToastUnfavorited : t.tplToastFavorited, 'success');
+  renderTemplates();
+}
+
+async function copyTemplateLink(cat, index) {
+  const t = LOCALES[currentLang];
+  const url = `${location.href.split('#')[0]}#template=${encodeURIComponent(cat)}:${index}`;
+  try {
+    await navigator.clipboard.writeText(url);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  showToast(t.tplToastShared, 'success');
+}
+
+function openTemplateFromHash() {
+  const match = location.hash.match(/^#template=([^:]+):(\d+)$/);
+  if (!match) return;
+  const cat = decodeURIComponent(match[1]);
+  const index = Number(match[2]);
+  const entry = getTemplateEntry(cat, index);
+  if (!entry) return;
+  switchTab('templates');
+  filterTemplates(cat);
+  renderTemplateComposer(entry);
 }
 
 /* ==================== 提示词质量评分 ==================== */
@@ -2552,6 +2834,8 @@ function loadHistory(index) {
 document.getElementById('optInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); optimizePrompt(); }
 });
+window.addEventListener('hashchange', openTemplateFromHash);
+openTemplateFromHash();
 </script>
 </body>
 </html>

@@ -54,7 +54,7 @@ graph TB
 | 安全工具 | `escapeHTML`、`safeStorageGet`、`safeStorageSet`、`safeStorageRemove` |
 | 生成器 | Universal、Midjourney、Flux、Video AI、SeaDance 2.0 Prompt 生成 |
 | 优化器 | 描述增强、多模型优化、优化历史 |
-| 模板库 | 分类数据、当前分类搜索、模板插入 |
+| 模板库 | 分类数据、全局/分类/收藏搜索、占位符填写、模板插入、模板分享 |
 | 质量评分 | 4 维度评分和建议生成 |
 | 本地提示词库 | 保存、去重、复制、恢复、删除、清空、JSON 备份恢复 |
 | UI 控制 | 语言切换、主题切换、Tab 切换、键盘导航、Toast |
@@ -113,6 +113,7 @@ interface VaultBackup {
 | `tsc-theme` | 当前主题 | `dark` 或 `light` |
 | `tsc-opt-history` | 优化历史 | 最多 20 条 |
 | `tsc-prompt-vault` | 本地提示词库 | 最多 80 条 |
+| `tsc-template-favorites` | 模板收藏 | 模板 key 数组 |
 
 本地存储读写必须使用安全包装函数。读取失败时返回默认值，写入失败时静默降级，不阻断页面使用。
 
@@ -120,6 +121,7 @@ interface VaultBackup {
 
 - 用户输入、模板内容、历史记录、导入 JSON、生成结果渲染前必须调用 `escapeHTML`。
 - 导入 JSON 需要结构校验、字段归一化、ID 安全字符限制、去重和最大数量截断。
+- 模板占位符填写结果、收藏状态和分享链接渲染时必须使用安全转义。
 - 不执行导入文件中的任何脚本。
 - 不向后端发送用户输入或保存的 Prompt。
 - GitHub Star 请求只读取公开仓库元数据。

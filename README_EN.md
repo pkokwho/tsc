@@ -52,8 +52,10 @@ Enter a creative idea and generate professional prompts for universal image mode
 
 - 9 categories: SEO, Blog Writing, YouTube Script, Coding Assistant, Study Assistant, Marketing Copy, Midjourney, Flux, and SeaDance.
 - Every template has Chinese and English versions.
-- Includes keyword search inside the active category.
-- One click inserts a template into the generator.
+- Search across all templates, one category, or favorite templates.
+- Detects `[placeholders]` and generates a fill-in form with live preview.
+- Templates can be saved locally as favorites for reuse.
+- Template links can be copied and opened through URL hashes.
 
 ### Local Prompt Vault
 
@@ -164,6 +166,7 @@ tsc/
 
 | Version | Date | Description |
 |---------|------|-------------|
+| [v3.3.0] | 2026-06-14 | Template placeholder filling, favorites, global search, share links |
 | [v3.2.0] | 2026-06-14 | Local prompt vault, JSON backup/restore, template search, doc encoding fix |
 | [v3.1.1] | 2026-06-13 | Stability polish, docs sync, safe rendering, accessibility improvements |
 | [v3.1.0] | 2026-06-05 | SeaDance 2.0 support |

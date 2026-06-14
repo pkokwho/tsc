@@ -5,6 +5,20 @@ All notable changes to TSC AI Prompt Studio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2026-06-14
+
+### Added
+
+- Added template placeholder detection with a local fill-in composer and live preview
+- Added local template favorites backed by `localStorage`
+- Added all-template and favorite-template search flows
+- Added shareable template links via URL hash routing
+
+### Changed
+
+- Template cards now show category and placeholder-count metadata
+- Template library workflow now supports compose, copy, insert, favorite, and share actions
+
 ## [3.2.0] - 2026-06-14
 
 ### Added
