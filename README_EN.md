@@ -4,9 +4,9 @@
 
 # TSC AI Prompt Studio
 
-**Modern AI Prompt Generator · Optimizer · Template Library**
+**Modern AI Prompt Generator · Optimizer · Template Library · Local Prompt Vault**
 
-Enter your creative idea in any language, and instantly generate professional prompts for Midjourney, Flux, Video AI, and all image generation models
+Enter a creative idea and generate professional prompts for universal image models, Midjourney, Flux, Video AI, and SeaDance 2.0.
 
 [Live Demo](https://pkokwho.github.io/tsc/) · [Report Bug](https://github.com/pkokwho/tsc/issues) · [Request Feature](https://github.com/pkokwho/tsc/issues/new?template=feature_request.md) · [中文](README.md)
 
@@ -34,141 +34,152 @@ Enter your creative idea in any language, and instantly generate professional pr
 
 ## Features
 
-<table>
-<tr>
-<td width="50%">
+### Prompt Generator
 
-### 🎨 Prompt Generator
-- Multi-Model — Universal / Midjourney / Flux / Video AI / SeaDance 2.0
-- 12 Art Styles — Photorealistic, Cyberpunk, Anime, Oil Painting, etc.
-- Adjustable Params — Aspect ratio, quality, stylize intensity
-- Export — Copy / TXT / Markdown download
+- Generates prompts for Universal, Midjourney, Flux, Video AI, and SeaDance 2.0.
+- Includes 12 art styles: photorealistic, cyberpunk, anime, oil painting, watercolor, sci-fi, and more.
+- Supports aspect ratio, quality, and stylize controls.
+- Each result can be copied, downloaded as TXT or Markdown, or saved to the local prompt vault.
 
-</td>
-<td width="50%">
+### Prompt Optimizer
 
-### ⚡ Prompt Optimizer
-- Smart Enhancement — Simple description → Professional prompt
-- Multi-Model — ChatGPT / MJ / Flux / Video / SeaDance 2.0 optimized versions
-- Before & After — Original vs enhanced comparison
-- History — Auto-save with recall and clear
+- Expands simple descriptions into more specific professional prompts.
+- Produces optimized outputs for ChatGPT, Midjourney, Flux, Video AI, and SeaDance 2.0.
+- Shows original vs enhanced text.
+- Saves optimizer history locally for recall and clearing.
 
-</td>
-</tr>
-<tr>
-<td width="50%">
+### Template Library
 
-### 📚 Template Library
-- 9 Categories — SEO / Blog / YouTube / Coding / Study / Marketing / MJ / Flux / SeaDance
-- One-Click Insert — Click to use, auto-fill into generator
-- Bilingual — Each template available in Chinese & English
-- Growing — More templates added regularly
+- 9 categories: SEO, Blog Writing, YouTube Script, Coding Assistant, Study Assistant, Marketing Copy, Midjourney, Flux, and SeaDance.
+- Every template has Chinese and English versions.
+- Includes keyword search inside the active category.
+- One click inserts a template into the generator.
 
-</td>
-<td width="50%">
+### Local Prompt Vault
 
-### 📊 Quality Score
-- 4 Dimensions — Clarity / Context / Specificity / Structure
-- 0-100 Score — Quantified prompt quality
-- Suggestions — Targeted improvement directions
-- Real-time — Scored instantly on generation
+- Save high-value prompts from generated results.
+- Copy, restore, delete, or clear saved prompts.
+- Export and import JSON backups for migration.
+- All data stays in the browser. No account, backend, or database required.
 
-</td>
-</tr>
-</table>
+### Quality Score
 
-### General
-- **Bilingual** — Chinese / English with auto browser language detection
-- **Dark & Light Theme** — Toggle with one click, preference saved locally
-- **Responsive Design** — Works on desktop, tablet, and mobile
-- **Single File** — Zero dependencies, deploy anywhere
-- **SEO & Social** — Open Graph, Twitter Card, JSON-LD structured data
-- **Local-first** — User input is never uploaded; runtime network access is limited to GitHub star count
+- Scores prompts by clarity, context, specificity, and structure.
+- Shows a 0-100 score after generation.
+- Provides targeted improvement suggestions.
+
+## Zero-Cost Product Principles
+
+The current phase intentionally avoids paid APIs, databases, login systems, cloud sync, and paid analytics. The project remains:
+
+- Single entry file: `index.html`
+- Zero dependency: no build tool, package manager, or runtime dependency
+- Local-first: user input, optimizer history, and saved prompts stay in the browser
+- Directly deployable: GitHub Pages, Cloudflare Pages, Netlify, Vercel, or any static server
+
+The only runtime external request fetches the GitHub repository star count for social proof. User input and saved prompts are not uploaded.
 
 ## Quick Start
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/pkokwho/tsc.git
-   ```
-2. Open `index.html` in your browser — that's it!
+```bash
+git clone https://github.com/pkokwho/tsc.git
+cd tsc
+```
 
-No dependencies to install. No build step required.
+Open `index.html` in a browser. No install step. No build step.
 
 ## Deployment
 
 ### GitHub Pages
 
-1. Fork or push this repository to GitHub
-2. Go to **Settings → Pages**
-3. Set source to `master` branch, root directory
-4. Your site will be live at `https://<username>.github.io/tsc/`
+1. Fork or push this repository to GitHub.
+2. Go to **Settings > Pages**.
+3. Set source to the `master` branch and root directory.
+4. Visit `https://<username>.github.io/tsc/`.
 
-### Other Platforms
+### Other Static Platforms
 
-`index.html` is a complete single-file application that can be deployed to any static hosting service:
-- Vercel / Netlify / Cloudflare Pages
-- Any web server
-- Open locally in a browser
+`index.html` is a complete static application and can be deployed to:
+
+- Cloudflare Pages
+- Netlify
+- Vercel
+- Any static web server
+- Local filesystem
 
 ## Tech Stack
 
 - Vanilla HTML / CSS / JavaScript
-- CSS Custom Properties for theming
-- No frameworks, no build tools, no dependencies
+- CSS custom properties for theming
+- `localStorage` for language, theme, optimizer history, and local prompt vault
+- Blob + FileReader for TXT, Markdown, and JSON export/import
+- No framework, no build step, no backend
 
 ## Project Structure
 
-```
+```text
 tsc/
-├── .github/
-│   ├── ISSUE_TEMPLATE/    # Issue templates
-│   └── PULL_REQUEST_TEMPLATE.md
-├── assets/                # Logo, screenshots, and static assets
-│   ├── logo.svg           # SVG Logo
-│   ├── demo.gif           # Demo animation
-│   ├── dark-theme.png     # Dark theme screenshot
-│   └── light-theme.png    # Light theme screenshot
-├── index.html             # Complete single-file application
-├── CHANGELOG.md           # Changelog
-├── CODE_OF_CONDUCT.md     # Code of Conduct
-├── CONTRIBUTING.md        # Contribution guide
-├── LICENSE                # MIT License
-├── README.md              # Chinese documentation
-├── README_EN.md           # English documentation
-├── SECURITY.md            # Security policy
-└── SUPPORT.md             # Support channels
+├── .github/                         # Issue and PR templates
+├── .trae/documents/                 # Product and architecture planning docs
+├── assets/
+│   ├── logo.svg                     # Logo
+│   ├── dark-theme.png               # Dark theme screenshot
+│   ├── light-theme.png              # Light theme screenshot
+│   └── demo.gif                     # Demo GIF, folded by default in README
+├── docs/superpowers/plans/          # Implementation plan records
+├── index.html                       # Complete single-file app
+├── README.md                        # Chinese documentation
+├── README_EN.md                     # English documentation
+├── CHANGELOG.md                     # Changelog
+├── SECURITY.md                      # Security policy
+├── SUPPORT.md                       # Support channels
+├── CONTRIBUTING.md                  # Contribution guide
+└── LICENSE                          # MIT License
 ```
 
 ## Roadmap
 
-- [ ] AI-powered prompt auto-completion
-- [ ] Prompt favorites / bookmark system
-- [ ] More template categories (DALL-E, Stable Diffusion, Sora)
-- [ ] Prompt version diff view
-- [ ] Custom user templates
-- [ ] PWA offline support
-- [ ] More languages (Japanese, Korean)
+### Current Zero-Cost Phase
+
+- [x] Multi-model prompt generation
+- [x] Prompt optimizer
+- [x] Template library
+- [x] Quality scoring
+- [x] Local prompt vault
+- [x] JSON backup and restore
+- [ ] Local custom templates
+- [ ] Prompt version diff
+- [ ] PWA offline cache
+
+### Future Funded Phase
+
+- [ ] Accounts and cloud sync
+- [ ] Team workspaces
+- [ ] Premium template marketplace
+- [ ] Paid plans and subscriptions
+- [ ] Real AI API-assisted generation
+- [ ] Privacy compliance and product analytics
 
 ## Releases
 
 | Version | Date | Description |
 |---------|------|-------------|
-| [v3.1.1] | 2026-06-13 | Stability polish, docs sync, safe rendering |
+| [v3.2.0] | 2026-06-14 | Local prompt vault, JSON backup/restore, template search, doc encoding fix |
+| [v3.1.1] | 2026-06-13 | Stability polish, docs sync, safe rendering, accessibility improvements |
 | [v3.1.0] | 2026-06-05 | SeaDance 2.0 support |
 | [v3.0.0] | 2026-06-05 | Template Library, Quality Score, Export features |
 | [v2.0.0] | 2026-06-03 | Bilingual system, theme toggle, SEO, open source standards |
-| [v1.0.0] | 2026-06-03 | Initial release — Generator, Optimizer |
+| [v1.0.0] | 2026-06-03 | Initial release |
 
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Contributing
 
-Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md) for details.
+Contributions are welcome. Please read the [Contributing Guide](CONTRIBUTING.md).
 
 ## Code of Conduct
 
-This project adopts the [Contributor Covenant](CODE_OF_CONDUCT.md) as its code of conduct. By participating, you are expected to uphold this code.
+This project uses the [Contributor Covenant](CODE_OF_CONDUCT.md) as its code of conduct.
 
 ## License
 

@@ -5,6 +5,25 @@ All notable changes to TSC AI Prompt Studio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-06-14
+
+### Added
+
+- Added a local prompt vault for saving generated prompts in the browser
+- Added prompt vault copy, restore, delete, clear, JSON export, and JSON import actions
+- Added template search inside the active template category
+- Added an implementation plan record for the local-first v3.2 optimization batch
+
+### Changed
+
+- Rewrote Chinese and English READMEs to remove mojibake and document the zero-cost local-first product direction
+- Updated PRD and technical architecture docs for the local prompt vault, JSON backup/restore, template search, and future paid-feature boundary
+- Result cards now support saving prompts in addition to copy, TXT, and Markdown export
+
+### Security
+
+- Imported prompt vault items are normalized, deduplicated, capped, and rendered through existing HTML escaping
+
 ## [3.1.1] - 2026-06-13
 
 ### Changed

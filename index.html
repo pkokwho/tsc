@@ -155,6 +155,10 @@
 
   /* ==================== Layout ==================== */
   .container { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:0 24px; }
+  .sr-only {
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
 
   /* ==================== Navigation ==================== */
   nav {
@@ -474,6 +478,59 @@
   .btn-copy:hover { background:var(--copy-hover-bg); color:var(--text-primary); border-color:var(--copy-border); }
   .btn-copy.copied { background:rgba(34,197,94,0.15); border-color:rgba(34,197,94,0.3); color:#22c55e; }
 
+  /* ==================== Local Prompt Vault ==================== */
+  .vault-section { margin:0 auto 56px; }
+  .vault-panel {
+    background:var(--bg-card); border:1px solid var(--border-color);
+    border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-card);
+  }
+  .vault-header {
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:18px; margin-bottom:18px;
+  }
+  .vault-title { font-size:18px; font-weight:700; letter-spacing:0; line-height:1.3; }
+  .vault-subtitle { margin-top:4px; color:var(--text-secondary); font-size:13px; line-height:1.5; }
+  .vault-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .btn-vault {
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    min-height:40px; padding:9px 13px; background:var(--copy-bg);
+    border:1px solid var(--border-color); border-radius:var(--radius-sm);
+    color:var(--text-secondary); font-family:var(--font-stack);
+    font-size:13px; font-weight:500; cursor:pointer;
+    transition:all var(--transition-fast);
+  }
+  .btn-vault:hover { background:var(--copy-hover-bg); color:var(--text-primary); border-color:var(--copy-border); }
+  .btn-vault.danger:hover { color:#ef4444; border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.08); }
+  .vault-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:14px; }
+  .vault-card {
+    background:var(--bg-secondary); border:1px solid var(--border-color);
+    border-radius:var(--radius-md); padding:16px; position:relative; overflow:hidden;
+  }
+  .vault-card::before {
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, #22c55e, #06b6d4);
+  }
+  .vault-card.mj::before { background:linear-gradient(90deg, #5865f2, #a855f7); }
+  .vault-card.flux::before { background:linear-gradient(90deg, #f97316, #facc15); }
+  .vault-card.video::before { background:linear-gradient(90deg, #ec4899, #f97316); }
+  .vault-card.seedance::before { background:linear-gradient(90deg, #0ea5e9, #22c55e); }
+  .vault-meta {
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    margin-bottom:10px; color:var(--text-tertiary); font-size:12px;
+  }
+  .vault-model { font-weight:700; color:var(--text-primary); }
+  .vault-prompt {
+    min-height:92px; max-height:160px; overflow:auto;
+    color:var(--text-secondary); font-size:13px; line-height:1.65;
+    word-break:break-word; white-space:pre-wrap; margin-bottom:12px;
+  }
+  .vault-card-actions { display:flex; gap:8px; flex-wrap:wrap; }
+  .vault-empty {
+    padding:28px; text-align:center; color:var(--text-tertiary);
+    border:1px dashed var(--border-color); border-radius:var(--radius-md);
+    background:var(--bg-secondary); grid-column:1 / -1;
+  }
+
   /* ==================== Empty State ==================== */
   .empty-state { text-align:center; padding:80px 24px; color:var(--text-tertiary); }
   .empty-icon { width:64px; height:64px; margin:0 auto 16px; opacity:0.3; }
@@ -524,8 +581,10 @@
   .btn-clear-history:focus-visible,
   .btn-use-template:focus-visible,
   .btn-export:focus-visible,
+  .btn-vault:focus-visible,
   .btn-copy-sm:focus-visible,
   .template-cat-btn:focus-visible,
+  .template-search:focus-visible,
   .history-item:focus-visible,
   .control-select:focus-visible,
   .input-textarea:focus-visible {
@@ -720,6 +779,16 @@
 
 /* ==================== Template Library ==================== */
 .template-section { margin-bottom: 48px; }
+.template-search-wrap { margin-bottom:16px; }
+.template-search {
+  width:100%; min-height:44px; padding:12px 16px;
+  background:var(--input-bg); border:1px solid var(--border-color);
+  border-radius:var(--radius-sm); color:var(--text-primary);
+  font-family:var(--font-stack); font-size:15px; outline:none;
+  transition:all var(--transition-fast);
+}
+.template-search::placeholder { color:var(--text-tertiary); }
+.template-search:focus { background:var(--input-focus-bg); border-color:var(--border-active); }
 .template-categories {
   display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
 }
@@ -750,6 +819,11 @@
 .template-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
 .template-card-preview { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .template-card-footer { display: flex; justify-content: flex-end; }
+.template-empty {
+  grid-column:1 / -1; padding:28px; text-align:center;
+  color:var(--text-tertiary); border:1px dashed var(--border-color);
+  border-radius:var(--radius-md); background:var(--bg-secondary);
+}
 .btn-use-template {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 16px; background: var(--accent-gradient); border: none;
@@ -788,10 +862,10 @@
 .quality-suggestion-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-1); margin-top: 7px; flex-shrink: 0; }
 
 /* ==================== Export Buttons ==================== */
-.export-group { display: flex; gap: 8px; }
+.export-group { display: flex; gap: 8px; flex-wrap: wrap; width:100%; }
 .btn-export {
   display: flex; align-items: center; justify-content: center; gap: 6px;
-  flex: 1; padding: 10px 12px; background: var(--copy-bg);
+  flex: 1 1 calc(50% - 8px); padding: 10px 12px; background: var(--copy-bg);
   border: 1px solid var(--border-color); border-radius: var(--radius-sm);
   color: var(--text-secondary); font-family: var(--font-stack);
   font-size: 13px; font-weight: 500; cursor: pointer;
@@ -801,6 +875,9 @@
 .btn-export.copied { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3); color: #22c55e; }
 
 @media (max-width:768px) {
+  .vault-header { flex-direction:column; align-items:stretch; }
+  .vault-actions { justify-content:flex-start; }
+  .vault-grid { grid-template-columns:1fr; }
   .quality-metrics { grid-template-columns: repeat(2, 1fr); }
   .template-grid { grid-template-columns: 1fr; }
   .export-group { flex-wrap: wrap; }
@@ -1063,6 +1140,24 @@
 <!-- ==================== Quality Score Section ==================== -->
 <div class="container" id="qualitySection" style="display:none;"></div>
 
+<!-- ==================== Local Prompt Vault Section ==================== -->
+<section class="vault-section container" id="vaultSection" style="display:none;">
+  <div class="vault-panel">
+    <div class="vault-header">
+      <div>
+        <h2 class="vault-title" data-i18n="vaultTitle">本地提示词库</h2>
+        <p class="vault-subtitle" data-i18n="vaultSubtitle">保存高价值提示词，全部留在你的浏览器本地。</p>
+      </div>
+      <div class="vault-actions">
+        <button class="btn-vault" type="button" onclick="exportVaultJson()" data-i18n="vaultExport">导出 JSON</button>
+        <button class="btn-vault" type="button" onclick="document.getElementById('vaultImportInput').click()" data-i18n="vaultImport">导入</button>
+        <button class="btn-vault danger" type="button" onclick="clearVault()" data-i18n="vaultClear">清空</button>
+      </div>
+    </div>
+    <div class="vault-grid" id="vaultGrid"></div>
+  </div>
+</section>
+
 <!-- ==================== Prompt Optimizer Section ==================== -->
 <section class="optimizer-section container" id="optimizerSection" style="display:none;">
   <div class="input-card">
@@ -1156,6 +1251,10 @@
     </div>
   </div>
   <div class="input-card">
+    <div class="template-search-wrap">
+      <label class="sr-only" for="templateSearch" data-i18n="tplSearchLabel">搜索模板</label>
+      <input class="template-search" id="templateSearch" type="search" data-i18n-placeholder="tplSearchPlaceholder" placeholder="搜索当前分类的模板" autocomplete="off">
+    </div>
     <div class="template-categories" id="templateCategories">
       <button class="template-cat-btn active" data-cat="seo" aria-pressed="true" onclick="filterTemplates('seo')">🔍 <span data-i18n="tplCatSEO">SEO</span></button>
       <button class="template-cat-btn" data-cat="blog" aria-pressed="false" onclick="filterTemplates('blog')">✍️ <span data-i18n="tplCatBlog">博客写作</span></button>
@@ -1186,6 +1285,7 @@
 </footer>
 
 <!-- ==================== Toast Container ==================== -->
+<input type="file" id="vaultImportInput" accept="application/json" style="display:none;">
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
@@ -1231,6 +1331,26 @@ const LOCALES = {
     modelUniversal: '适配所有生图模型', modelMj: 'AI 绘画 · 专业级', modelFlux: 'AI 绘画 · 开源模型', modelVideo: 'AI 视频 · 动态效果', modelSeedance: 'AI 视频 · SeaDance 2.0',
     copyBtn: '复制', copiedBtn: '已复制',
     toastEmpty: '请输入描述内容', toastSuccess: '提示词生成成功！', toastCopied: '已复制到剪贴板',
+    vaultSave: '保存',
+    vaultSaved: '已保存',
+    vaultTitle: '本地提示词库',
+    vaultSubtitle: '保存高价值提示词，全部留在你的浏览器本地。',
+    vaultEmpty: '还没有保存的提示词。生成结果后点击“保存”即可加入本地库。',
+    vaultRestore: '恢复',
+    vaultDelete: '删除',
+    vaultExport: '导出 JSON',
+    vaultImport: '导入',
+    vaultClear: '清空',
+    vaultSourceGenerated: '生成器',
+    vaultToastSaved: '已保存到本地提示词库',
+    vaultToastDuplicate: '这个提示词已经保存过',
+    vaultToastDeleted: '已删除',
+    vaultToastRestored: '已恢复到生成器',
+    vaultToastCleared: '本地提示词库已清空',
+    vaultToastExported: '提示词库已导出',
+    vaultToastEmpty: '本地提示词库为空',
+    vaultToastImported: '导入完成',
+    vaultToastImportFailed: '导入失败，请检查 JSON 文件',
     footerIssues: '反馈问题',
     footerText: 'TSC AI Prompt Studio | 单文件部署，支持 GitHub Pages',
     /* Optimizer */
@@ -1253,6 +1373,9 @@ const LOCALES = {
     tplCatCoding: '编程助手', tplCatStudy: '学习助手', tplCatMarketing: '营销文案',
     tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: '使用', tplToastInserted: '模板已插入',
+    tplSearchLabel: '搜索模板',
+    tplSearchPlaceholder: '搜索当前分类的模板',
+    tplSearchEmpty: '当前分类没有匹配的模板',
     tplGuideTitle: '📖 模板库使用教程',
     tplGuideStep1Title: '选择分类', tplGuideStep1Desc: '点击上方标签切换不同场景分类',
     tplGuideStep2Title: '挑选模板', tplGuideStep2Desc: '浏览卡片找到合适的提示词模板',
@@ -1303,6 +1426,26 @@ const LOCALES = {
     modelUniversal: 'All Image Models', modelMj: 'AI Art · Professional', modelFlux: 'AI Art · Open Source', modelVideo: 'AI Video · Motion', modelSeedance: 'AI Video · SeaDance 2.0',
     copyBtn: 'Copy', copiedBtn: 'Copied',
     toastEmpty: 'Please enter a description', toastSuccess: 'Prompts generated successfully!', toastCopied: 'Copied to clipboard',
+    vaultSave: 'Save',
+    vaultSaved: 'Saved',
+    vaultTitle: 'Local Prompt Vault',
+    vaultSubtitle: 'Save high-value prompts locally in your browser.',
+    vaultEmpty: 'No saved prompts yet. Generate prompts and click Save to add them here.',
+    vaultRestore: 'Restore',
+    vaultDelete: 'Delete',
+    vaultExport: 'Export JSON',
+    vaultImport: 'Import',
+    vaultClear: 'Clear',
+    vaultSourceGenerated: 'Generator',
+    vaultToastSaved: 'Saved to local prompt vault',
+    vaultToastDuplicate: 'This prompt is already saved',
+    vaultToastDeleted: 'Deleted',
+    vaultToastRestored: 'Restored to generator',
+    vaultToastCleared: 'Local prompt vault cleared',
+    vaultToastExported: 'Prompt vault exported',
+    vaultToastEmpty: 'Prompt vault is empty',
+    vaultToastImported: 'Import complete',
+    vaultToastImportFailed: 'Import failed. Check the JSON file',
     footerIssues: 'Report Issue',
     footerText: 'TSC AI Prompt Studio | Single-file deploy, GitHub Pages ready',
     /* Optimizer */
@@ -1325,6 +1468,9 @@ const LOCALES = {
     tplCatCoding: 'Coding Assistant', tplCatStudy: 'Study Assistant', tplCatMarketing: 'Marketing Copy',
     tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: 'Use', tplToastInserted: 'Template inserted',
+    tplSearchLabel: 'Search templates',
+    tplSearchPlaceholder: 'Search templates in this category',
+    tplSearchEmpty: 'No matching templates in this category',
     tplGuideTitle: '📖 Template Library Guide',
     tplGuideStep1Title: 'Choose Category', tplGuideStep1Desc: 'Click tabs above to switch between categories',
     tplGuideStep2Title: 'Pick a Template', tplGuideStep2Desc: 'Browse cards to find the right prompt template',
@@ -1373,6 +1519,11 @@ function safeStorageRemove(key) {
 const browserLang = navigator.language && navigator.language.startsWith('zh') ? 'zh' : 'en';
 let currentLang = safeStorageGet('tsc-lang', browserLang);
 let currentTheme = safeStorageGet('tsc-theme', 'dark');
+const VAULT_KEY = 'tsc-prompt-vault';
+const MAX_VAULT_ITEMS = 80;
+let lastGeneratedCards = [];
+let templateSearchQuery = '';
+let activeTab = 'generator';
 if (!LOCALES[currentLang]) currentLang = browserLang;
 if (!['dark', 'light'].includes(currentTheme)) currentTheme = 'dark';
 
@@ -1540,6 +1691,7 @@ function generatePrompts() {
 
 function renderResults(cards) {
   const grid=document.getElementById('resultsGrid'),count=document.getElementById('resultsCount'),t=LOCALES[currentLang];
+  lastGeneratedCards = cards.map(card => ({ ...card, source: 'generated' }));
   count.textContent=t.resultsCount.replace('{n}',cards.length);
   grid.innerHTML=cards.map((c,i)=>`
     <div class="prompt-card ${escapeHTML(c.iconClass)}" style="animation-delay:${i*0.1}s">
@@ -1560,6 +1712,10 @@ function renderResults(cards) {
         <button class="btn-export" onclick="exportMd(${i})">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/><path d="M9 15l3-3 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           ${t.exportMd}
+        </button>
+        <button class="btn-export" onclick="savePromptToVault(${i}, this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          ${escapeHTML(t.vaultSave)}
         </button>
       </div></div>
     </div>`).join('');
@@ -1586,9 +1742,207 @@ function showToast(msg,type) {
   t.textContent=msg;c.appendChild(t);setTimeout(()=>t.remove(),2500);
 }
 
+/* ==================== 本地提示词库 ==================== */
+function getVault() {
+  try {
+    const value = JSON.parse(safeStorageGet(VAULT_KEY, '[]'));
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveVault(items) {
+  safeStorageSet(VAULT_KEY, JSON.stringify(items.slice(0, MAX_VAULT_ITEMS)));
+  renderVault();
+}
+
+function normalizeVaultItem(item) {
+  if (!item || typeof item !== 'object') return null;
+  const prompt = String(item.prompt || '').trim();
+  if (!prompt) return null;
+  const createdAt = item.createdAt && !Number.isNaN(Date.parse(item.createdAt)) ? item.createdAt : new Date().toISOString();
+  const rawId = String(item.id || '');
+  const safeId = /^[a-zA-Z0-9_-]{4,80}$/.test(rawId) ? rawId : `vault-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  return {
+    id: safeId,
+    model: String(item.model || 'Prompt').slice(0, 80),
+    icon: String(item.icon || 'P').slice(0, 8),
+    iconClass: ['universal', 'mj', 'flux', 'video', 'seedance'].includes(item.iconClass) ? item.iconClass : 'universal',
+    desc: String(item.desc || LOCALES[currentLang].vaultSourceGenerated).slice(0, 120),
+    prompt,
+    source: String(item.source || 'generated').slice(0, 40),
+    createdAt
+  };
+}
+
+function savePromptToVault(index, btn) {
+  const t = LOCALES[currentLang];
+  const card = lastGeneratedCards[index];
+  if (!card) return;
+  const vault = getVault();
+  if (vault.some(item => item.prompt === card.prompt)) {
+    showToast(t.vaultToastDuplicate, 'warning');
+    return;
+  }
+  const item = normalizeVaultItem({
+    ...card,
+    id: `vault-${Date.now()}-${index}`,
+    desc: card.desc || t.vaultSourceGenerated,
+    createdAt: new Date().toISOString()
+  });
+  if (!item) return;
+  vault.unshift(item);
+  saveVault(vault);
+  if (btn) {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${escapeHTML(t.vaultSaved)}`;
+  }
+  showToast(t.vaultToastSaved, 'success');
+}
+
+async function copyVaultItem(id, btn) {
+  const t = LOCALES[currentLang];
+  const item = getVault().find(entry => entry.id === id);
+  if (!item) return;
+  try {
+    await navigator.clipboard.writeText(item.prompt);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = item.prompt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  if (btn) {
+    btn.classList.add('copied');
+    btn.textContent = t.copiedBtn;
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = t.copyBtn; }, 2000);
+  }
+  showToast(t.toastCopied, 'success');
+}
+
+function deleteVaultItem(id) {
+  const t = LOCALES[currentLang];
+  const next = getVault().filter(item => item.id !== id);
+  saveVault(next);
+  showToast(t.vaultToastDeleted, 'success');
+}
+
+function restoreVaultItem(id) {
+  const t = LOCALES[currentLang];
+  const item = getVault().find(entry => entry.id === id);
+  if (!item) return;
+  document.getElementById('description').value = item.prompt;
+  switchTab('generator');
+  document.getElementById('description').focus();
+  showToast(t.vaultToastRestored, 'success');
+}
+
+function clearVault() {
+  const t = LOCALES[currentLang];
+  if (getVault().length === 0) {
+    showToast(t.vaultToastEmpty, 'warning');
+    return;
+  }
+  safeStorageRemove(VAULT_KEY);
+  renderVault();
+  showToast(t.vaultToastCleared, 'success');
+}
+
+function renderVault() {
+  const t = LOCALES[currentLang];
+  const section = document.getElementById('vaultSection');
+  const grid = document.getElementById('vaultGrid');
+  if (!section || !grid) return;
+  const vault = getVault();
+  if (activeTab !== 'generator') {
+    section.style.display = 'none';
+    return;
+  }
+  if (vault.length === 0) {
+    section.style.display = 'none';
+    grid.innerHTML = `<div class="vault-empty">${escapeHTML(t.vaultEmpty)}</div>`;
+    return;
+  }
+  section.style.display = '';
+  grid.innerHTML = vault.map(item => {
+    const date = new Date(item.createdAt);
+    const timeStr = Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    return `<article class="vault-card ${escapeHTML(item.iconClass)}">
+      <div class="vault-meta">
+        <span class="vault-model">${escapeHTML(item.model)}</span>
+        <span>${escapeHTML(timeStr)}</span>
+      </div>
+      <div class="vault-prompt">${escapeHTML(item.prompt)}</div>
+      <div class="vault-card-actions">
+        <button class="btn-vault" type="button" onclick="copyVaultItem('${escapeHTML(item.id)}', this)">${escapeHTML(t.copyBtn)}</button>
+        <button class="btn-vault" type="button" onclick="restoreVaultItem('${escapeHTML(item.id)}')">${escapeHTML(t.vaultRestore)}</button>
+        <button class="btn-vault danger" type="button" onclick="deleteVaultItem('${escapeHTML(item.id)}')">${escapeHTML(t.vaultDelete)}</button>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function exportVaultJson() {
+  const t = LOCALES[currentLang];
+  const items = getVault();
+  if (items.length === 0) {
+    showToast(t.vaultToastEmpty, 'warning');
+    return;
+  }
+  const payload = {
+    app: 'TSC AI Prompt Studio',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    items
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tsc-prompt-vault.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(t.vaultToastExported, 'success');
+}
+
+function importVaultJson(file) {
+  const t = LOCALES[currentLang];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(String(reader.result || ''));
+      const incoming = Array.isArray(parsed) ? parsed : parsed.items;
+      if (!Array.isArray(incoming)) throw new Error('Invalid vault payload');
+      const current = getVault();
+      const merged = [...incoming.map(normalizeVaultItem).filter(Boolean), ...current];
+      const deduped = [];
+      const seen = new Set();
+      merged.forEach(item => {
+        if (seen.has(item.prompt)) return;
+        seen.add(item.prompt);
+        deduped.push(item);
+      });
+      saveVault(deduped.slice(0, MAX_VAULT_ITEMS));
+      showToast(t.vaultToastImported, 'success');
+    } catch {
+      showToast(t.vaultToastImportFailed, 'warning');
+    }
+  };
+  reader.readAsText(file);
+}
+
 /* ==================== 键盘快捷键 ==================== */
 document.getElementById('description').addEventListener('keydown',function(e){
   if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();generatePrompts();}
+});
+document.getElementById('vaultImportInput').addEventListener('change', function(e) {
+  importVaultJson(e.target.files && e.target.files[0]);
+  e.target.value = '';
+});
+document.getElementById('templateSearch').addEventListener('input', function(e) {
+  templateSearchQuery = e.target.value;
+  renderTemplates();
 });
 
 /* ==================== 初始化 ==================== */
@@ -1600,9 +1954,11 @@ switchTab('generator');
 
 /* ==================== Tab 切换 ==================== */
 function switchTab(tab) {
+  activeTab = tab;
   const genSection = document.getElementById('inputSection');
   const resSection = document.getElementById('resultsSection');
   const qualitySection = document.getElementById('qualitySection');
+  const vaultSection = document.getElementById('vaultSection');
   const optSection = document.getElementById('optimizerSection');
   const tplSection = document.getElementById('templateSection');
   const tabs = {
@@ -1615,6 +1971,7 @@ function switchTab(tab) {
   genSection.style.display = 'none'; resSection.style.display = 'none';
   optSection.style.display = 'none'; tplSection.style.display = 'none';
   if (qualitySection) qualitySection.style.display = 'none';
+  if (vaultSection) vaultSection.style.display = 'none';
   Object.entries(tabs).forEach(([key, btn]) => {
     const active = key === tab;
     btn.classList.toggle('active', active);
@@ -1625,6 +1982,7 @@ function switchTab(tab) {
   if (tab === 'generator') {
     genSection.style.display = ''; resSection.style.display = '';
     if (qualitySection && qualitySection.innerHTML.trim()) qualitySection.style.display = '';
+    renderVault();
   } else if (tab === 'optimizer') {
     optSection.style.display = '';
     renderHistory();
@@ -1678,6 +2036,7 @@ function refreshVisibleDynamicContent() {
 
   if (document.getElementById('templateGrid').children.length > 0) renderTemplates();
   if (document.getElementById('historySection').style.display !== 'none') renderHistory();
+  renderVault();
 }
 
 /* ==================== Prompt 优化器引擎 ==================== */
@@ -1796,10 +2155,23 @@ function renderTemplates() {
   const t = LOCALES[currentLang];
   const cat = TEMPLATE_DATA[currentTemplateCat];
   const grid = document.getElementById('templateGrid');
+  const searchInput = document.getElementById('templateSearch');
+  if (searchInput && searchInput.value !== templateSearchQuery) searchInput.value = templateSearchQuery;
+  const lang = currentLang === 'zh' ? 'zh' : 'en';
+  const query = templateSearchQuery.trim().toLowerCase();
+  const entries = cat.templates
+    .map((tpl, i) => ({ i, data: tpl[lang] }))
+    .filter(({ data }) => {
+      if (!query) return true;
+      return [data.title, data.preview, data.template].join(' ').toLowerCase().includes(query);
+    });
   
-  grid.innerHTML = cat.templates.map((tpl, i) => {
-    const lang = currentLang === 'zh' ? 'zh' : 'en';
-    const data = tpl[lang];
+  if (entries.length === 0) {
+    grid.innerHTML = `<div class="template-empty">${escapeHTML(t.tplSearchEmpty)}</div>`;
+    return;
+  }
+
+  grid.innerHTML = entries.map(({ i, data }) => {
     return `<div class="template-card">
       <div class="template-card-title">${escapeHTML(data.title)}</div>
       <div class="template-card-preview">${escapeHTML(data.preview)}</div>
