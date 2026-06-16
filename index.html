@@ -143,6 +143,7 @@
     position:absolute; inset:0; width:100%; height:100%;
     opacity:var(--motion-canvas-opacity);
     mix-blend-mode:screen;
+    transform:translateZ(0);
   }
   [data-theme="light"] .motion-canvas { mix-blend-mode:multiply; }
   .bg-effects::before {
@@ -801,11 +802,30 @@
 
   /* ==================== Responsive ==================== */
   @media (max-width:768px) {
+    :root { --motion-canvas-opacity:0.34; }
+    [data-theme="light"] { --motion-canvas-opacity:0.28; }
     .hero { padding:40px 16px 28px; }
     .hero-logo { width:60px; height:60px; margin-bottom:20px; }
+    .motion-canvas,
+    [data-theme="light"] .motion-canvas {
+      mix-blend-mode:normal;
+    }
+    .bg-effects::before { opacity:0.24; }
     .bg-orb-1 { width:420px; height:420px; top:-140px; left:-180px; }
     .bg-orb-2 { width:380px; height:380px; right:-180px; bottom:-120px; }
     .bg-orb-3 { width:240px; height:240px; }
+    .bg-orb { filter:blur(72px); }
+    nav,
+    .hero-stat,
+    .input-card,
+    .prompt-card,
+    .vault-panel,
+    .tab-nav,
+    .template-card,
+    .quality-section {
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+    }
     .input-card { padding:20px; }
     .controls { grid-template-columns:1fr 1fr; gap:12px; }
     .results-grid { grid-template-columns:1fr; }
@@ -1712,7 +1732,12 @@ const motionBackground = {
   height: 0,
   nodes: [],
   startedAt: 0,
-  reducedMotion: false
+  reducedMotion: false,
+  mobilePerformance: false,
+  lastFrameAt: 0,
+  resizeTimer: null,
+  scrollTimer: null,
+  pausedForScroll: false
 };
 
 function easeInOutCubic(t) {
@@ -1740,7 +1765,7 @@ function getMotionPalette() {
 function resizeMotionCanvas() {
   const state = motionBackground;
   if (!state.canvas) return;
-  state.dpr = Math.min(window.devicePixelRatio || 1, 2);
+  state.dpr = state.mobilePerformance ? 1 : Math.min(window.devicePixelRatio || 1, 2);
   state.width = window.innerWidth;
   state.height = window.innerHeight;
   state.canvas.width = Math.floor(state.width * state.dpr);
@@ -1753,7 +1778,10 @@ function resizeMotionCanvas() {
 
 function seedMotionNodes() {
   const state = motionBackground;
-  const count = Math.max(28, Math.min(76, Math.round((state.width * state.height) / 26000)));
+  const density = state.mobilePerformance ? 56000 : 26000;
+  const minNodes = state.mobilePerformance ? 14 : 28;
+  const maxNodes = state.mobilePerformance ? 26 : 76;
+  const count = Math.max(minNodes, Math.min(maxNodes, Math.round((state.width * state.height) / density)));
   state.nodes = Array.from({ length: count }, (_, i) => {
     const lane = i / Math.max(1, count - 1);
     return {
@@ -1768,7 +1796,13 @@ function seedMotionNodes() {
 
 function drawMotionBackground(time) {
   const state = motionBackground;
-  if (!state.ctx || state.reducedMotion || document.hidden) return;
+  if (!state.ctx || state.reducedMotion || state.pausedForScroll || document.hidden) return;
+  const targetFrameMs = state.mobilePerformance ? 1000 / 24 : 1000 / 60;
+  if (state.lastFrameAt && time - state.lastFrameAt < targetFrameMs) {
+    state.raf = requestAnimationFrame(drawMotionBackground);
+    return;
+  }
+  state.lastFrameAt = time;
   const ctx = state.ctx;
   const palette = getMotionPalette();
   const elapsed = (time - state.startedAt) / 1000;
@@ -1800,14 +1834,16 @@ function drawMotionBackground(time) {
   });
 
   ctx.lineWidth = 1;
+  const connectDistance = state.mobilePerformance ? 104 : 145;
   points.forEach((a, i) => {
-    for (let j = i + 1; j < points.length; j += 1) {
+    const step = state.mobilePerformance ? 2 : 1;
+    for (let j = i + 1; j < points.length; j += step) {
       const b = points[j];
       const dx = a.px - b.px;
       const dy = a.py - b.py;
       const distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance > 145) continue;
-      ctx.globalAlpha = (1 - distance / 145) * (currentTheme === 'light' ? 0.46 : 0.62);
+      if (distance > connectDistance) continue;
+      ctx.globalAlpha = (1 - distance / connectDistance) * (currentTheme === 'light' ? 0.46 : 0.62);
       ctx.strokeStyle = palette.line;
       ctx.beginPath();
       ctx.moveTo(a.px, a.py);
@@ -1846,8 +1882,13 @@ function initMotionBackground() {
   state.ctx = state.canvas.getContext('2d', { alpha: true });
   if (!state.ctx) return;
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobileQuery = window.matchMedia('(max-width: 768px), (pointer: coarse)');
   const applyMotionPreference = () => {
     state.reducedMotion = motionQuery.matches;
+    const nextMobilePerformance = mobileQuery.matches;
+    const mobileModeChanged = state.mobilePerformance !== nextMobilePerformance;
+    state.mobilePerformance = nextMobilePerformance;
+    if (mobileModeChanged) resizeMotionCanvas();
     if (state.reducedMotion) {
       if (state.raf) cancelAnimationFrame(state.raf);
       state.raf = null;
@@ -1859,7 +1900,22 @@ function initMotionBackground() {
   };
   resizeMotionCanvas();
   applyMotionPreference();
-  window.addEventListener('resize', resizeMotionCanvas);
+  window.addEventListener('resize', () => {
+    clearTimeout(state.resizeTimer);
+    state.resizeTimer = setTimeout(resizeMotionCanvas, state.mobilePerformance ? 180 : 80);
+  });
+  window.addEventListener('scroll', () => {
+    if (!state.mobilePerformance || state.reducedMotion) return;
+    state.pausedForScroll = true;
+    if (state.raf) cancelAnimationFrame(state.raf);
+    state.raf = null;
+    clearTimeout(state.scrollTimer);
+    state.scrollTimer = setTimeout(() => {
+      state.pausedForScroll = false;
+      state.lastFrameAt = 0;
+      if (!document.hidden && !state.raf) state.raf = requestAnimationFrame(drawMotionBackground);
+    }, 180);
+  }, { passive: true });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && state.raf) {
       cancelAnimationFrame(state.raf);
@@ -1871,6 +1927,8 @@ function initMotionBackground() {
   });
   if (motionQuery.addEventListener) motionQuery.addEventListener('change', applyMotionPreference);
   else motionQuery.addListener(applyMotionPreference);
+  if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', applyMotionPreference);
+  else mobileQuery.addListener(applyMotionPreference);
 }
 
 function refreshMotionBackground() {

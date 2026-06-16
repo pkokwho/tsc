@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgraded hero, generator, result, template, quality score, and local vault surfaces with a more professional workspace hierarchy
 - Tuned motion behavior for performance by keeping runtime effects in Canvas and avoiding layout-driving animation
 - Improved reduced-motion behavior by disabling the animated canvas and keeping a static visual fallback
+- Optimized mobile scrolling by reducing canvas density, pausing animation during scroll, debouncing viewport resize, and disabling heavy backdrop blur on small screens
 
 ## [3.3.0] - 2026-06-14
 
