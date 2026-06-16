@@ -5,6 +5,19 @@ All notable changes to TSC AI Prompt Studio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-06-16
+
+### Added
+
+- Added a zero-dependency Canvas motion background with theme-aware particles, connection lines, light sweeps, and focus rings
+- Added a documented premium motion implementation plan for the single-file GitHub Pages architecture
+
+### Changed
+
+- Upgraded hero, generator, result, template, quality score, and local vault surfaces with a more professional workspace hierarchy
+- Tuned motion behavior for performance by keeping runtime effects in Canvas and avoiding layout-driving animation
+- Improved reduced-motion behavior by disabling the animated canvas and keeping a static visual fallback
+
 ## [3.3.0] - 2026-06-14
 
 ### Added

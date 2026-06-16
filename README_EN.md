@@ -34,6 +34,13 @@ Enter a creative idea and generate professional prompts for universal image mode
 
 ## Features
 
+### Professional Interface and Motion
+
+- Built-in single-file Canvas background animation for a premium AI workspace feel.
+- Motion is performance-conscious and uses Canvas, opacity, and lightweight drawing without runtime dependencies.
+- Supports `prefers-reduced-motion`; users who reduce system motion get a static background fallback.
+- Dark and light themes have tuned background colors, card hierarchy, and focus states.
+
 ### Prompt Generator
 
 - Generates prompts for Universal, Midjourney, Flux, Video AI, and SeaDance 2.0.
@@ -166,6 +173,7 @@ tsc/
 
 | Version | Date | Description |
 |---------|------|-------------|
+| [v3.4.0] | 2026-06-16 | Premium motion background, stronger workspace hierarchy, accessible motion fallback |
 | [v3.3.0] | 2026-06-14 | Template placeholder filling, favorites, global search, share links |
 | [v3.2.0] | 2026-06-14 | Local prompt vault, JSON backup/restore, template search, doc encoding fix |
 | [v3.1.1] | 2026-06-13 | Stability polish, docs sync, safe rendering, accessibility improvements |
