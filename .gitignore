@@ -1,0 +1,24 @@
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 依赖（本项目无依赖，但保留以防未来使用）
+node_modules/
+
+# 构建输出（本项目无构建步骤）
+dist/
+build/
+
+# 环境变量
+.env
+.env.local
+
+# 日志
+*.log
