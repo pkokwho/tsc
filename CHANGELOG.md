@@ -5,6 +5,21 @@ All notable changes to TSC AI Prompt Studio will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2026-06-19
+
+### Added
+
+- Added a professional parameter panel for use case, camera language, composition, lighting, color palette, mood, detail density, and negative prompts
+- Expanded the generator from 12 to 24 style presets, including product advertising, cinematic poster, architectural visualization, claymorphism, paper cut art, high fashion, film noir, macro photography, isometric illustration, Bauhaus poster, ukiyo-e, and brand visual
+- Added a zero-dependency static regression test for the single-file app's prompt controls and mobile motion budget
+
+### Changed
+
+- Reworked multi-model prompt generation around a shared structured context object so Universal, Midjourney, Flux, Video AI, and SeaDance outputs stay aligned
+- Upgraded the optimizer to infer common intents such as portrait, product, video, and architecture before adding camera, lighting, composition, and negative prompt guidance
+- Made SeaDance helper selection deterministic from prompt context instead of changing randomly on refresh
+- Further reduced mobile scrolling cost by capping the animated canvas around 20fps, lowering mobile node density, and disabling hover movement on coarse pointers
+
 ## [3.4.0] - 2026-06-16
 
 ### Added

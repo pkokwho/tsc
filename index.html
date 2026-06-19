@@ -429,20 +429,41 @@
     display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
     gap:16px; margin-top:24px;
   }
+  .advanced-controls { margin-top:16px; }
+  .prompt-controls-title {
+    display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    margin-top:22px; padding-top:20px; border-top:1px solid var(--border-color);
+  }
+  .prompt-controls-title strong {
+    display:block; font-size:14px; font-weight:700; line-height:1.35;
+  }
+  .prompt-controls-title span {
+    display:block; margin-top:3px; color:var(--text-secondary); font-size:12px; line-height:1.45;
+  }
   .control-group label {
     display:block; font-size:13px; color:var(--text-secondary);
     margin-bottom:8px; font-weight:500;
   }
-  .control-select {
+  .control-group.wide { grid-column:span 2; }
+  .control-select,
+  .control-input {
     width:100%; padding:12px 16px; background:var(--input-bg);
     border:1px solid var(--border-color); border-radius:var(--radius-sm);
     color:var(--text-primary); font-family:var(--font-stack); font-size:16px;
+    outline:none; min-height:44px;
+    transition:all var(--transition-fast);
+  }
+  .control-select {
     outline:none; cursor:pointer; appearance:none; -webkit-appearance:none;
     background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat:no-repeat; background-position:right 16px center;
-    transition:all var(--transition-fast); min-height:44px;
   }
-  .control-select:focus { border-color:var(--border-active); background-color:var(--input-focus-bg); }
+  .control-input {
+    resize:vertical; min-height:44px; line-height:1.5;
+  }
+  .control-input::placeholder { color:var(--text-tertiary); }
+  .control-select:focus,
+  .control-input:focus { border-color:var(--border-active); background-color:var(--input-focus-bg); }
   .control-select option { background:var(--select-bg); color:var(--text-primary); }
 
   /* ==================== Generate Button ==================== */
@@ -811,6 +832,8 @@
       mix-blend-mode:normal;
     }
     .bg-effects::before { opacity:0.24; }
+    .bg-grid { background-size:96px 96px; opacity:0.52; }
+    .bg-spotlight { opacity:0.38; }
     .bg-orb-1 { width:420px; height:420px; top:-140px; left:-180px; }
     .bg-orb-2 { width:380px; height:380px; right:-180px; bottom:-120px; }
     .bg-orb-3 { width:240px; height:240px; }
@@ -828,6 +851,8 @@
     }
     .input-card { padding:20px; }
     .controls { grid-template-columns:1fr 1fr; gap:12px; }
+    .prompt-controls-title { flex-direction:column; align-items:flex-start; }
+    .control-group.wide { grid-column:1 / -1; }
     .results-grid { grid-template-columns:1fr; }
     .card-body { padding:16px 20px; }
     .card-header { padding:16px 20px 12px; }
@@ -847,9 +872,29 @@
     .optimizer-input-row { flex-direction:column; }
     .optimizer-actions { flex-direction:row; }
     .btn-optimize, .btn-clear-history { flex:1; }
+    .prompt-card,
+    .template-card,
+    .vault-card {
+      content-visibility:auto;
+      contain-intrinsic-size:280px;
+    }
+  }
+  @media (hover:none), (pointer:coarse) {
+    .btn-generate:hover,
+    .btn-cta-primary:hover,
+    .btn-cta-secondary:hover,
+    .prompt-card:hover,
+    .vault-card:hover,
+    .template-card:hover,
+    .btn-use-template:hover,
+    .btn-optimize:hover {
+      transform:none;
+      box-shadow:var(--shadow-card);
+    }
   }
   @media (max-width:480px) {
     .controls { grid-template-columns:1fr; }
+    .control-group.wide { grid-column:auto; }
     .hero h1 { font-size:26px; }
     .hero-sub { font-size:14px; }
     .nav-btn { width:36px; height:36px; font-size:12px; }
@@ -1281,6 +1326,49 @@
       </div>
     </div>
 
+    <div class="prompt-controls-title">
+      <div>
+        <strong data-i18n="advancedTitle">专业参数</strong>
+        <span data-i18n="advancedHint">补充用途、镜头、光线和负面约束，输出会更稳定。</span>
+      </div>
+      <span data-i18n="advancedPrivacy">仍然只在本地生成，不上传输入。</span>
+    </div>
+
+    <div class="controls advanced-controls">
+      <div class="control-group">
+        <label for="scenePurpose" data-i18n="purposeLabel">用途场景</label>
+        <select class="control-select" id="scenePurpose"></select>
+      </div>
+      <div class="control-group">
+        <label for="cameraShot" data-i18n="cameraLabel">镜头语言</label>
+        <select class="control-select" id="cameraShot"></select>
+      </div>
+      <div class="control-group">
+        <label for="composition" data-i18n="compositionLabel">构图方式</label>
+        <select class="control-select" id="composition"></select>
+      </div>
+      <div class="control-group">
+        <label for="lighting" data-i18n="lightingLabel">光线质感</label>
+        <select class="control-select" id="lighting"></select>
+      </div>
+      <div class="control-group">
+        <label for="colorPalette" data-i18n="paletteLabel">色彩方案</label>
+        <select class="control-select" id="colorPalette"></select>
+      </div>
+      <div class="control-group">
+        <label for="mood" data-i18n="moodLabel">情绪氛围</label>
+        <select class="control-select" id="mood"></select>
+      </div>
+      <div class="control-group">
+        <label for="detailLevel" data-i18n="detailLabel">细节密度</label>
+        <select class="control-select" id="detailLevel"></select>
+      </div>
+      <div class="control-group wide">
+        <label for="negativePrompt" data-i18n="negativeLabel">负面提示词</label>
+        <textarea class="control-input" id="negativePrompt" rows="1" data-i18n-placeholder="negativePlaceholder" placeholder="可选：低质量、模糊、多余手指、文字水印"></textarea>
+      </div>
+    </div>
+
     <button class="btn-generate" id="generateBtn" onclick="generatePrompts()">
       <span class="btn-shimmer"></span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -1488,6 +1576,13 @@ const LOCALES = {
     inputLabel: '描述你的创意',
     inputPlaceholder: '例如：一只穿着宇航服的猫咪站在月球表面，背景是蓝色的地球，星空璀璨，超现实主义风格',
     aspectLabel: '画面比例', styleLabel: '艺术风格', qualityLabel: '画面质量', stylizeLabel: '风格化强度',
+    advancedTitle: '专业参数',
+    advancedHint: '补充用途、镜头、光线和负面约束，输出会更稳定。',
+    advancedPrivacy: '仍然只在本地生成，不上传输入。',
+    purposeLabel: '用途场景', cameraLabel: '镜头语言', compositionLabel: '构图方式',
+    lightingLabel: '光线质感', paletteLabel: '色彩方案', moodLabel: '情绪氛围',
+    detailLabel: '细节密度', negativeLabel: '负面提示词',
+    negativePlaceholder: '可选：低质量、模糊、多余手指、文字水印',
     aspectOptions: [
       {value:'1:1',text:'1:1 正方形'},{value:'16:9',text:'16:9 宽屏'},{value:'9:16',text:'9:16 竖屏'},
       {value:'4:3',text:'4:3 标准'},{value:'3:2',text:'3:2 经典'},{value:'2:3',text:'2:3 肖像'}
@@ -1496,10 +1591,69 @@ const LOCALES = {
       {value:'写实摄影',text:'写实摄影'},{value:'赛博朋克',text:'赛博朋克'},{value:'动漫风格',text:'动漫风格'},
       {value:'油画质感',text:'油画质感'},{value:'水彩手绘',text:'水彩手绘'},{value:'极简主义',text:'极简主义'},
       {value:'科幻未来',text:'科幻未来'},{value:'奇幻魔法',text:'奇幻魔法'},{value:'暗黑哥特',text:'暗黑哥特'},
-      {value:'复古胶片',text:'复古胶片'},{value:'3D渲染',text:'3D渲染'},{value:'像素艺术',text:'像素艺术'}
+      {value:'复古胶片',text:'复古胶片'},{value:'3D渲染',text:'3D渲染'},{value:'像素艺术',text:'像素艺术'},
+      {value:'电影海报',text:'电影海报'},{value:'产品广告',text:'产品广告'},{value:'建筑可视化',text:'建筑可视化'},
+      {value:'黏土模型',text:'黏土模型'},{value:'剪纸艺术',text:'剪纸艺术'},{value:'高级时装',text:'高级时装'},
+      {value:'黑色电影',text:'黑色电影'},{value:'微距摄影',text:'微距摄影'},{value:'等距插画',text:'等距插画'},
+      {value:'包豪斯海报',text:'包豪斯海报'},{value:'日式浮世绘',text:'日式浮世绘'},{value:'品牌视觉',text:'品牌视觉'}
     ],
     qualityOptions: [{value:'1',text:'标准'},{value:'2',text:'高质量'},{value:'3',text:'超高质量'}],
     stylizeOptions: [{value:'100',text:'低 (100)'},{value:'250',text:'中 (250)'},{value:'500',text:'高 (500)'},{value:'750',text:'极高 (750)'},{value:'1000',text:'最大 (1000)'}],
+    purposeOptions: [
+      {value:'portrait identity, clear subject presence, expressive detail',text:'人物/角色'},
+      {value:'premium product hero shot, commercial readability, clear selling point',text:'产品展示'},
+      {value:'cinematic environment design, immersive worldbuilding, strong atmosphere',text:'场景世界观'},
+      {value:'social media key visual, immediate hook, high shareability',text:'社媒主视觉'},
+      {value:'brand campaign visual, coherent identity system, premium layout',text:'品牌活动'},
+      {value:'concept art exploration, production-ready design language',text:'概念设计'},
+      {value:'educational diagram aesthetic, clear hierarchy, readable structure',text:'知识说明'}
+    ],
+    cameraOptions: [
+      {value:'eye-level shot, natural perspective',text:'自然平视'},
+      {value:'close-up shot, shallow depth of field, intimate details',text:'特写镜头'},
+      {value:'wide shot, environmental scale, strong spatial depth',text:'广角远景'},
+      {value:'low angle shot, heroic scale, dramatic presence',text:'低机位'},
+      {value:'top-down view, clean layout, graphic clarity',text:'俯视构图'},
+      {value:'macro lens, tactile details, crisp texture',text:'微距镜头'},
+      {value:'anamorphic cinematic lens, subtle lens compression',text:'电影宽银幕'}
+    ],
+    compositionOptions: [
+      {value:'rule of thirds composition, balanced negative space',text:'三分法'},
+      {value:'centered symmetrical composition, iconic presentation',text:'居中对称'},
+      {value:'leading lines, strong depth cues, guided eye flow',text:'引导线'},
+      {value:'layered foreground, midground, background, cinematic depth',text:'前中后三层'},
+      {value:'dynamic diagonal composition, energetic movement',text:'动态斜线'},
+      {value:'editorial grid layout, premium whitespace, clean hierarchy',text:'杂志网格'}
+    ],
+    lightingOptions: [
+      {value:'soft diffused studio lighting, clean shadows',text:'柔和棚拍'},
+      {value:'golden hour light, warm rim glow, long shadows',text:'黄金时刻'},
+      {value:'dramatic chiaroscuro lighting, high contrast shadow',text:'明暗对照'},
+      {value:'neon practical lighting, reflective highlights',text:'霓虹实景光'},
+      {value:'volumetric light beams, atmospheric haze',text:'体积光'},
+      {value:'overcast natural light, realistic soft contrast',text:'阴天自然光'}
+    ],
+    paletteOptions: [
+      {value:'natural color palette, realistic color harmony',text:'自然真实'},
+      {value:'warm amber and deep teal palette, cinematic contrast',text:'青橙电影感'},
+      {value:'monochrome palette with one refined accent color',text:'单色加点缀'},
+      {value:'pastel palette, soft low-contrast harmony',text:'柔和粉彩'},
+      {value:'luxury black, ivory, and muted gold palette',text:'高级黑金'},
+      {value:'bold high-saturation palette, poster-like impact',text:'高饱和海报'}
+    ],
+    moodOptions: [
+      {value:'calm, refined, professional atmosphere',text:'冷静专业'},
+      {value:'cinematic, suspenseful, high-stakes mood',text:'电影张力'},
+      {value:'dreamlike, poetic, soft emotional mood',text:'梦幻诗意'},
+      {value:'optimistic, bright, inviting atmosphere',text:'明亮友好'},
+      {value:'mysterious, elegant, premium mood',text:'神秘高级'},
+      {value:'energetic, bold, launch-ready mood',text:'强势发布'}
+    ],
+    detailOptions: [
+      {value:'clean detail level, uncluttered scene, readable silhouette',text:'干净克制'},
+      {value:'balanced details, clear focal point, rich but controlled',text:'平衡细节'},
+      {value:'ultra detailed textures, layered micro-details, production quality',text:'高密度细节'}
+    ],
     generateBtn: '生成提示词', regenBtn: '重新生成',
     generating: '<span class="spinner"></span> 生成中...',
     resultsTitle: '生成结果', resultsWaiting: '等待生成', resultsCount: '已生成 {n} 条',
@@ -1598,6 +1752,13 @@ const LOCALES = {
     inputLabel: 'Describe your idea',
     inputPlaceholder: 'e.g. A cat wearing a spacesuit standing on the moon, blue Earth in the background, starry sky, surrealism style',
     aspectLabel: 'Aspect Ratio', styleLabel: 'Art Style', qualityLabel: 'Image Quality', stylizeLabel: 'Stylize Intensity',
+    advancedTitle: 'Professional Controls',
+    advancedHint: 'Add intent, camera, lighting, and constraints for more stable outputs.',
+    advancedPrivacy: 'Still generated locally. Your input is not uploaded.',
+    purposeLabel: 'Use Case', cameraLabel: 'Camera Language', compositionLabel: 'Composition',
+    lightingLabel: 'Lighting', paletteLabel: 'Color Palette', moodLabel: 'Mood',
+    detailLabel: 'Detail Density', negativeLabel: 'Negative Prompt',
+    negativePlaceholder: 'Optional: low quality, blurry, extra fingers, watermark',
     aspectOptions: [
       {value:'1:1',text:'1:1 Square'},{value:'16:9',text:'16:9 Widescreen'},{value:'9:16',text:'9:16 Portrait'},
       {value:'4:3',text:'4:3 Standard'},{value:'3:2',text:'3:2 Classic'},{value:'2:3',text:'2:3 Portrait'}
@@ -1606,10 +1767,69 @@ const LOCALES = {
       {value:'写实摄影',text:'Photorealistic'},{value:'赛博朋克',text:'Cyberpunk'},{value:'动漫风格',text:'Anime Style'},
       {value:'油画质感',text:'Oil Painting'},{value:'水彩手绘',text:'Watercolor'},{value:'极简主义',text:'Minimalist'},
       {value:'科幻未来',text:'Sci-Fi Futuristic'},{value:'奇幻魔法',text:'Fantasy Magical'},{value:'暗黑哥特',text:'Dark Gothic'},
-      {value:'复古胶片',text:'Vintage Film'},{value:'3D渲染',text:'3D Render'},{value:'像素艺术',text:'Pixel Art'}
+      {value:'复古胶片',text:'Vintage Film'},{value:'3D渲染',text:'3D Render'},{value:'像素艺术',text:'Pixel Art'},
+      {value:'电影海报',text:'Cinematic Poster'},{value:'产品广告',text:'Product Advertising'},{value:'建筑可视化',text:'Architectural Visualization'},
+      {value:'黏土模型',text:'Claymorphism'},{value:'剪纸艺术',text:'Paper Cut Art'},{value:'高级时装',text:'High Fashion'},
+      {value:'黑色电影',text:'Film Noir'},{value:'微距摄影',text:'Macro Photography'},{value:'等距插画',text:'Isometric Illustration'},
+      {value:'包豪斯海报',text:'Bauhaus Poster'},{value:'日式浮世绘',text:'Ukiyo-e'},{value:'品牌视觉',text:'Brand Visual'}
     ],
     qualityOptions: [{value:'1',text:'Standard'},{value:'2',text:'High Quality'},{value:'3',text:'Ultra Quality'}],
     stylizeOptions: [{value:'100',text:'Low (100)'},{value:'250',text:'Medium (250)'},{value:'500',text:'High (500)'},{value:'750',text:'Very High (750)'},{value:'1000',text:'Max (1000)'}],
+    purposeOptions: [
+      {value:'portrait identity, clear subject presence, expressive detail',text:'Character / Portrait'},
+      {value:'premium product hero shot, commercial readability, clear selling point',text:'Product Showcase'},
+      {value:'cinematic environment design, immersive worldbuilding, strong atmosphere',text:'World / Scene'},
+      {value:'social media key visual, immediate hook, high shareability',text:'Social Key Visual'},
+      {value:'brand campaign visual, coherent identity system, premium layout',text:'Brand Campaign'},
+      {value:'concept art exploration, production-ready design language',text:'Concept Design'},
+      {value:'educational diagram aesthetic, clear hierarchy, readable structure',text:'Educational Visual'}
+    ],
+    cameraOptions: [
+      {value:'eye-level shot, natural perspective',text:'Eye Level'},
+      {value:'close-up shot, shallow depth of field, intimate details',text:'Close-Up'},
+      {value:'wide shot, environmental scale, strong spatial depth',text:'Wide Shot'},
+      {value:'low angle shot, heroic scale, dramatic presence',text:'Low Angle'},
+      {value:'top-down view, clean layout, graphic clarity',text:'Top-Down'},
+      {value:'macro lens, tactile details, crisp texture',text:'Macro Lens'},
+      {value:'anamorphic cinematic lens, subtle lens compression',text:'Anamorphic'}
+    ],
+    compositionOptions: [
+      {value:'rule of thirds composition, balanced negative space',text:'Rule of Thirds'},
+      {value:'centered symmetrical composition, iconic presentation',text:'Centered Symmetry'},
+      {value:'leading lines, strong depth cues, guided eye flow',text:'Leading Lines'},
+      {value:'layered foreground, midground, background, cinematic depth',text:'Layered Depth'},
+      {value:'dynamic diagonal composition, energetic movement',text:'Dynamic Diagonal'},
+      {value:'editorial grid layout, premium whitespace, clean hierarchy',text:'Editorial Grid'}
+    ],
+    lightingOptions: [
+      {value:'soft diffused studio lighting, clean shadows',text:'Soft Studio'},
+      {value:'golden hour light, warm rim glow, long shadows',text:'Golden Hour'},
+      {value:'dramatic chiaroscuro lighting, high contrast shadow',text:'Chiaroscuro'},
+      {value:'neon practical lighting, reflective highlights',text:'Neon Practical'},
+      {value:'volumetric light beams, atmospheric haze',text:'Volumetric Light'},
+      {value:'overcast natural light, realistic soft contrast',text:'Overcast Natural'}
+    ],
+    paletteOptions: [
+      {value:'natural color palette, realistic color harmony',text:'Natural'},
+      {value:'warm amber and deep teal palette, cinematic contrast',text:'Teal and Amber'},
+      {value:'monochrome palette with one refined accent color',text:'Mono + Accent'},
+      {value:'pastel palette, soft low-contrast harmony',text:'Soft Pastel'},
+      {value:'luxury black, ivory, and muted gold palette',text:'Luxury Black Gold'},
+      {value:'bold high-saturation palette, poster-like impact',text:'High Saturation'}
+    ],
+    moodOptions: [
+      {value:'calm, refined, professional atmosphere',text:'Calm Professional'},
+      {value:'cinematic, suspenseful, high-stakes mood',text:'Cinematic Tension'},
+      {value:'dreamlike, poetic, soft emotional mood',text:'Dreamlike'},
+      {value:'optimistic, bright, inviting atmosphere',text:'Bright Friendly'},
+      {value:'mysterious, elegant, premium mood',text:'Mysterious Premium'},
+      {value:'energetic, bold, launch-ready mood',text:'Launch Energy'}
+    ],
+    detailOptions: [
+      {value:'clean detail level, uncluttered scene, readable silhouette',text:'Clean'},
+      {value:'balanced details, clear focal point, rich but controlled',text:'Balanced'},
+      {value:'ultra detailed textures, layered micro-details, production quality',text:'Ultra Detailed'}
+    ],
     generateBtn: 'Generate Prompts', regenBtn: 'Regenerate',
     generating: '<span class="spinner"></span> Generating...',
     resultsTitle: 'Results', resultsWaiting: 'Waiting', resultsCount: '{n} prompts generated',
@@ -1778,9 +1998,9 @@ function resizeMotionCanvas() {
 
 function seedMotionNodes() {
   const state = motionBackground;
-  const density = state.mobilePerformance ? 56000 : 26000;
-  const minNodes = state.mobilePerformance ? 14 : 28;
-  const maxNodes = state.mobilePerformance ? 26 : 76;
+  const density = state.mobilePerformance ? 76000 : 26000;
+  const minNodes = state.mobilePerformance ? 10 : 28;
+  const maxNodes = state.mobilePerformance ? 18 : 76;
   const count = Math.max(minNodes, Math.min(maxNodes, Math.round((state.width * state.height) / density)));
   state.nodes = Array.from({ length: count }, (_, i) => {
     const lane = i / Math.max(1, count - 1);
@@ -1797,7 +2017,7 @@ function seedMotionNodes() {
 function drawMotionBackground(time) {
   const state = motionBackground;
   if (!state.ctx || state.reducedMotion || state.pausedForScroll || document.hidden) return;
-  const targetFrameMs = state.mobilePerformance ? 1000 / 24 : 1000 / 60;
+  const targetFrameMs = state.mobilePerformance ? 1000 / 20 : 1000 / 60;
   if (state.lastFrameAt && time - state.lastFrameAt < targetFrameMs) {
     state.raf = requestAnimationFrame(drawMotionBackground);
     return;
@@ -1991,12 +2211,20 @@ function applyLocale() {
   populateSelect('style', t.styleOptions, '写实摄影');
   populateSelect('quality', t.qualityOptions, '2');
   populateSelect('stylize', t.stylizeOptions, '250');
+  populateSelect('scenePurpose', t.purposeOptions, t.purposeOptions[0].value);
+  populateSelect('cameraShot', t.cameraOptions, t.cameraOptions[0].value);
+  populateSelect('composition', t.compositionOptions, t.compositionOptions[0].value);
+  populateSelect('lighting', t.lightingOptions, t.lightingOptions[0].value);
+  populateSelect('colorPalette', t.paletteOptions, t.paletteOptions[0].value);
+  populateSelect('mood', t.moodOptions, t.moodOptions[0].value);
+  populateSelect('detailLevel', t.detailOptions, t.detailOptions[1].value);
 
   refreshVisibleDynamicContent();
 }
 
 function populateSelect(id, options, defaultVal) {
   const sel = document.getElementById(id);
+  if (!sel) return;
   const currentVal = sel.value || defaultVal;
   sel.innerHTML = options.map(o =>
     `<option value="${escapeHTML(o.value)}"${o.value === currentVal ? ' selected' : ''}>${escapeHTML(o.text)}</option>`
@@ -2046,7 +2274,19 @@ const STYLE_MAP = {
   '暗黑哥特': {mj:'dark gothic, moody atmosphere, dramatic shadows',flux:'dark gothic style, dramatic lighting',video:'dark gothic cinematic, moody atmosphere',universal:'dark gothic style, dramatic lighting, moody atmosphere, ornate details',seedance:'dark gothic, moody atmosphere, dramatic shadows, candlelit corridors, fog rolling in, ornate Victorian architecture'}, 
   '复古胶片': {mj:'vintage film photography, film grain, retro',flux:'vintage film aesthetic, retro style, film grain',video:'vintage film look, retro cinematic',universal:'vintage film photography aesthetic, film grain, retro color grading, nostalgic mood',seedance:'vintage film look, film grain, retro color grading, nostalgic mood, warm tones, soft vignette, period-accurate costumes'}, 
   '3D渲染': {mj:'3D render, octane render, ray tracing',flux:'3D rendered, octane render, photorealistic 3D',video:'3D animation, octane render style',universal:'3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting',seedance:'3D rendered, octane render, ray tracing, photorealistic 3D, studio lighting, subsurface scattering, realistic material physics'}, 
-  '像素艺术': {mj:'pixel art, 16-bit style, retro gaming',flux:'pixel art style, retro game aesthetic',video:'pixel art animation, retro style',universal:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details',seedance:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details, vibrant colors, nostalgic game feel'}
+  '像素艺术': {mj:'pixel art, 16-bit style, retro gaming',flux:'pixel art style, retro game aesthetic',video:'pixel art animation, retro style',universal:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details',seedance:'pixel art style, 16-bit retro gaming aesthetic, crisp pixel details, vibrant colors, nostalgic game feel'},
+  '电影海报': {mj:'cinematic poster design, premium key art, bold title-safe composition',flux:'cinematic poster aesthetic, editorial key visual, dramatic lighting',video:'cinematic trailer look, poster-grade framing, dramatic motion',universal:'cinematic poster design, bold focal point, premium key art composition',seedance:'cinematic poster look, dramatic blocking, trailer-ready composition, atmospheric depth'},
+  '产品广告': {mj:'premium product advertising, commercial photography, clean hero shot',flux:'premium product render, commercial lighting, clean material detail',video:'premium product film, controlled camera movement, elegant reveal',universal:'premium product advertising, clean hero shot, commercial readability, refined material detail',seedance:'premium product film, elegant reveal, controlled motion, tactile material highlights, brand-safe composition'},
+  '建筑可视化': {mj:'architectural visualization, realistic materials, refined spatial lighting',flux:'architectural visualization, clean geometry, realistic material rendering',video:'architectural walkthrough, smooth camera path, realistic scale',universal:'architectural visualization, clean geometry, realistic materials, refined spatial lighting',seedance:'architectural walkthrough, smooth dolly movement, realistic scale, natural light falloff, spatial depth'},
+  '黏土模型': {mj:'claymorphism, soft clay materials, rounded handcrafted forms',flux:'claymorphism style, tactile clay texture, soft studio lighting',video:'clay animation style, tactile stop-motion feel, soft shadows',universal:'claymorphism style, soft clay materials, tactile rounded forms, studio lighting',seedance:'claymorphism style, tactile clay texture, soft shadows, playful stop-motion-inspired motion'},
+  '剪纸艺术': {mj:'paper cut art, layered paper texture, handcrafted shadows',flux:'paper cut illustration, layered cutout forms, tactile paper grain',video:'paper cut animation style, layered parallax, handmade texture',universal:'paper cut art, layered cutout shapes, tactile paper grain, handcrafted shadows',seedance:'paper cut animation style, layered parallax, handmade texture, subtle shadow motion'},
+  '高级时装': {mj:'high fashion editorial, couture styling, luxury magazine photography',flux:'high fashion editorial, couture silhouette, refined styling',video:'fashion film, elegant model movement, luxury editorial mood',universal:'high fashion editorial, couture styling, luxury magazine composition, refined textures',seedance:'fashion film, elegant model movement, couture styling, luxury editorial lighting, premium runway atmosphere'},
+  '黑色电影': {mj:'film noir, high contrast monochrome, venetian blind shadows',flux:'film noir aesthetic, dramatic black and white contrast, smoky atmosphere',video:'film noir cinematography, slow suspenseful camera movement',universal:'film noir style, high contrast monochrome, dramatic shadows, smoky atmosphere',seedance:'film noir cinematography, high contrast shadows, smoky air, slow suspenseful camera movement'},
+  '微距摄影': {mj:'macro photography, crisp micro texture, shallow depth of field',flux:'macro photography, tactile surface details, sharp focal plane',video:'macro cinematic shot, slow focus pull, tactile texture movement',universal:'macro photography, crisp micro textures, shallow depth of field, tactile detail',seedance:'macro cinematic shot, slow focus pull, tactile surface details, natural micro movement'},
+  '等距插画': {mj:'isometric illustration, clean vector-like geometry, detailed miniature world',flux:'isometric illustration, precise geometry, clean visual hierarchy',video:'isometric animated scene, smooth parallax, miniature world motion',universal:'isometric illustration, clean geometry, miniature world detail, readable visual hierarchy',seedance:'isometric animated scene, smooth parallax, precise geometry, miniature world motion'},
+  '包豪斯海报': {mj:'Bauhaus poster, geometric shapes, disciplined typography-inspired layout',flux:'Bauhaus graphic design, geometric abstraction, disciplined layout',video:'Bauhaus motion poster, geometric movement, clean rhythm',universal:'Bauhaus poster style, geometric forms, disciplined layout, bold color blocking',seedance:'Bauhaus motion poster, geometric choreography, clean rhythm, bold color blocking'},
+  '日式浮世绘': {mj:'ukiyo-e style, woodblock print texture, elegant linework',flux:'ukiyo-e inspired illustration, woodblock texture, refined linework',video:'ukiyo-e animation style, layered woodblock parallax, elegant motion',universal:'ukiyo-e style, woodblock print texture, elegant linework, flat color planes',seedance:'ukiyo-e animation style, layered woodblock parallax, elegant linework, calm flowing motion'},
+  '品牌视觉': {mj:'brand campaign visual, premium art direction, coherent identity system',flux:'brand visual system, premium layout, clean campaign art direction',video:'brand film look, polished motion language, premium identity reveal',universal:'brand campaign visual, premium art direction, coherent identity system, clean layout',seedance:'brand film look, polished motion language, premium identity reveal, consistent visual system'}
 };
 
 /* ==================== SeaDance 2.0 专用提示词引擎 ==================== */
@@ -2057,43 +2297,142 @@ const SEEDANCE_MOODS = ['epic','melancholic','tense','dreamy','nostalgic','myste
 const SEEDANCE_PHYSICS = ['realistic physics','natural motion','accurate weight and momentum','fabric flowing naturally','hair swaying in wind','believable impacts','motion blur on fast action'];
 const SEEDANCE_AUDIO = ['intense orchestral buildup','pulsing electronic beat','emotional piano','diegetic ambient sound','sudden silence to explosion','synced to rhythmic cuts'];
 const QUALITY_MAP = {'1':'','2':'masterpiece, best quality','3':'masterpiece, best quality, ultra detailed, 8K UHD'};
+const BASE_NEGATIVE_PROMPT = 'low quality, blurry, artifacts, distorted anatomy, extra limbs, bad hands, unreadable text, watermark, logo, oversaturated, noisy background';
+
+function joinPromptParts(parts) {
+  return parts
+    .flatMap(part => Array.isArray(part) ? part : [part])
+    .map(part => String(part || '').trim())
+    .filter(Boolean)
+    .join(', ');
+}
+
+function deterministicHash(value) {
+  let hash = 2166136261;
+  const text = String(value || '');
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return Math.abs(hash >>> 0);
+}
+
+function pickFrom(list, seed, offset = 0) {
+  return list[(seed + offset) % list.length];
+}
+
+function getControlValue(id, fallback = '') {
+  const el = document.getElementById(id);
+  return el ? String(el.value || fallback).trim() : fallback;
+}
+
+function buildNegativePrompt(context = {}) {
+  return joinPromptParts([BASE_NEGATIVE_PROMPT, context.negativePrompt]);
+}
+
+function buildPromptContext(overrides = {}) {
+  const style = overrides.style || getControlValue('style', '写实摄影');
+  const context = {
+    style,
+    aspect: overrides.aspect || getControlValue('aspectRatio', '16:9'),
+    quality: overrides.quality || getControlValue('quality', '2'),
+    stylize: overrides.stylize || getControlValue('stylize', '250'),
+    purpose: overrides.purpose || getControlValue('scenePurpose'),
+    cameraShot: overrides.cameraShot || getControlValue('cameraShot'),
+    composition: overrides.composition || getControlValue('composition'),
+    lighting: overrides.lighting || getControlValue('lighting'),
+    colorPalette: overrides.colorPalette || getControlValue('colorPalette'),
+    mood: overrides.mood || getControlValue('mood'),
+    detailLevel: overrides.detailLevel || getControlValue('detailLevel'),
+    negativePrompt: overrides.negativePrompt ?? getControlValue('negativePrompt')
+  };
+  context.stylePreset = STYLE_MAP[style] || STYLE_MAP['写实摄影'];
+  context.modifiers = [
+    context.purpose,
+    context.cameraShot,
+    context.composition,
+    context.lighting,
+    context.colorPalette,
+    context.mood,
+    context.detailLevel
+  ];
+  context.negative = buildNegativePrompt(context);
+  context.seed = deterministicHash(joinPromptParts([style, context.aspect, context.modifiers, context.negativePrompt]));
+  return context;
+}
 
 /* ==================== Prompt 生成函数 ==================== */
-function generateMidjourneyPrompt(desc,style,aspect,quality,stylize) {
-  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影']; const q=QUALITY_MAP[quality];
-  let p=desc; if(q) p=q+', '+p; p+=', '+s.mj; p+=' --v 6.0 --ar '+aspect+' --q 2 --style raw --s '+stylize; return p;
+function generateMidjourneyPrompt(desc, context) {
+  const q = QUALITY_MAP[context.quality];
+  const prompt = joinPromptParts([q, desc, context.stylePreset.mj, context.modifiers]);
+  return `${prompt} --v 6.0 --ar ${context.aspect} --q 2 --style raw --s ${context.stylize} --no ${context.negative}`;
 }
-function generateFluxPrompt(desc,style) {
-  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
-  return desc+', '+s.flux+', ultra detailed, professional quality, sharp focus, cinematic composition';
+function generateFluxPrompt(desc, context) {
+  const prompt = joinPromptParts([
+    desc,
+    context.stylePreset.flux,
+    context.modifiers,
+    'ultra detailed, professional quality, sharp focus, cinematic composition'
+  ]);
+  return `${prompt}\nNegative prompt: ${context.negative}`;
 }
-function generateVideoPrompt(desc,style) {
-  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
-  return desc+', '+s.video+', smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion';
+function generateVideoPrompt(desc, context) {
+  const movement = pickFrom(SEEDANCE_MOVEMENTS, context.seed, 3);
+  const prompt = joinPromptParts([
+    desc,
+    context.stylePreset.video,
+    context.purpose,
+    context.cameraShot,
+    movement,
+    context.composition,
+    context.lighting,
+    context.colorPalette,
+    context.mood,
+    'smooth cinematic motion, realistic physics, consistent subject identity, 4K quality, clean temporal continuity'
+  ]);
+  return `${prompt}\nAvoid: ${context.negative}`;
 }
-function generateUniversalPrompt(desc,style) {
-  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
-  return desc+', '+s.universal+', high quality, best quality, masterpiece, ultra detailed, professional composition, cinematic lighting';
+function generateUniversalPrompt(desc, context) {
+  return joinPromptParts([
+    desc,
+    context.stylePreset.universal,
+    context.modifiers,
+    'high quality, best quality, professional composition, controlled lighting, clear focal point',
+    `negative prompt: ${context.negative}`
+  ]);
 }
-function generateSeedancePrompt(desc,style) {
-  const s=STYLE_MAP[style]||STYLE_MAP['写实摄影'];
-  const shot=SEEDANCE_SHOTS[Math.floor(Math.random()*SEEDANCE_SHOTS.length)];
-  const movement=SEEDANCE_MOVEMENTS[Math.floor(Math.random()*SEEDANCE_MOVEMENTS.length)];
-  const lighting=SEEDANCE_LIGHTING[Math.floor(Math.random()*SEEDANCE_LIGHTING.length)];
-  const mood=SEEDANCE_MOODS[Math.floor(Math.random()*SEEDANCE_MOODS.length)];
+function generateSeedancePrompt(desc, context) {
+  const shot=pickFrom(SEEDANCE_SHOTS, context.seed, 1);
+  const movement=pickFrom(SEEDANCE_MOVEMENTS, context.seed, 2);
+  const lighting=pickFrom(SEEDANCE_LIGHTING, context.seed, 3);
+  const mood=pickFrom(SEEDANCE_MOODS, context.seed, 4);
   const physics=SEEDANCE_PHYSICS.slice(0,3).join(', ');
-  const audio=SEEDANCE_AUDIO[Math.floor(Math.random()*SEEDANCE_AUDIO.length)];
-  return desc+', '+s.seedance+', '+shot+', '+movement+', '+lighting+' lighting, '+mood+' atmosphere, '+physics+', '+audio+', seamless transition, continuous motion, 2K cinematic quality, 24fps';
+  const audio=pickFrom(SEEDANCE_AUDIO, context.seed, 5);
+  return joinPromptParts([
+    desc,
+    context.stylePreset.seedance,
+    context.purpose,
+    context.cameraShot || shot,
+    context.composition,
+    context.lighting || `${lighting} lighting`,
+    context.colorPalette,
+    context.mood || `${mood} atmosphere`,
+    movement,
+    physics,
+    audio,
+    'seamless transition, continuous motion, consistent subject identity, 2K cinematic quality, 24fps',
+    `avoid ${context.negative}`
+  ]);
 }
 
-function buildPromptCards(desc, style, aspect, quality, stylize) {
+function buildPromptCards(desc, context) {
   const t = LOCALES[currentLang];
   return [
-    {model:currentLang==='zh'?'通用模型':'Universal',icon:'ALL',iconClass:'universal',desc:t.modelUniversal,prompt:generateUniversalPrompt(desc,style)},
-    {model:'Midjourney',icon:'MJ',iconClass:'mj',desc:t.modelMj,prompt:generateMidjourneyPrompt(desc,style,aspect,quality,stylize)},
-    {model:'Flux',icon:'FL',iconClass:'flux',desc:t.modelFlux,prompt:generateFluxPrompt(desc,style)},
-    {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,style)},
-    {model:'SeaDance 2.0',icon:'SD',iconClass:'seedance',desc:t.modelSeedance,prompt:generateSeedancePrompt(desc,style)}
+    {model:currentLang==='zh'?'通用模型':'Universal',icon:'ALL',iconClass:'universal',desc:t.modelUniversal,prompt:generateUniversalPrompt(desc,context)},
+    {model:'Midjourney',icon:'MJ',iconClass:'mj',desc:t.modelMj,prompt:generateMidjourneyPrompt(desc,context)},
+    {model:'Flux',icon:'FL',iconClass:'flux',desc:t.modelFlux,prompt:generateFluxPrompt(desc,context)},
+    {model:currentLang==='zh'?'视频生成':'Video',icon:'VI',iconClass:'video',desc:t.modelVideo,prompt:generateVideoPrompt(desc,context)},
+    {model:'SeaDance 2.0',icon:'SD',iconClass:'seedance',desc:t.modelSeedance,prompt:generateSeedancePrompt(desc,context)}
   ];
 }
 
@@ -2101,13 +2440,11 @@ function buildPromptCards(desc, style, aspect, quality, stylize) {
 function generatePrompts() {
   const desc=document.getElementById('description').value.trim(); const t=LOCALES[currentLang];
   if(!desc){document.getElementById('description').focus();showToast(t.toastEmpty,'warning');return;}
-  const style=document.getElementById('style').value,aspect=document.getElementById('aspectRatio').value,
-    quality=document.getElementById('quality').value,stylize=document.getElementById('stylize').value,
-    btn=document.getElementById('generateBtn'),btnText=document.getElementById('btnText');
+  const context=buildPromptContext(), btn=document.getElementById('generateBtn'),btnText=document.getElementById('btnText');
   btn.disabled=true; btnText.innerHTML=t.generating;
   setTimeout(()=>{
-    renderResults(buildPromptCards(desc,style,aspect,quality,stylize));
-    renderQualityScore(generateUniversalPrompt(desc,style));
+    renderResults(buildPromptCards(desc,context));
+    renderQualityScore(generateUniversalPrompt(desc,context));
     btn.disabled=false; btnText.textContent=t.regenBtn; showToast(t.toastSuccess,'success');
   },800);
 }
@@ -2441,12 +2778,9 @@ function refreshVisibleDynamicContent() {
   const desc = document.getElementById('description').value.trim();
   const hasPromptCards = document.querySelectorAll('.prompt-card').length > 0;
   if (hasPromptCards && desc) {
-    const style = document.getElementById('style').value;
-    const aspect = document.getElementById('aspectRatio').value;
-    const quality = document.getElementById('quality').value;
-    const stylize = document.getElementById('stylize').value;
-    renderResults(buildPromptCards(desc, style, aspect, quality, stylize));
-    renderQualityScore(generateUniversalPrompt(desc, style));
+    const context = buildPromptContext();
+    renderResults(buildPromptCards(desc, context));
+    renderQualityScore(generateUniversalPrompt(desc, context));
   }
 
   const optInput = document.getElementById('optInput').value.trim();
@@ -2500,6 +2834,78 @@ const ENHANCE_MAP = {
   '大': 'grand and epic scale, sweeping vista, monumental presence, awe-inspiring magnitude',
   '小': 'intimate and delicate, fine details, close-up perspective, charming miniature quality'
 };
+
+function inferOptimizerIntent(input) {
+  const text = String(input || '');
+  if (/产品|商品|包装|电商|广告|product|commerce|packaging/i.test(text)) {
+    return {
+      style: '产品广告',
+      purpose: 'premium product hero shot, commercial readability, clear selling point',
+      cameraShot: 'macro lens, tactile details, crisp texture',
+      composition: 'editorial grid layout, premium whitespace, clean hierarchy',
+      lighting: 'soft diffused studio lighting, clean shadows',
+      colorPalette: 'luxury black, ivory, and muted gold palette',
+      mood: 'calm, refined, professional atmosphere',
+      aspect: '4:3'
+    };
+  }
+  if (/视频|短片|镜头|运镜|跳舞|奔跑|video|film|motion|camera/i.test(text)) {
+    return {
+      style: '电影海报',
+      purpose: 'cinematic environment design, immersive worldbuilding, strong atmosphere',
+      cameraShot: 'anamorphic cinematic lens, subtle lens compression',
+      composition: 'layered foreground, midground, background, cinematic depth',
+      lighting: 'volumetric light beams, atmospheric haze',
+      colorPalette: 'warm amber and deep teal palette, cinematic contrast',
+      mood: 'cinematic, suspenseful, high-stakes mood',
+      aspect: '16:9'
+    };
+  }
+  if (/人物|角色|头像|肖像|女孩|男孩|portrait|character|avatar/i.test(text)) {
+    return {
+      style: '写实摄影',
+      purpose: 'portrait identity, clear subject presence, expressive detail',
+      cameraShot: 'close-up shot, shallow depth of field, intimate details',
+      composition: 'rule of thirds composition, balanced negative space',
+      lighting: 'soft diffused studio lighting, clean shadows',
+      colorPalette: 'natural color palette, realistic color harmony',
+      mood: 'calm, refined, professional atmosphere',
+      aspect: '2:3'
+    };
+  }
+  if (/建筑|室内|空间|城市|building|architecture|interior|city/i.test(text)) {
+    return {
+      style: '建筑可视化',
+      purpose: 'cinematic environment design, immersive worldbuilding, strong atmosphere',
+      cameraShot: 'wide shot, environmental scale, strong spatial depth',
+      composition: 'leading lines, strong depth cues, guided eye flow',
+      lighting: 'overcast natural light, realistic soft contrast',
+      colorPalette: 'natural color palette, realistic color harmony',
+      mood: 'calm, refined, professional atmosphere',
+      aspect: '16:9'
+    };
+  }
+  return {
+    style: '写实摄影',
+    purpose: 'concept art exploration, production-ready design language',
+    cameraShot: 'eye-level shot, natural perspective',
+    composition: 'rule of thirds composition, balanced negative space',
+    lighting: 'golden hour light, warm rim glow, long shadows',
+    colorPalette: 'natural color palette, realistic color harmony',
+    mood: 'dreamlike, poetic, soft emotional mood',
+    aspect: '16:9'
+  };
+}
+
+function buildOptimizerContext(input) {
+  return buildPromptContext({
+    ...inferOptimizerIntent(input),
+    quality: '3',
+    stylize: '500',
+    detailLevel: 'ultra detailed textures, layered micro-details, production quality',
+    negativePrompt: ''
+  });
+}
 
 /* ==================== 模板库数据 ==================== */
 const TEMPLATE_DATA = {
@@ -2985,57 +3391,67 @@ function exportMd(index) {
 
  /* 优化核心函数：将简单描述扩展为专业 Prompt */
 function enhanceDescription(input) {
+  const intent = inferOptimizerIntent(input);
   let enhanced = input;
 
   /* 移除常见的中文前缀 */
   enhanced = enhanced.replace(/^(帮我|请|给我|我想|画一个|画一只|画一个|生成|创建|制作|做)(一个|一只|一幅|一张|个|只)?/g, '').trim();
 
   /* 关键词替换增强 */
+  let replaced = false;
   for (const [key, value] of Object.entries(ENHANCE_MAP)) {
     if (enhanced.includes(key)) {
       enhanced = enhanced.replace(key, value);
+      replaced = true;
       break; /* 只替换第一个匹配的关键词 */
     }
   }
 
-  /* 如果没有匹配到任何关键词，添加通用增强 */
-  if (enhanced === input.replace(/^(帮我|请|给我|我想|画一个|画一只|画一个|生成|创建|制作|做)(一个|一只|一幅|一张|个|只)?/g, '').trim()) {
-    enhanced += ', highly detailed, professional quality, stunning composition, cinematic lighting, masterpiece';
-  }
-
-  return enhanced;
+  return joinPromptParts([
+    enhanced,
+    replaced ? '' : 'clear subject, specific visual details',
+    intent.purpose,
+    intent.cameraShot,
+    intent.composition,
+    intent.lighting,
+    intent.colorPalette,
+    intent.mood,
+    'professional quality, controlled composition, strong focal point'
+  ]);
 }
 
 /* 为不同模型生成优化后的 Prompt */
 function optimizeForChatGPT(desc) {
   const e = enhanceDescription(desc);
-  return `Create a detailed and vivid description of: ${e}. Include specific details about composition, lighting, color palette, mood, and artistic style. The result should be a comprehensive prompt suitable for high-quality image generation.`;
+  return `Role: senior visual prompt director
+Task: transform the idea into a production-ready image prompt.
+Subject: ${e}
+Requirements:
+1. Define the main subject, action, environment, lighting, color palette, mood, and composition.
+2. Keep one clear focal point and avoid conflicting style instructions.
+3. Add concrete camera/lens details when relevant.
+4. Include a short negative prompt for artifacts, anatomy errors, blur, watermark, and unreadable text.
+Output format: final prompt + negative prompt + 3 optional variations.`;
 }
 
 function optimizeForMidjourney(desc) {
   const e = enhanceDescription(desc);
-  return `${e}, masterpiece, best quality, ultra detailed, professional photography --v 6.0 --q 2 --style raw --s 500`;
+  return generateMidjourneyPrompt(e, buildOptimizerContext(desc));
 }
 
 function optimizeForFlux(desc) {
   const e = enhanceDescription(desc);
-  return `${e}, ultra detailed, professional quality, sharp focus, cinematic composition, 8K resolution`;
+  return generateFluxPrompt(e, buildOptimizerContext(desc));
 }
 
 function optimizeForVideo(desc) {
   const e = enhanceDescription(desc);
-  return `${e}, smooth cinematic motion, dynamic camera movement, 4K quality, professional lighting, film grain, slow motion, atmospheric`;
+  return generateVideoPrompt(e, buildOptimizerContext(desc));
 }
 
 function optimizeForSeedance(desc) {
   const e = enhanceDescription(desc);
-  const shot = SEEDANCE_SHOTS[Math.floor(Math.random() * SEEDANCE_SHOTS.length)];
-  const movement = SEEDANCE_MOVEMENTS[Math.floor(Math.random() * SEEDANCE_MOVEMENTS.length)];
-  const lighting = SEEDANCE_LIGHTING[Math.floor(Math.random() * SEEDANCE_LIGHTING.length)];
-  const mood = SEEDANCE_MOODS[Math.floor(Math.random() * SEEDANCE_MOODS.length)];
-  const physics = SEEDANCE_PHYSICS.slice(0, 3).join(', ');
-  const audio = SEEDANCE_AUDIO[Math.floor(Math.random() * SEEDANCE_AUDIO.length)];
-  return `${e}, ${shot}, ${movement}, ${lighting} lighting, ${mood} atmosphere, ${physics}, ${audio}, seamless transition, continuous motion, 2K cinematic quality, 24fps`;
+  return generateSeedancePrompt(e, buildOptimizerContext(desc));
 }
 
 /* ==================== 优化器主逻辑 ==================== */

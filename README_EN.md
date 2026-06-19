@@ -44,14 +44,16 @@ Enter a creative idea and generate professional prompts for universal image mode
 ### Prompt Generator
 
 - Generates prompts for Universal, Midjourney, Flux, Video AI, and SeaDance 2.0.
-- Includes 12 art styles: photorealistic, cyberpunk, anime, oil painting, watercolor, sci-fi, and more.
-- Supports aspect ratio, quality, and stylize controls.
+- Includes 24 art styles, including photorealistic, product advertising, cinematic poster, architectural visualization, claymorphism, paper cut art, and high fashion.
+- Supports aspect ratio, quality, stylize, use case, camera language, composition, lighting, color palette, mood, detail density, and negative prompt controls.
+- Multi-model outputs share one structured context so prompts are more consistent than simple string concatenation.
 - Each result can be copied, downloaded as TXT or Markdown, or saved to the local prompt vault.
 
 ### Prompt Optimizer
 
 - Expands simple descriptions into more specific professional prompts.
 - Produces optimized outputs for ChatGPT, Midjourney, Flux, Video AI, and SeaDance 2.0.
+- Infers common intents such as portrait, product, video, and architecture, then adds camera, lighting, composition, and negative prompt guidance.
 - Shows original vs enhanced text.
 - Saves optimizer history locally for recall and clearing.
 
@@ -136,6 +138,7 @@ tsc/
 │   ├── light-theme.png              # Light theme screenshot
 │   └── demo.gif                     # Demo GIF, folded by default in README
 ├── docs/superpowers/plans/          # Implementation plan records
+├── tests/                           # Zero-dependency regression checks
 ├── index.html                       # Complete single-file app
 ├── README.md                        # Chinese documentation
 ├── README_EN.md                     # English documentation
@@ -156,6 +159,7 @@ tsc/
 - [x] Quality scoring
 - [x] Local prompt vault
 - [x] JSON backup and restore
+- [x] Professional controls and structured prompt context
 - [ ] Local custom templates
 - [ ] Prompt version diff
 - [ ] PWA offline cache
@@ -173,6 +177,7 @@ tsc/
 
 | Version | Date | Description |
 |---------|------|-------------|
+| [v3.5.0] | 2026-06-19 | Professional controls, 24 styles, structured multi-model generation, optimizer intent inference, mobile scroll performance tuning |
 | [v3.4.0] | 2026-06-16 | Premium motion background, stronger workspace hierarchy, accessible motion fallback |
 | [v3.3.0] | 2026-06-14 | Template placeholder filling, favorites, global search, share links |
 | [v3.2.0] | 2026-06-14 | Local prompt vault, JSON backup/restore, template search, doc encoding fix |
