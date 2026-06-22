@@ -1,16 +1,19 @@
 /* ====================================================================
- * AI Creator Workbench - Service Worker
+ * AI Creator Workbench - Service Worker (Vercel 适配版)
  * 策略：
  *   - 静态资源：Cache First + 后台更新（stale-while-revalidate）
  *   - 页面导航：Network First，离线时回退到缓存
  *   - 字体/图片：Cache First，长期缓存
+ *   - API 路由：Network First，不缓存（实时数据）
  *   - 更新：skipWaiting + controllerchange 自动激活
+ * 适配：GitHub Pages（相对路径）+ Vercel（根路径）
  * ==================================================================== */
 
-const SW_VERSION = 'v1.0.0';
+const SW_VERSION = 'v1.1.0';
 const STATIC_CACHE = `acw-static-${SW_VERSION}`;
 const RUNTIME_CACHE = `acw-runtime-${SW_VERSION}`;
 const FONT_CACHE = `acw-fonts-${SW_VERSION}`;
+const API_CACHE = `acw-api-${SW_VERSION}`;
 const OFFLINE_URL = './offline.html';
 
 /* 预缓存核心资源（安装时立即缓存） */
@@ -50,7 +53,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then(keys =>
       Promise.all(
         keys
-          .filter(key => ![STATIC_CACHE, RUNTIME_CACHE, FONT_CACHE].includes(key))
+          .filter(key => ![STATIC_CACHE, RUNTIME_CACHE, FONT_CACHE, API_CACHE].includes(key))
           .map(key => caches.delete(key))
       )
     ).then(() => self.clients.claim())
@@ -67,6 +70,12 @@ self.addEventListener('fetch', (event) => {
 
   /* 跳过 chrome-extension 和非 http(s) 请求 */
   if (!url.protocol.startsWith('http')) return;
+
+  /* API 路由：Network First，短时缓存（5 秒） */
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(apiNetworkFirst(request));
+    return;
+  }
 
   /* 导航请求：Network First，离线回退 */
   if (request.mode === 'navigate') {
@@ -128,6 +137,27 @@ async function networkFirst(request, cacheName = RUNTIME_CACHE) {
       return offline || new Response('You are offline', { status: 503, headers: { 'Content-Type': 'text/html' } });
     }
     return new Response('Offline', { status: 503, statusText: 'Offline' });
+  }
+}
+
+/* API Network First：API 请求专用，Network First + 短缓存降级 */
+async function apiNetworkFirst(request) {
+  const cache = await caches.open(API_CACHE);
+  try {
+    const response = await fetch(request);
+    /* 只缓存成功的响应 */
+    if (response.ok) {
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (err) {
+    /* API 离线：尝试缓存 */
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    return new Response(JSON.stringify({ error: 'offline', message: 'API unavailable' }), {
+      status: 503,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 }
 
