@@ -2075,200 +2075,6 @@
   .live-score-details { width:100%; grid-template-columns:1fr 1fr; }
 }
 
-/* ==================== AI Gallery / Example Images ==================== */
-.gallery-section { margin-top:32px; }
-.gallery-header {
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:16px; flex-wrap:wrap; gap:10px;
-}
-.gallery-title {
-  font-size:18px; font-weight:700; margin:0;
-  display:flex; align-items:center; gap:8px;
-  background:var(--accent-gradient); -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent; background-clip:text;
-}
-.gallery-title-icon { width:20px; height:20px; opacity:0.7; }
-.gallery-model-filter {
-  display:flex; gap:4px; flex-wrap:wrap;
-}
-.gallery-model-btn {
-  padding:5px 12px; border:1px solid var(--border-color);
-  background:var(--bg-card); border-radius:100px;
-  font-family:var(--font-stack); font-size:12px; font-weight:500;
-  color:var(--text-tertiary); cursor:pointer;
-  transition:all var(--transition-fast); white-space:nowrap;
-  display:flex; align-items:center; gap:5px;
-}
-.gallery-model-btn:hover { color:var(--text-secondary); border-color:var(--border-active); }
-.gallery-model-btn.active {
-  background:var(--accent-gradient); color:#fff; border-color:transparent;
-}
-.gallery-model-btn .dot {
-  width:8px; height:8px; border-radius:50%; flex-shrink:0;
-}
-.gallery-model-btn .dot.mj { background:#5865f2; }
-.gallery-model-btn .dot.flux { background:#f97316; }
-.gallery-model-btn .dot.seedance { background:#0ea5e9; }
-
-/* Masonry Layout */
-.gallery-masonry {
-  column-count:4; column-gap:14px;
-}
-.gallery-item {
-  break-inside:avoid; margin-bottom:14px; position:relative;
-  border-radius:var(--radius-md); overflow:hidden;
-  background:var(--bg-card); border:1px solid var(--border-color);
-  cursor:pointer; transition:all var(--transition-medium);
-  display:block;
-}
-.gallery-item:hover {
-  border-color:var(--border-active);
-  transform:translateY(-3px);
-  box-shadow:var(--shadow-card), 0 12px 40px rgba(99,102,241,0.1);
-}
-.gallery-item-img-wrap {
-  position:relative; width:100%; overflow:hidden;
-  background:var(--bg-secondary);
-}
-.gallery-item-img {
-  width:100%; display:block; height:auto;
-  opacity:0; transition:opacity 0.5s ease;
-}
-.gallery-item-img.loaded { opacity:1; }
-
-/* Skeleton Loading */
-.gallery-skeleton {
-  width:100%; min-height:200px;
-  background:linear-gradient(90deg,
-    var(--bg-secondary) 0%,
-    rgba(99,102,241,0.06) 50%,
-    var(--bg-secondary) 100%);
-  background-size:200% 100%;
-  animation:skeletonShimmer 1.5s ease-in-out infinite;
-}
-@keyframes skeletonShimmer {
-  0% { background-position:200% 0; }
-  100% { background-position:-200% 0; }
-}
-
-/* Hover Overlay */
-.gallery-overlay {
-  position:absolute; inset:0;
-  background:linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85) 100%);
-  opacity:0; transition:opacity var(--transition-fast);
-  display:flex; flex-direction:column; justify-content:flex-end;
-  padding:14px; pointer-events:none;
-}
-.gallery-item:hover .gallery-overlay { opacity:1; }
-.gallery-overlay-model {
-  display:inline-flex; align-items:center; gap:5px;
-  font-size:11px; font-weight:600; color:#fff;
-  margin-bottom:4px; text-transform:uppercase; letter-spacing:0.04em;
-}
-.gallery-overlay-model .dot {
-  width:7px; height:7px; border-radius:50%;
-}
-.gallery-overlay-summary {
-  font-size:12px; color:rgba(255,255,255,0.9);
-  line-height:1.5; display:-webkit-box;
-  -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
-}
-.gallery-overlay-zoom {
-  position:absolute; top:10px; right:10px;
-  width:32px; height:32px; border-radius:50%;
-  background:rgba(0,0,0,0.5); backdrop-filter:blur(8px);
-  display:flex; align-items:center; justify-content:center;
-  color:#fff; opacity:0; transition:opacity var(--transition-fast);
-}
-.gallery-item:hover .gallery-overlay-zoom { opacity:1; }
-.gallery-overlay-zoom svg { width:16px; height:16px; }
-
-/* Lightbox */
-.gallery-lightbox {
-  position:fixed; inset:0; z-index:9999;
-  background:rgba(0,0,0,0.92);
-  backdrop-filter:blur(20px);
-  display:none; align-items:center; justify-content:center;
-  padding:40px; animation:fadeIn 0.3s ease;
-}
-.gallery-lightbox.open { display:flex; }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-.gallery-lightbox-content {
-  position:relative; max-width:90vw; max-height:85vh;
-  display:flex; flex-direction:column; align-items:center; gap:16px;
-  animation:zoomIn 0.4s var(--motion-spring);
-}
-@keyframes zoomIn {
-  from { transform:scale(0.85); opacity:0; }
-  to { transform:scale(1); opacity:1; }
-}
-.gallery-lightbox-img {
-  max-width:90vw; max-height:70vh; border-radius:var(--radius-md);
-  box-shadow:0 20px 80px rgba(0,0,0,0.5);
-}
-.gallery-lightbox-info {
-  width:100%; max-width:600px; text-align:center;
-}
-.gallery-lightbox-model {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:4px 12px; border-radius:100px;
-  background:rgba(255,255,255,0.1); color:#fff;
-  font-size:12px; font-weight:600; margin-bottom:8px;
-}
-.gallery-lightbox-prompt {
-  font-size:13px; color:rgba(255,255,255,0.8);
-  line-height:1.6; max-height:120px; overflow-y:auto;
-  text-align:left; background:rgba(255,255,255,0.05);
-  padding:12px 16px; border-radius:var(--radius-sm);
-  border:1px solid rgba(255,255,255,0.1);
-}
-.gallery-lightbox-close {
-  position:absolute; top:-40px; right:0;
-  width:36px; height:36px; border-radius:50%;
-  background:rgba(255,255,255,0.1); border:none;
-  color:#fff; cursor:pointer; display:flex;
-  align-items:center; justify-content:center;
-  transition:all var(--transition-fast);
-}
-.gallery-lightbox-close:hover { background:rgba(255,255,255,0.2); transform:rotate(90deg); }
-.gallery-lightbox-close svg { width:18px; height:18px; }
-.gallery-lightbox-nav {
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:44px; height:44px; border-radius:50%;
-  background:rgba(255,255,255,0.1); border:none;
-  color:#fff; cursor:pointer; display:flex;
-  align-items:center; justify-content:center;
-  transition:all var(--transition-fast);
-}
-.gallery-lightbox-nav:hover { background:rgba(255,255,255,0.2); }
-.gallery-lightbox-nav.prev { left:-60px; }
-.gallery-lightbox-nav.next { right:-60px; }
-.gallery-lightbox-nav svg { width:20px; height:20px; }
-
-/* Empty gallery */
-.gallery-empty {
-  column-span:all; text-align:center; padding:48px 24px;
-  color:var(--text-tertiary); font-size:14px;
-}
-
-/* Responsive */
-@media (max-width:1024px) {
-  .gallery-masonry { column-count:3; }
-}
-@media (max-width:768px) {
-  .gallery-masonry { column-count:2; column-gap:10px; }
-  .gallery-item { margin-bottom:10px; }
-  .gallery-lightbox { padding:20px; }
-  .gallery-lightbox-nav.prev { left:-10px; }
-  .gallery-lightbox-nav.next { right:-10px; }
-  .gallery-lightbox-content { max-height:90vh; }
-}
-@media (max-width:480px) {
-  .gallery-masonry { column-count:1; }
-  .gallery-header { flex-direction:column; align-items:flex-start; }
-  .gallery-model-filter { width:100%; overflow-x:auto; flex-wrap:nowrap; }
-}
-
 /* ==================== AI Result Card System ==================== */
 .result-card-system { padding-bottom:80px; }
 .result-system-header {
@@ -3298,10 +3104,6 @@ nav {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
         <span data-i18n="wbNavFavorites">收藏库</span>
       </button>
-      <button class="wb-nav-item" data-wb-tab="gallery" onclick="wbNavigate('templates');setTimeout(()=>document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'}),100)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-        <span data-i18n="wbNavGallery">示例图</span>
-      </button>
 
       <div class="wb-nav-divider"></div>
       <div class="wb-nav-section-label" data-i18n="wbNavProgress">创作进度</div>
@@ -3887,52 +3689,7 @@ nav {
     <div class="template-composer" id="templateComposer" style="display:none;"></div>
     <div class="template-grid" id="templateGrid"></div>
   </div>
-
-  <!-- AI Example Gallery -->
-  <div class="gallery-section input-card" id="gallerySection">
-    <div class="gallery-header">
-      <h3 class="gallery-title">
-        <svg class="gallery-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-        <span data-i18n="galleryTitle">AI 示例图展示</span>
-      </h3>
-      <div class="gallery-model-filter" id="galleryModelFilter">
-        <button class="gallery-model-btn active" data-model="all" onclick="filterGalleryModel('all')">
-          <span data-i18n="galleryAll">全部</span>
-        </button>
-        <button class="gallery-model-btn" data-model="mj" onclick="filterGalleryModel('mj')">
-          <span class="dot mj"></span>Midjourney
-        </button>
-        <button class="gallery-model-btn" data-model="flux" onclick="filterGalleryModel('flux')">
-          <span class="dot flux"></span>Flux
-        </button>
-        <button class="gallery-model-btn" data-model="seedance" onclick="filterGalleryModel('seedance')">
-          <span class="dot seedance"></span>SeaDance
-        </button>
-      </div>
-    </div>
-    <div class="gallery-masonry" id="galleryMasonry"></div>
-  </div>
 </section>
-
-<!-- Gallery Lightbox -->
-<div class="gallery-lightbox" id="galleryLightbox" onclick="closeGalleryLightbox(event)">
-  <div class="gallery-lightbox-content" onclick="event.stopPropagation()">
-    <button class="gallery-lightbox-close" onclick="closeGalleryLightbox()" aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-    <button class="gallery-lightbox-nav prev" onclick="navGallery(-1)" aria-label="Previous">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
-    </button>
-    <img class="gallery-lightbox-img" id="galleryLightboxImg" src="" alt="">
-    <div class="gallery-lightbox-info">
-      <div class="gallery-lightbox-model" id="galleryLightboxModel"></div>
-      <div class="gallery-lightbox-prompt" id="galleryLightboxPrompt"></div>
-    </div>
-    <button class="gallery-lightbox-nav next" onclick="navGallery(1)" aria-label="Next">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
-    </button>
-  </div>
-</div>
 
 <!-- ==================== Footer ==================== -->
 <footer>
@@ -5001,14 +4758,11 @@ const LOCALES = {
     tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: '使用', tplToastInserted: '模板已插入',
     tplFavorite: '收藏模板',
-    /* Gallery */
-    galleryTitle: 'AI 示例图展示', galleryAll: '全部',
-    galleryEmpty: '暂无示例图', galleryLoading: '加载中...',
     /* Workbench */
     wbCmdkPlaceholder: '搜索或执行命令...', wbNavWorkspace: '工作区', wbNavLibrary: '资产库',
     wbNavProgress: '创作进度', wbNavCompose: '创作', wbNavStyles: '风格宇宙',
     wbNavTemplates: '模板库', wbNavOptimizer: '优化器', wbNavHistory: '历史版本',
-    wbNavFavorites: '收藏库', wbNavGallery: '示例图', wbNavShortcuts: '快捷键',
+    wbNavFavorites: '收藏库', wbNavShortcuts: '快捷键',
     wbLevel: 'Level', wbWorkspaceLabel: '工作台', wbSave: '保存', wbGenerate: '生成',
     wbAssistScore: 'Prompt 强度', wbAssistModules: '模块构建', wbAssistSuggestions: 'AI 建议',
     wbAssistStyles: '快速风格', wbAssistTokens: 'Token 统计',
@@ -5244,14 +4998,11 @@ const LOCALES = {
     tplCatMidjourney: 'Midjourney', tplCatFlux: 'Flux', tplCatSeedance: 'SeaDance',
     tplUseBtn: 'Use', tplToastInserted: 'Template inserted',
     tplFavorite: 'Favorite template',
-    /* Gallery */
-    galleryTitle: 'AI Example Gallery', galleryAll: 'All',
-    galleryEmpty: 'No examples yet', galleryLoading: 'Loading...',
     /* Workbench */
     wbCmdkPlaceholder: 'Search or run a command...', wbNavWorkspace: 'Workspace', wbNavLibrary: 'Library',
     wbNavProgress: 'Progress', wbNavCompose: 'Compose', wbNavStyles: 'Style Universe',
     wbNavTemplates: 'Templates', wbNavOptimizer: 'Optimizer', wbNavHistory: 'History',
-    wbNavFavorites: 'Favorites', wbNavGallery: 'Gallery', wbNavShortcuts: 'Shortcuts',
+    wbNavFavorites: 'Favorites', wbNavShortcuts: 'Shortcuts',
     wbLevel: 'Level', wbWorkspaceLabel: 'Workspace', wbSave: 'Save', wbGenerate: 'Generate',
     wbAssistScore: 'Prompt Score', wbAssistModules: 'Modules', wbAssistSuggestions: 'AI Suggestions',
     wbAssistStyles: 'Quick Styles', wbAssistTokens: 'Token Count',
@@ -6024,252 +5775,6 @@ async function generatePromptStreaming(model, onDelta, onDone) {
     return text;
   }
 }
-
-/* ==================== AI Gallery / Example Images ==================== */
-const GALLERY_DATA = [
-  /* Midjourney examples */
-  { model:'mj', seed:'mj-portrait-cinematic', aspect:'portrait',
-    title:{ zh:'电影感人像', en:'Cinematic Portrait' },
-    prompt:{ zh:'A portrait of a young woman, detailed facial features, melancholic expression, soft rim lighting, neon city background, shot on 85mm, cinematic style, masterpiece, best quality, ultra detailed --v 6.0 --ar 2:3 --style raw --s 500',
-             en:'A portrait of a young woman, detailed facial features, melancholic expression, soft rim lighting, neon city background, shot on 85mm, cinematic style, masterpiece, best quality, ultra detailed --v 6.0 --ar 2:3 --style raw --s 500' } },
-  { model:'mj', seed:'mj-landscape-mountain', aspect:'landscape',
-    title:{ zh:'山岳黎明', en:'Mountain Dawn' },
-    prompt:{ zh:'Misty mountain range at dawn, golden hour, ethereal atmosphere, warm color palette, dramatic composition, aerial perspective, volumetric lighting, ray tracing, ultra detailed landscape, 8K resolution --v 6.0 --ar 16:9 --s 750',
-             en:'Misty mountain range at dawn, golden hour, ethereal atmosphere, warm color palette, dramatic composition, aerial perspective, volumetric lighting, ray tracing, ultra detailed landscape, 8K resolution --v 6.0 --ar 16:9 --s 750' } },
-  { model:'mj', seed:'mj-product-perfume', aspect:'square',
-    title:{ zh:'香水广告', en:'Perfume Ad' },
-    prompt:{ zh:'Professional product photography of a crystal perfume bottle, glass material details, soft silk background, studio lighting, soft shadows, pastel color scheme, commercial quality, high-end advertising style, sharp focus, 8K UHD --v 6.0 --ar 4:3 --s 250',
-             en:'Professional product photography of a crystal perfume bottle, glass material details, soft silk background, studio lighting, soft shadows, pastel color scheme, commercial quality, high-end advertising style, sharp focus, 8K UHD --v 6.0 --ar 4:3 --s 250' } },
-  { model:'mj', seed:'mj-character-fantasy', aspect:'portrait',
-    title:{ zh:'幻想角色', en:'Fantasy Character' },
-    prompt:{ zh:'A fantasy warrior with ornate armor, intricate metalwork, glowing runes, dramatic side lighting, dark moody background, concept art style, hyper detailed, ArtStation trending --v 6.0 --ar 2:3 --s 600',
-             en:'A fantasy warrior with ornate armor, intricate metalwork, glowing runes, dramatic side lighting, dark moody background, concept art style, hyper detailed, ArtStation trending --v 6.0 --ar 2:3 --s 600' } },
-  /* Flux examples */
-  { model:'flux', seed:'flux-art-bloom', aspect:'square',
-    title:{ zh:'绽放艺术', en:'Bloom Art' },
-    prompt:{ zh:'Abstract floral composition, artistic interpretation, oil painting style, rich color palette, expressive brushwork, detailed composition, emotional depth, gallery quality, fine art aesthetic, ultra detailed',
-             en:'Abstract floral composition, artistic interpretation, oil painting style, rich color palette, expressive brushwork, detailed composition, emotional depth, gallery quality, fine art aesthetic, ultra detailed' } },
-  { model:'flux', seed:'flux-concept-chair', aspect:'landscape',
-    title:{ zh:'概念椅子设计', en:'Concept Chair' },
-    prompt:{ zh:'Concept design of a futuristic lounge chair, minimalist Scandinavian style, clean lines, modern aesthetic, walnut wood and brushed brass, professional industrial design, blueprint quality, technical precision, 8K',
-             en:'Concept design of a futuristic lounge chair, minimalist Scandinavian style, clean lines, modern aesthetic, walnut wood and brushed brass, professional industrial design, blueprint quality, technical precision, 8K' } },
-  { model:'flux', seed:'flux-photo-cafe', aspect:'portrait',
-    title:{ zh:'咖啡馆写实', en:'Cafe Photoreal' },
-    prompt:{ zh:'A cozy cafe corner, photorealistic, natural lighting, golden hour, shallow depth of field, RAW photo quality, professional photography, sharp focus, cinematic color grading, ultra detailed, 8K UHD',
-             en:'A cozy cafe corner, photorealistic, natural lighting, golden hour, shallow depth of field, RAW photo quality, professional photography, sharp focus, cinematic color grading, ultra detailed, 8K UHD' } },
-  { model:'flux', seed:'flux-art-neon', aspect:'square',
-    title:{ zh:'霓虹艺术', en:'Neon Art' },
-    prompt:{ zh:'Cyberpunk street art, vibrant neon colors, rain reflections, futuristic aesthetic, expressive digital brushwork, gallery quality, ultra detailed, professional quality',
-             en:'Cyberpunk street art, vibrant neon colors, rain reflections, futuristic aesthetic, expressive digital brushwork, gallery quality, ultra detailed, professional quality' } },
-  /* SeaDance examples */
-  { model:'seedance', seed:'seedance-cinematic-walk', aspect:'landscape',
-    title:{ zh:'电影级行走', en:'Cinematic Walk' },
-    prompt:{ zh:'A woman in a red coat is walking slowly through rain-soaked Tokyo streets at night, medium shot, slow dolly-in, neon signs reflecting on wet pavement, cinematic lighting, Blade Runner style, realistic physics, natural motion, 2K cinematic quality, 24fps',
-             en:'A woman in a red coat is walking slowly through rain-soaked Tokyo streets at night, medium shot, slow dolly-in, neon signs reflecting on wet pavement, cinematic lighting, Blade Runner style, realistic physics, natural motion, 2K cinematic quality, 24fps' } },
-  { model:'seedance', seed:'seedance-character-narrative', aspect:'landscape',
-    title:{ zh:'角色叙事', en:'Character Narrative' },
-    prompt:{ zh:'Using character @Aria consistently. Shot 1 wide: Aria enters the library, slow pan. Shot 2 close-up: her eyes scanning books, subtle smile. Shot 3 medium: she picks up a glowing book, push-in. Seamless transition, realistic physics, natural motion, 2K cinematic quality, 24fps',
-             en:'Using character @Aria consistently. Shot 1 wide: Aria enters the library, slow pan. Shot 2 close-up: her eyes scanning books, subtle smile. Shot 3 medium: she picks up a glowing book, push-in. Seamless transition, realistic physics, natural motion, 2K cinematic quality, 24fps' } },
-  { model:'seedance', seed:'seedance-onetake-park', aspect:'landscape',
-    title:{ zh:'公园一镜到底', en:'Park One-Take' },
-    prompt:{ zh:'Slow continuous drone shot from sunrise over a misty park, smoothly gliding over dewy grass to reveal a lone bench under an oak tree, soft morning light, peaceful atmosphere, ultra realistic details, Terrence Malick style, seamless one-take feel, no cuts, 2K cinematic quality, 24fps',
-             en:'Slow continuous drone shot from sunrise over a misty park, smoothly gliding over dewy grass to reveal a lone bench under an oak tree, soft morning light, peaceful atmosphere, ultra realistic details, Terrence Malick style, seamless one-take feel, no cuts, 2K cinematic quality, 24fps' } },
-  { model:'seedance', seed:'seedance-product-spin', aspect:'square',
-    title:{ zh:'产品旋转展示', en:'Product Spin' },
-    prompt:{ zh:'A luxury watch slowly rotating on a marble surface, macro shot, 360-degree turntable motion, soft studio lighting, subtle reflections, premium product reveal, realistic physics, natural motion, 2K cinematic quality, 24fps',
-             en:'A luxury watch slowly rotating on a marble surface, macro shot, 360-degree turntable motion, soft studio lighting, subtle reflections, premium product reveal, realistic physics, natural motion, 2K cinematic quality, 24fps' } }
-];
-
-const GALLERY_MODEL_META = {
-  mj:       { label:'Midjourney', color:'#5865f2', gradient:['#5865f2','#a855f7'] },
-  flux:     { label:'Flux',       color:'#f97316', gradient:['#f97316','#facc15'] },
-  seedance: { label:'SeaDance',   color:'#0ea5e9', gradient:['#0ea5e9','#22d3ee'] }
-};
-
-let currentGalleryFilter = 'all';
-let galleryLightboxIndex = 0;
-let galleryObserver = null;
-
-/* --- Mock image generator (SVG data URL placeholder) --- */
-function generateMockImage(seed, model, aspect) {
-  const meta = GALLERY_MODEL_META[model] || GALLERY_MODEL_META.mj;
-  // Deterministic pseudo-random from seed
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) { h = (h * 31 + seed.charCodeAt(i)) >>> 0; }
-  const rand = (n) => { h = (h * 1103515245 + 12345) & 0x7fffffff; return (h % 1000) / 1000 * n; };
-  const w = aspect === 'portrait' ? 600 : aspect === 'square' ? 700 : 800;
-  const hh = aspect === 'portrait' ? 900 : aspect === 'square' ? 700 : 560;
-  // Build abstract shapes
-  let shapes = '';
-  const shapeCount = 5 + Math.floor(rand(4));
-  for (let i = 0; i < shapeCount; i++) {
-    const cx = rand(w), cy = rand(hh), r = 40 + rand(160);
-    const op = 0.08 + rand(0.18);
-    const c1 = meta.gradient[0], c2 = meta.gradient[1];
-    shapes += `<circle cx="${cx.toFixed(0)}" cy="${cy.toFixed(0)}" r="${r.toFixed(0)}" fill="${i % 2 ? c1 : c2}" opacity="${op.toFixed(2)}"/>`;
-  }
-  // Geometric lines for tech feel
-  let lines = '';
-  for (let i = 0; i < 6; i++) {
-    const y = (hh / 6) * i + rand(20);
-    lines += `<line x1="0" y1="${y.toFixed(0)}" x2="${w}" y2="${(y + rand(40) - 20).toFixed(0)}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`;
-  }
-  const gradId = 'g' + seed.replace(/[^a-z0-9]/gi, '');
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${hh}" viewBox="0 0 ${w} ${hh}">
-    <defs>
-      <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="${meta.gradient[0]}"/>
-        <stop offset="100%" stop-color="${meta.gradient[1]}"/>
-      </linearGradient>
-      <filter id="blur"><feGaussianBlur stdDeviation="40"/></filter>
-    </defs>
-    <rect width="${w}" height="${hh}" fill="#0b0d12"/>
-    <rect width="${w}" height="${hh}" fill="url(#${gradId})" opacity="0.35"/>
-    <g filter="url(#blur)">${shapes}</g>
-    <g>${lines}</g>
-    <g opacity="0.9">
-      <rect x="20" y="20" width="10" height="10" fill="${meta.color}"/>
-      <text x="40" y="30" font-family="ui-monospace,monospace" font-size="11" fill="rgba(255,255,255,0.7)" letter-spacing="1">${meta.label.toUpperCase()}</text>
-    </g>
-    <text x="${w/2}" y="${hh/2}" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="22" font-weight="600" fill="rgba(255,255,255,0.85)">AI Example</text>
-    <text x="${w/2}" y="${hh/2 + 26}" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="rgba(255,255,255,0.4)" letter-spacing="2">MOCK · ${seed.toUpperCase().slice(0,18)}</text>
-  </svg>`;
-  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-}
-
-/* --- Get filtered gallery items --- */
-function getGalleryItems() {
-  if (currentGalleryFilter === 'all') return GALLERY_DATA;
-  return GALLERY_DATA.filter(item => item.model === currentGalleryFilter);
-}
-
-/* --- Render gallery masonry --- */
-function renderGallery() {
-  const t = LOCALES[currentLang];
-  const lang = currentLang === 'zh' ? 'zh' : 'en';
-  const masonry = document.getElementById('galleryMasonry');
-  if (!masonry) return;
-  const items = getGalleryItems();
-  if (items.length === 0) {
-    masonry.innerHTML = `<div class="gallery-empty">${escapeHTML(t.galleryEmpty)}</div>`;
-    return;
-  }
-  masonry.innerHTML = items.map((item, idx) => {
-    const meta = GALLERY_MODEL_META[item.model];
-    const title = item.title[lang];
-    const promptText = item.prompt[lang];
-    const summary = promptText.length > 120 ? promptText.slice(0, 120) + '…' : promptText;
-    return `<div class="gallery-item" data-index="${idx}" onclick="openGalleryLightbox(${idx})">
-      <div class="gallery-item-img-wrap">
-        <div class="gallery-skeleton"></div>
-        <img class="gallery-item-img" data-src="${generateMockImage(item.seed, item.model, item.aspect)}" alt="${escapeHTML(title)}" loading="lazy">
-      </div>
-      <div class="gallery-overlay">
-        <div class="gallery-overlay-model">
-          <span class="dot" style="background:${meta.color}"></span>${escapeHTML(meta.label)}
-        </div>
-        <div class="gallery-overlay-summary">${escapeHTML(summary)}</div>
-      </div>
-      <div class="gallery-overlay-zoom">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>`;
-  }).join('');
-  setupGalleryObserver();
-}
-
-/* --- Filter gallery by model --- */
-function filterGalleryModel(model) {
-  currentGalleryFilter = model;
-  document.querySelectorAll('.gallery-model-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.model === model);
-  });
-  renderGallery();
-}
-
-/* --- IntersectionObserver for lazy loading --- */
-function setupGalleryObserver() {
-  if (galleryObserver) galleryObserver.disconnect();
-  const imgs = document.querySelectorAll('.gallery-item-img[data-src]');
-  if (!('IntersectionObserver' in window)) {
-    // Fallback: load all immediately
-    imgs.forEach(img => {
-      img.src = img.dataset.src;
-      img.classList.add('loaded');
-      const skel = img.parentElement.querySelector('.gallery-skeleton');
-      if (skel) skel.style.display = 'none';
-    });
-    return;
-  }
-  galleryObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const img = entry.target;
-      const src = img.dataset.src;
-      if (!src) return;
-      const tmp = new Image();
-      tmp.onload = () => {
-        img.src = src;
-        requestAnimationFrame(() => {
-          img.classList.add('loaded');
-          const skel = img.parentElement.querySelector('.gallery-skeleton');
-          if (skel) skel.style.opacity = '0';
-          setTimeout(() => { if (skel) skel.style.display = 'none'; }, 500);
-        });
-      };
-      tmp.onerror = () => {
-        const skel = img.parentElement.querySelector('.gallery-skeleton');
-        if (skel) skel.style.display = 'none';
-      };
-      tmp.src = src;
-      observer.unobserve(img);
-    });
-  }, { rootMargin: '200px 0px', threshold: 0.01 });
-  imgs.forEach(img => galleryObserver.observe(img));
-}
-
-/* --- Lightbox --- */
-function openGalleryLightbox(index) {
-  const items = getGalleryItems();
-  if (!items.length) return;
-  galleryLightboxIndex = ((index % items.length) + items.length) % items.length;
-  const item = items[galleryLightboxIndex];
-  const lang = currentLang === 'zh' ? 'zh' : 'en';
-  const meta = GALLERY_MODEL_META[item.model];
-  const lightbox = document.getElementById('galleryLightbox');
-  const imgEl = document.getElementById('galleryLightboxImg');
-  const modelEl = document.getElementById('galleryLightboxModel');
-  const promptEl = document.getElementById('galleryLightboxPrompt');
-  imgEl.src = generateMockImage(item.seed, item.model, item.aspect);
-  imgEl.alt = item.title[lang];
-  modelEl.innerHTML = `<span class="dot" style="background:${meta.color}"></span>${escapeHTML(meta.label)} · ${escapeHTML(item.title[lang])}`;
-  promptEl.textContent = item.prompt[lang];
-  lightbox.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeGalleryLightbox(event) {
-  if (event && event.target.closest('.gallery-lightbox-content') && !event.target.closest('.gallery-lightbox-close')) return;
-  const lightbox = document.getElementById('galleryLightbox');
-  lightbox.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function navGallery(direction) {
-  const items = getGalleryItems();
-  if (!items.length) return;
-  galleryLightboxIndex = (galleryLightboxIndex + direction + items.length) % items.length;
-  openGalleryLightbox(galleryLightboxIndex);
-}
-
-/* Keyboard navigation for lightbox */
-document.addEventListener('keydown', function(e) {
-  const lightbox = document.getElementById('galleryLightbox');
-  if (!lightbox || !lightbox.classList.contains('open')) return;
-  if (e.key === 'Escape') closeGalleryLightbox();
-  else if (e.key === 'ArrowLeft') navGallery(-1);
-  else if (e.key === 'ArrowRight') navGallery(1);
-});
 
 /* ==================== AI Service Layer (Provider Abstraction) ==================== */
 /**
@@ -7159,7 +6664,6 @@ function switchTab(tab) {
   } else if (tab === 'templates') {
     tplSection.style.display = '';
     renderTemplates();
-    renderGallery();
   }
 }
 
@@ -7204,7 +6708,6 @@ function refreshVisibleDynamicContent() {
   }
 
   if (document.getElementById('templateGrid').children.length > 0) renderTemplates();
-  if (document.getElementById('galleryMasonry') && document.getElementById('galleryMasonry').children.length > 0) renderGallery();
   if (activeTemplateDraft) {
     const entry = getTemplateEntry(activeTemplateDraft.cat, activeTemplateDraft.index);
     if (entry) renderTemplateComposer(entry, activeTemplateDraft.values);
@@ -8048,7 +7551,7 @@ openTemplateFromHash();
  */
 
 /* 一级分类 */
-const STYLE_CATEGORIES = [
+var STYLE_CATEGORIES = [
   { id: 'all', name: { zh: '全部', en: 'All' }, gradient: 'linear-gradient(135deg, #6366f1, #a855f7)' },
   { id: 'photography', name: { zh: '摄影', en: 'Photography' }, gradient: 'linear-gradient(135deg, #10b981, #06b6d4)', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>' },
   { id: 'cinematic', name: { zh: '电影', en: 'Cinematic' }, gradient: 'linear-gradient(135deg, #f59e0b, #ef4444)', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>' },
@@ -8060,7 +7563,7 @@ const STYLE_CATEGORIES = [
 ];
 
 /* 二级 + 三级风格数据 */
-const STYLE_UNIVERSE = [
+var STYLE_UNIVERSE = [
   /* === 摄影 === */
   {
     id: 'photoreal', category: 'photography', subcategory: 'realistic',
@@ -8165,7 +7668,7 @@ const STYLE_UNIVERSE = [
     promptTokens: ['akira kurosawa inspired', 'high contrast black and white', 'dynamic composition', 'weather elements', 'epic battle scene', 'deep focus', 'geometric framing', 'timeless'],
     negativeTokens: ['colorful', 'modern', 'soft', 'pastel'],
     compatibleStyles: ['cinematic', 'noir', 'surreal'],
-    conflictStyles: ['vaporwave', 'cyberpunk', 'vaporwave', 'pixar'],
+    conflictStyles: ['vaporwave', 'cyberpunk', 'pixar'],
     weight: 0.9, animationType: 'slide'
   },
 
@@ -8383,7 +7886,7 @@ const STYLE_UNIVERSE = [
     promptTokens: ['film noir', 'high contrast black and white', 'dramatic shadows', 'venetian blind lighting', 'cigarette smoke', 'detective atmosphere', 'low key lighting', 'moody'],
     negativeTokens: ['bright', 'colorful', 'cheerful', 'soft lighting'],
     compatibleStyles: ['cinematic', 'kurosawa', 'street'],
-    conflictStyles: ['vaporwave', 'ghibli', 'pixar', 'vaporwave'],
+    conflictStyles: ['vaporwave', 'ghibli', 'pixar'],
     weight: 0.9, animationType: 'fade'
   }
 ];
@@ -9346,11 +8849,6 @@ applyLocale = function() {
   if (lastGeneratedCards && lastGeneratedCards.length > 0) {
     renderResultCards(lastGeneratedCards, true);
     renderVersionTabs();
-  }
-  // Re-render gallery if visible
-  const galleryMasonry = document.getElementById('galleryMasonry');
-  if (galleryMasonry && galleryMasonry.children.length > 0) {
-    renderGallery();
   }
   // Sync Workbench UI
   const wbLangBtn = document.getElementById('wbLangBtn');
