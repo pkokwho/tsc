@@ -1,0 +1,94 @@
+{
+  "name": "AI Creator Workbench",
+  "short_name": "AI Workbench",
+  "description": "AI Prompt Studio - 创作你的 AI Prompt 工作台",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#08090a",
+  "theme_color": "#08090a",
+  "categories": ["productivity", "utilities", "developer"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "开始创作",
+      "short_name": "创作",
+      "description": "直接进入创作工作台",
+      "url": "./?source=pwa&action=compose",
+      "icons": [{ "src": "icons/shortcut-compose.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "打开命令面板",
+      "short_name": "⌘K",
+      "description": "快速搜索模板、风格、历史",
+      "url": "./?source=pwa&action=cmdk",
+      "icons": [{ "src": "icons/shortcut-cmdk.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "查看历史版本",
+      "short_name": "历史",
+      "description": "查看 Prompt 版本历史",
+      "url": "./?source=pwa&action=history",
+      "icons": [{ "src": "icons/shortcut-history.png", "sizes": "96x96", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop workspace"
+    },
+    {
+      "src": "screenshots/mobile-1.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile workspace"
+    }
+  ],
+  "prefer_related_applications": false,
+  "id": "/?source=pwa",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
+}
