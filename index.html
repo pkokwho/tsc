@@ -3018,6 +3018,493 @@ nav {
   .hero-logo { width:58px; height:58px; }
   .hero-features { justify-content:flex-start; }
 }
+
+/* ==================== 双层模式：新手 + 专业 ==================== */
+
+/* 模式容器 */
+.mode-beginner {
+  display: none;
+  min-height: 100vh;
+  background: var(--wb-bg-base, #08090a);
+  position: relative;
+  z-index: 1;
+}
+.mode-beginner.active { display: flex; flex-direction: column; align-items: center; }
+.wb-app.mode-pro-hidden { display: none !important; }
+
+/* 新手模式背景光效 */
+.mode-beginner::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 50% 0%, rgba(99,102,241,0.08), transparent 70%),
+    radial-gradient(ellipse 400px 300px at 80% 80%, rgba(168,85,247,0.06), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 新手顶栏（极简） */
+.bz-topbar {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  position: relative;
+  z-index: 2;
+}
+.bz-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--wb-text-primary, #e2e8f0);
+  letter-spacing: -0.01em;
+}
+.bz-logo svg { width: 28px; height: 28px; }
+.bz-topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+.bz-icon-btn {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--wb-border-subtle, rgba(255,255,255,0.08));
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  color: var(--wb-text-secondary, #94a3b8);
+  cursor: pointer;
+  transition: all 0.2s var(--wb-ease-out, ease);
+}
+.bz-icon-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--wb-text-primary, #e2e8f0);
+  border-color: rgba(255,255,255,0.15);
+}
+.bz-icon-btn svg { width: 16px; height: 16px; }
+
+/* 新手主内容 */
+.bz-main {
+  width: 100%;
+  max-width: 640px;
+  padding: 20px 20px 60px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 新手 Hero */
+.bz-hero {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: bzFadeUp 0.6s var(--wb-ease-out, ease) both;
+}
+.bz-hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  background: linear-gradient(135deg, #e2e8f0, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.bz-hero p {
+  font-size: 15px;
+  color: var(--wb-text-tertiary, #64748b);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 步骤指示器 */
+.bz-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+  width: 100%;
+  animation: bzFadeUp 0.6s 0.1s var(--wb-ease-out, ease) both;
+}
+.bz-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--wb-text-tertiary, #64748b);
+  transition: color 0.3s;
+  flex-shrink: 0;
+}
+.bz-step.active { color: var(--wb-accent, #6366f1); font-weight: 600; }
+.bz-step.done { color: var(--wb-success, #10b981); }
+.bz-step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  border: 1.5px solid currentColor;
+  transition: all 0.3s;
+}
+.bz-step.active .bz-step-num { background: var(--wb-accent, #6366f1); color: #fff; border-color: var(--wb-accent, #6366f1); }
+.bz-step.done .bz-step-num { background: var(--wb-success, #10b981); color: #fff; border-color: var(--wb-success, #10b981); }
+.bz-step-line {
+  flex: 1;
+  height: 1.5px;
+  background: rgba(255,255,255,0.08);
+  margin: 0 8px;
+  border-radius: 1px;
+  transition: background 0.3s;
+}
+.bz-step-line.done { background: var(--wb-success, #10b981); }
+
+/* 输入卡片 */
+.bz-input-card {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: bzFadeUp 0.6s 0.15s var(--wb-ease-out, ease) both;
+  transition: border-color 0.3s;
+}
+.bz-input-card:focus-within {
+  border-color: rgba(99,102,241,0.4);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.08);
+}
+.bz-input-card textarea {
+  width: 100%;
+  min-height: 80px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: vertical;
+  color: var(--wb-text-primary, #e2e8f0);
+  font-size: 15px;
+  font-family: inherit;
+  line-height: 1.6;
+}
+.bz-input-card textarea::placeholder { color: var(--wb-text-tertiary, #475569); }
+
+/* 选项组 */
+.bz-options {
+  width: 100%;
+  margin-top: 16px;
+  animation: bzFadeUp 0.6s 0.2s var(--wb-ease-out, ease) both;
+}
+.bz-option-group {
+  margin-bottom: 14px;
+}
+.bz-option-label {
+  font-size: 12px;
+  color: var(--wb-text-tertiary, #64748b);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.bz-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.bz-chip {
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  color: var(--wb-text-secondary, #94a3b8);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s var(--wb-ease-out, ease);
+  user-select: none;
+}
+.bz-chip:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: var(--wb-text-primary, #e2e8f0);
+}
+.bz-chip.selected {
+  border-color: var(--wb-accent, #6366f1);
+  background: rgba(99,102,241,0.12);
+  color: #a5b4fc;
+}
+
+/* 主按钮 */
+.bz-generate-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s var(--wb-ease-out, ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+  animation: bzFadeUp 0.6s 0.25s var(--wb-ease-out, ease) both;
+}
+.bz-generate-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.bz-generate-btn:hover::before { opacity: 1; }
+.bz-generate-btn:active { transform: scale(0.98); }
+.bz-generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.bz-generate-btn svg { width: 18px; height: 18px; }
+
+/* 结果区 */
+.bz-result {
+  width: 100%;
+  margin-top: 24px;
+  display: none;
+  animation: bzFadeUp 0.5s var(--wb-ease-out, ease) both;
+}
+.bz-result.show { display: block; }
+.bz-result-label {
+  font-size: 12px;
+  color: var(--wb-text-tertiary, #64748b);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bz-result-label .bz-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--wb-success, #10b981);
+  animation: bzPulse 1.5s infinite;
+}
+.bz-result-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+}
+.bz-result-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--wb-text-primary, #e2e8f0);
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 40px;
+}
+.bz-result-text .cursor-blink {
+  display: inline-block;
+  width: 2px;
+  height: 16px;
+  background: var(--wb-accent, #6366f1);
+  vertical-align: text-bottom;
+  animation: bzBlink 0.8s infinite;
+}
+.bz-result-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.bz-action-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: var(--wb-text-secondary, #94a3b8);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.bz-action-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--wb-text-primary, #e2e8f0);
+  border-color: rgba(255,255,255,0.15);
+}
+.bz-action-btn.primary {
+  background: rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.3);
+  color: #a5b4fc;
+}
+.bz-action-btn.primary:hover {
+  background: rgba(99,102,241,0.2);
+}
+.bz-action-btn svg { width: 14px; height: 14px; }
+
+/* 模式切换 */
+.bz-mode-switch {
+  width: 100%;
+  max-width: 640px;
+  padding: 0 20px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+  animation: bzFadeUp 0.6s 0.3s var(--wb-ease-out, ease) both;
+}
+.bz-mode-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  color: var(--wb-text-tertiary, #64748b);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bz-mode-btn.active {
+  border-color: rgba(99,102,241,0.3);
+  background: rgba(99,102,241,0.08);
+  color: #a5b4fc;
+}
+.bz-mode-btn svg { width: 14px; height: 14px; }
+
+/* 引导提示 */
+.bz-guide-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #a5b4fc;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 100;
+  animation: bzFadeUp 0.4s var(--wb-ease-out, ease) both;
+  pointer-events: none;
+}
+.bz-guide-hint.hide { display: none; }
+
+/* 专业模式快捷键提示 */
+.pro-shortcut-hint {
+  position: fixed;
+  bottom: 36px;
+  right: 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 11px;
+  color: var(--wb-text-tertiary, #64748b);
+  z-index: 100;
+  display: none;
+  line-height: 1.8;
+}
+.pro-shortcut-hint.show { display: block; animation: bzFadeUp 0.4s ease both; }
+.pro-shortcut-hint kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  font-size: 10px;
+  font-family: monospace;
+  color: var(--wb-text-secondary, #94a3b8);
+  margin: 0 2px;
+}
+
+/* TopBar 模式切换按钮 */
+.wb-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+  color: var(--wb-text-secondary, #94a3b8);
+}
+.wb-mode-toggle:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--wb-text-primary, #e2e8f0);
+}
+.wb-mode-toggle svg { width: 14px; height: 14px; }
+
+/* 动画 */
+@keyframes bzFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bzPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes bzBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 模式切换过渡 */
+.mode-transition {
+  animation: modeSlideIn 0.4s var(--wb-ease-out, ease) both;
+}
+@keyframes modeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+  .bz-hero h1 { font-size: 24px; }
+  .bz-hero p { font-size: 13px; }
+  .bz-main { padding: 12px 16px 40px; }
+  .bz-input-card { padding: 16px; border-radius: 14px; }
+  .bz-step { font-size: 11px; }
+  .bz-step-num { width: 20px; height: 20px; font-size: 10px; }
+  .bz-chip { padding: 6px 12px; font-size: 12px; }
+  .bz-generate-btn { padding: 12px; font-size: 14px; }
+  .pro-shortcut-hint { display: none !important; }
+  .bz-mode-switch { padding: 0 16px 24px; }
+  .bz-mode-btn { padding: 8px 16px; font-size: 12px; }
+}
+
+/* 浅色主题适配 */
+[data-theme="light"] .mode-beginner { background: #f8fafc; }
+[data-theme="light"] .bz-hero h1 { background: linear-gradient(135deg, #1e293b, #7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+[data-theme="light"] .bz-input-card { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .bz-chip { border-color: rgba(0,0,0,0.08); background: rgba(0,0,0,0.01); color: #475569; }
+[data-theme="light"] .bz-chip:hover { background: rgba(0,0,0,0.04); color: #1e293b; }
+[data-theme="light"] .bz-action-btn { border-color: rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); color: #475569; }
+[data-theme="light"] .bz-result-box { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .bz-mode-btn { border-color: rgba(0,0,0,0.08); background: rgba(0,0,0,0.01); color: #64748b; }
 </style>
 </head>
 <body>
@@ -3032,6 +3519,141 @@ nav {
     <div class="pwa-splash-subtitle" data-i18n="pwaSplashSubtitle">正在准备工作台...</div>
   </div>
   <div class="pwa-splash-loader"></div>
+</div>
+
+<!-- ==================== 新手模式 ==================== -->
+<div class="mode-beginner" id="modeBeginner">
+  <!-- 极简顶栏 -->
+  <div class="bz-topbar">
+    <div class="bz-logo">
+      <svg viewBox="0 0 80 80" fill="none">
+        <defs><linearGradient id="bzLogoGrad" x1="0" y1="0" x2="80" y2="80"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs>
+        <path d="M40 12L20 24v16l20 12 20-12V24L40 12z" stroke="url(#bzLogoGrad)" stroke-width="3" fill="none" stroke-linejoin="round"/>
+        <circle cx="40" cy="24" r="4" fill="url(#bzLogoGrad)"/>
+      </svg>
+      <span>AI Prompt Studio</span>
+    </div>
+    <div class="bz-topbar-actions">
+      <button class="bz-icon-btn" onclick="toggleTheme()" aria-label="Theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/></svg>
+      </button>
+      <button class="bz-icon-btn" onclick="toggleLang()" aria-label="Language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 主内容 -->
+  <div class="bz-main">
+    <!-- Hero -->
+    <div class="bz-hero">
+      <h1 data-i18n="bzTitle">一句话生成专业提示词</h1>
+      <p data-i18n="bzSubtitle">用中文描述你的想法，自动生成可直接使用的 AI 描述</p>
+    </div>
+
+    <!-- 步骤指示器 -->
+    <div class="bz-steps" id="bzSteps">
+      <div class="bz-step active" data-step="1">
+        <span class="bz-step-num">1</span>
+        <span data-i18n="bzStep1">输入想法</span>
+      </div>
+      <div class="bz-step-line" id="bzLine1"></div>
+      <div class="bz-step" data-step="2">
+        <span class="bz-step-num">2</span>
+        <span data-i18n="bzStep2">选择用途</span>
+      </div>
+      <div class="bz-step-line" id="bzLine2"></div>
+      <div class="bz-step" data-step="3">
+        <span class="bz-step-num">3</span>
+        <span data-i18n="bzStep3">一键生成</span>
+      </div>
+    </div>
+
+    <!-- 输入卡片 -->
+    <div class="bz-input-card">
+      <textarea id="bzInput" placeholder="描述你想生成的画面，比如：一只猫坐在窗边看雨..." data-i18n-placeholder="bzInputPlaceholder"></textarea>
+    </div>
+
+    <!-- 选项 -->
+    <div class="bz-options">
+      <div class="bz-option-group">
+        <div class="bz-option-label" data-i18n="bzUseCase">用途</div>
+        <div class="bz-chips" id="bzUseCaseChips">
+          <div class="bz-chip selected" data-value="image" onclick="bzSelectChip(this,'useCase')" data-i18n="bzCaseImage">AI 绘画</div>
+          <div class="bz-chip" data-value="video" onclick="bzSelectChip(this,'useCase')" data-i18n="bzCaseVideo">AI 视频</div>
+          <div class="bz-chip" data-value="writing" onclick="bzSelectChip(this,'useCase')" data-i18n="bzCaseWriting">AI 写作</div>
+          <div class="bz-chip" data-value="code" onclick="bzSelectChip(this,'useCase')" data-i18n="bzCaseCode">AI 编程</div>
+        </div>
+      </div>
+      <div class="bz-option-group">
+        <div class="bz-option-label" data-i18n="bzStylePref">风格偏好</div>
+        <div class="bz-chips" id="bzStyleChips">
+          <div class="bz-chip selected" data-value="cinematic" onclick="bzSelectChip(this,'style')" data-i18n="bzStyleCinematic">电影感</div>
+          <div class="bz-chip" data-value="anime" onclick="bzSelectChip(this,'style')" data-i18n="bzStyleAnime">动漫</div>
+          <div class="bz-chip" data-value="photoreal" onclick="bzSelectChip(this,'style')" data-i18n="bzStyleRealistic">写实</div>
+          <div class="bz-chip" data-value="minimalist" onclick="bzSelectChip(this,'style')" data-i18n="bzStyleMinimal">极简</div>
+          <div class="bz-chip" data-value="cyberpunk" onclick="bzSelectChip(this,'style')" data-i18n="bzStyleCyber">赛博朋克</div>
+          <div class="bz-chip" data-value="watercolor" onclick="bzSelectChip(this,'style')" data-i18n="bzStyleWatercolor">水彩</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 生成按钮 -->
+    <button class="bz-generate-btn" id="bzGenerateBtn" onclick="bzGenerate()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/></svg>
+      <span data-i18n="bzGenerate">立即生成</span>
+    </button>
+
+    <!-- 结果区 -->
+    <div class="bz-result" id="bzResult">
+      <div class="bz-result-label">
+        <span class="bz-dot"></span>
+        <span data-i18n="bzResultLabel">优化后的描述</span>
+      </div>
+      <div class="bz-result-box">
+        <div class="bz-result-text" id="bzResultText"></div>
+      </div>
+      <div class="bz-result-actions">
+        <button class="bz-action-btn primary" onclick="bzCopyResult()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span data-i18n="bzCopy">一键复制</span>
+        </button>
+        <button class="bz-action-btn" onclick="bzGenerate()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          <span data-i18n="bzRegenerate">再生成一个</span>
+        </button>
+        <button class="bz-action-btn" onclick="bzShowExamples()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span data-i18n="bzExamples">查看示例</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模式切换 -->
+  <div class="bz-mode-switch">
+    <button class="bz-mode-btn active" id="bzModeBtnBeginner" onclick="switchMode('beginner')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span data-i18n="bzModeBeginner">新手模式</span>
+    </button>
+    <button class="bz-mode-btn" id="bzModeBtnPro" onclick="switchMode('pro')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <span data-i18n="bzModePro">专业工作台</span>
+    </button>
+  </div>
+</div>
+
+<!-- 引导提示（新手模式） -->
+<div class="bz-guide-hint" id="bzGuideHint">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+  <span data-i18n="bzGuide">输入你的想法，选择用途，点击生成即可</span>
+</div>
+
+<!-- 专业模式快捷键提示 -->
+<div class="pro-shortcut-hint" id="proShortcutHint">
+  <div><kbd>⌘K</kbd> <span data-i18n="proHintCmdk">命令面板</span></div>
+  <div><kbd>⌘B</kbd> <span data-i18n="proHintSidebar">侧边栏</span></div>
+  <div><kbd>1-4</kbd> <span data-i18n="proHintTabs">切换模块</span></div>
 </div>
 
 <!-- ==================== AI Creator Workbench ==================== -->
@@ -3058,6 +3680,10 @@ nav {
       </button>
     </div>
     <div class="wb-topbar-right">
+      <button class="wb-mode-toggle" onclick="switchMode('beginner')" title="新手模式">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span data-i18n="bzModeBeginner">新手模式</span>
+      </button>
       <a class="wb-icon-btn" href="https://github.com/pkokwho/tsc" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
         <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
@@ -4729,6 +5355,42 @@ const LOCALES = {
     tabStyles: '风格宇宙',
     styleUniverseTitle: '风格宇宙',
     styleUniverseSubtitle: '探索 7 大风格星系，智能融合主风格、辅助风格与点缀风格，AI 自动检测冲突并推荐兼容组合。',
+
+    /* 双层模式 - 新手模式 */
+    bzTitle: '一句话生成专业提示词',
+    bzSubtitle: '用中文描述你的想法，自动生成可直接使用的 AI 描述',
+    bzStep1: '输入想法',
+    bzStep2: '选择用途',
+    bzStep3: '一键生成',
+    bzInputPlaceholder: '描述你想生成的画面，比如：一只猫坐在窗边看雨...',
+    bzUseCase: '用途',
+    bzCaseImage: 'AI 绘画',
+    bzCaseVideo: 'AI 视频',
+    bzCaseWriting: 'AI 写作',
+    bzCaseCode: 'AI 编程',
+    bzStylePref: '风格偏好',
+    bzStyleCinematic: '电影感',
+    bzStyleAnime: '动漫',
+    bzStyleRealistic: '写实',
+    bzStyleMinimal: '极简',
+    bzStyleCyber: '赛博朋克',
+    bzStyleWatercolor: '水彩',
+    bzGenerate: '立即生成',
+    bzGenerating: '生成中...',
+    bzResultLabel: '优化后的描述',
+    bzCopy: '一键复制',
+    bzRegenerate: '再生成一个',
+    bzExamples: '查看示例',
+    bzModeBeginner: '新手模式',
+    bzModePro: '专业工作台',
+    bzGuide: '输入你的想法，选择用途，点击生成即可',
+    bzInputEmpty: '请先输入你的想法',
+    bzCopied: '已复制到剪贴板',
+    bzExampleFilled: '已填入示例，点击生成试试',
+    proHintCmdk: '命令面板',
+    proHintSidebar: '侧边栏',
+    proHintTabs: '切换模块',
+
     styleSearchPlaceholder: '搜索风格...',
     styleFavFilter: '收藏',
     styleFusionTitle: '风格融合引擎',
@@ -4969,6 +5631,42 @@ const LOCALES = {
     tabStyles: 'Style Universe',
     styleUniverseTitle: 'Style Universe',
     styleUniverseSubtitle: 'Explore 7 style galaxies, fuse primary + secondary + accent styles with AI conflict detection and compatible recommendations.',
+
+    /* 双层模式 - Beginner Mode */
+    bzTitle: 'Generate Pro Prompts in One Sentence',
+    bzSubtitle: 'Describe your idea in your own words, get a ready-to-use AI prompt instantly',
+    bzStep1: 'Describe',
+    bzStep2: 'Choose Use',
+    bzStep3: 'Generate',
+    bzInputPlaceholder: 'Describe what you want to create, e.g. a cat sitting by the window watching rain...',
+    bzUseCase: 'Use Case',
+    bzCaseImage: 'AI Image',
+    bzCaseVideo: 'AI Video',
+    bzCaseWriting: 'AI Writing',
+    bzCaseCode: 'AI Code',
+    bzStylePref: 'Style Preference',
+    bzStyleCinematic: 'Cinematic',
+    bzStyleAnime: 'Anime',
+    bzStyleRealistic: 'Realistic',
+    bzStyleMinimal: 'Minimal',
+    bzStyleCyber: 'Cyberpunk',
+    bzStyleWatercolor: 'Watercolor',
+    bzGenerate: 'Generate Now',
+    bzGenerating: 'Generating...',
+    bzResultLabel: 'Optimized Description',
+    bzCopy: 'Copy',
+    bzRegenerate: 'Regenerate',
+    bzExamples: 'Examples',
+    bzModeBeginner: 'Beginner',
+    bzModePro: 'Pro Workbench',
+    bzGuide: 'Type your idea, choose a use case, then click generate',
+    bzInputEmpty: 'Please type your idea first',
+    bzCopied: 'Copied to clipboard',
+    bzExampleFilled: 'Example filled in, try generating now',
+    proHintCmdk: 'Command Palette',
+    proHintSidebar: 'Toggle Sidebar',
+    proHintTabs: 'Switch Modules',
+
     styleSearchPlaceholder: 'Search styles...',
     styleFavFilter: 'Favorites',
     styleFusionTitle: 'Style Fusion Engine',
@@ -6611,6 +7309,213 @@ document.getElementById('templateSearch').addEventListener('input', function(e) 
   renderTemplates();
 });
 
+/* ==================== 双层模式管理 ==================== */
+const MODE_KEY = 'tsc-mode';
+let currentMode = 'beginner'; // 'beginner' | 'pro'
+let bzUseCase = 'image';
+let bzStyle = 'cinematic';
+let bzIsGenerating = false;
+
+/* 获取模式 */
+function getMode() {
+  try { return localStorage.getItem(MODE_KEY) || 'beginner'; }
+  catch { return 'beginner'; }
+}
+
+/* 保存模式 */
+function saveMode(mode) {
+  try { localStorage.setItem(MODE_KEY, mode); } catch {}
+}
+
+/* 切换模式 */
+function switchMode(mode) {
+  if (mode === currentMode) return;
+  currentMode = mode;
+  saveMode(mode);
+
+  const beginnerEl = document.getElementById('modeBeginner');
+  const proEl = document.getElementById('wbApp');
+  const guideHint = document.getElementById('bzGuideHint');
+  const shortcutHint = document.getElementById('proShortcutHint');
+
+  if (mode === 'beginner') {
+    beginnerEl.classList.add('active');
+    beginnerEl.classList.add('mode-transition');
+    proEl.classList.add('mode-pro-hidden');
+    guideHint?.classList.remove('hide');
+    shortcutHint?.classList.remove('show');
+    /* 更新模式按钮状态 */
+    document.getElementById('bzModeBtnBeginner')?.classList.add('active');
+    document.getElementById('bzModeBtnPro')?.classList.remove('active');
+    /* 滚动到顶部 */
+    window.scrollTo(0, 0);
+  } else {
+    beginnerEl.classList.remove('active');
+    beginnerEl.classList.remove('mode-transition');
+    proEl.classList.remove('mode-pro-hidden');
+    proEl.classList.add('mode-transition');
+    guideHint?.classList.add('hide');
+    /* 专业模式快捷键提示（桌面端） */
+    if (window.innerWidth > 768) {
+      shortcutHint?.classList.add('show');
+      setTimeout(() => shortcutHint?.classList.remove('show'), 5000);
+    }
+    document.getElementById('bzModeBtnBeginner')?.classList.remove('active');
+    document.getElementById('bzModeBtnPro')?.classList.add('active');
+    /* 确保专业模式初始化 */
+    if (typeof switchTab === 'function') switchTab('generator');
+    if (typeof wbInit === 'function') wbInit();
+  }
+
+  /* 移除过渡类 */
+  setTimeout(() => {
+    beginnerEl.classList.remove('mode-transition');
+    proEl.classList.remove('mode-transition');
+  }, 500);
+}
+
+/* 新手模式：选择 chip */
+function bzSelectChip(el, group) {
+  const container = el.parentElement;
+  container.querySelectorAll('.bz-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if (group === 'useCase') bzUseCase = el.dataset.value;
+  else if (group === 'style') bzStyle = el.dataset.value;
+  /* 更新步骤 */
+  bzUpdateSteps(2);
+}
+
+/* 新手模式：更新步骤指示器 */
+function bzUpdateSteps(step) {
+  const steps = document.querySelectorAll('.bz-step');
+  const lines = [document.getElementById('bzLine1'), document.getElementById('bzLine2')];
+  steps.forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i + 1 < step) s.classList.add('done');
+    else if (i + 1 === step) s.classList.add('active');
+  });
+  lines.forEach((l, i) => {
+    l?.classList.toggle('done', i + 1 < step);
+  });
+}
+
+/* 新手模式：生成 */
+async function bzGenerate() {
+  const input = document.getElementById('bzInput').value.trim();
+  if (!input) {
+    const t = LOCALES[currentLang];
+    showToast(t?.bzInputEmpty || '请先输入你的想法', 'warning');
+    document.getElementById('bzInput').focus();
+    return;
+  }
+  if (bzIsGenerating) return;
+  bzIsGenerating = true;
+
+  const btn = document.getElementById('bzGenerateBtn');
+  const btnText = btn.querySelector('span');
+  const resultEl = document.getElementById('bzResult');
+  const textEl = document.getElementById('bzResultText');
+  const t = LOCALES[currentLang];
+
+  btn.disabled = true;
+  btnText.textContent = t?.bzGenerating || '生成中...';
+  resultEl.classList.add('show');
+  textEl.innerHTML = '<span class="cursor-blink"></span>';
+  bzUpdateSteps(3);
+
+  /* 获取风格 tokens */
+  const styleData = STYLE_UNIVERSE.find(s => s.id === bzStyle);
+  const styleTokens = styleData ? styleData.promptTokens.slice(0, 4) : [];
+
+  /* 根据用途构建 prompt */
+  let prompt = '';
+  const useCaseMap = {
+    image: { prefix: '', suffix: ', ' + styleTokens.join(', ') },
+    video: { prefix: '', suffix: ', cinematic motion, ' + styleTokens.join(', ') },
+    writing: { prefix: '', suffix: '' },
+    code: { prefix: '', suffix: '' }
+  };
+
+  /* 模拟流式生成 */
+  if (bzUseCase === 'writing' || bzUseCase === 'code') {
+    /* 写作/编程：生成结构化描述 */
+    prompt = bzUseCase === 'writing'
+      ? `请根据以下描述创作内容：\n\n主题：${input}\n风格：${styleData ? (styleData.name[currentLang] || styleData.name.en) : '通用'}\n要求：结构清晰，语言生动，适合目标受众阅读。`
+      : `请根据以下需求编写代码：\n\n需求：${input}\n要求：代码规范，注释清晰，可直接运行。`;
+  } else {
+    /* 绘画/视频：生成英文 prompt */
+    const translated = input;
+    prompt = `${translated}${useCaseMap[bzUseCase].suffix}, high quality, detailed, professional`;
+  }
+
+  /* 流式输出 */
+  await bzStreamText(prompt, textEl);
+
+  btn.disabled = false;
+  btnText.textContent = t?.bzGenerate || '立即生成';
+  bzIsGenerating = false;
+}
+
+/* 流式文本输出 */
+function bzStreamText(text, el) {
+  return new Promise(resolve => {
+    let i = 0;
+    const chunkSize = 3;
+    const delay = 20;
+    function tick() {
+      if (i >= text.length) {
+        resolve();
+        return;
+      }
+      const chunk = text.slice(i, i + chunkSize);
+      i += chunkSize;
+      el.innerHTML = text.slice(0, i).replace(/\n/g, '<br>') + '<span class="cursor-blink"></span>';
+      setTimeout(tick, delay);
+    }
+    tick();
+  });
+}
+
+/* 新手模式：复制结果 */
+function bzCopyResult() {
+  const text = document.getElementById('bzResultText').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const t = LOCALES[currentLang];
+    showToast(t?.bzCopied || '已复制到剪贴板', 'success');
+  }).catch(() => {
+    showToast('复制失败', 'error');
+  });
+}
+
+/* 新手模式：查看示例 */
+function bzShowExamples() {
+  const examples = {
+    image: '一只橘猫坐在窗边看雨，窗外是霓虹灯闪烁的东京街头，玻璃上有水珠反光',
+    video: '镜头从太空缓缓推进到地球表面，穿过云层，最终定格在一片金色麦田',
+    writing: '写一篇关于 AI 如何改变创意产业的深度文章，面向设计师和艺术家',
+    code: '用 React 写一个带动画的倒计时组件，支持自定义结束回调'
+  };
+  const input = document.getElementById('bzInput');
+  input.value = examples[bzUseCase] || examples.image;
+  input.focus();
+  const t = LOCALES[currentLang];
+  showToast(t?.bzExampleFilled || '已填入示例，点击生成试试', 'info');
+}
+
+/* 新手模式：输入框监听 */
+function bzInitInput() {
+  const bzInput = document.getElementById('bzInput');
+  if (bzInput) {
+    bzInput.addEventListener('input', () => bzUpdateSteps(1));
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bzInitInput);
+} else {
+  bzInitInput();
+}
+
 /* ==================== 初始化 ==================== */
 applyLocale();
 applyTheme();
@@ -6620,6 +7525,16 @@ fetchStarCount();
 setupTabKeyboard();
 switchTab('generator');
 wbInit();
+
+/* 模式初始化 */
+currentMode = getMode();
+if (currentMode === 'beginner') {
+  document.getElementById('modeBeginner').classList.add('active');
+  document.getElementById('wbApp').classList.add('mode-pro-hidden');
+} else {
+  document.getElementById('bzModeBtnPro')?.classList.add('active');
+  document.getElementById('bzModeBtnBeginner')?.classList.remove('active');
+}
 
 /* ==================== Tab 切换 ==================== */
 function switchTab(tab) {
