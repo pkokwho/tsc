@@ -3505,6 +3505,338 @@ nav {
 [data-theme="light"] .bz-action-btn { border-color: rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); color: #475569; }
 [data-theme="light"] .bz-result-box { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.08); }
 [data-theme="light"] .bz-mode-btn { border-color: rgba(0,0,0,0.08); background: rgba(0,0,0,0.01); color: #64748b; }
+
+/* ==================== 结果页分模块样式 ==================== */
+
+/* 示例输入系统 */
+.bz-examples {
+  width: 100%;
+  margin-top: 12px;
+  animation: bzFadeUp 0.6s 0.18s var(--wb-ease-out, ease) both;
+}
+.bz-examples-label {
+  font-size: 12px;
+  color: var(--wb-text-tertiary, #64748b);
+  margin-bottom: 8px;
+}
+.bz-examples-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bz-example-chip {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  color: var(--wb-text-tertiary, #64748b);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.bz-example-chip:hover {
+  border-color: rgba(99,102,241,0.3);
+  background: rgba(99,102,241,0.06);
+  color: #a5b4fc;
+}
+.bz-example-chip svg { width: 11px; height: 11px; opacity: 0.6; }
+
+/* 生成状态条 */
+.bz-result-status {
+  display: none;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(99,102,241,0.06);
+  border: 1px solid rgba(99,102,241,0.15);
+  align-items: center;
+  gap: 8px;
+}
+.bz-result-status.show { display: flex; }
+.bz-result-status.done {
+  background: rgba(16,185,129,0.06);
+  border-color: rgba(16,185,129,0.2);
+}
+.bz-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #a5b4fc;
+}
+.bz-result-status.done .bz-status-indicator { color: #6ee7b7; }
+.bz-status-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(99,102,241,0.2);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: bzSpin 0.8s linear infinite;
+}
+.bz-result-status.done .bz-status-spinner {
+  border: 2px solid rgba(16,185,129,0.2);
+  border-top-color: #10b981;
+  animation: none;
+  border-radius: 50%;
+  position: relative;
+}
+.bz-result-status.done .bz-status-spinner::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #10b981;
+}
+@keyframes bzSpin { to { transform: rotate(360deg); } }
+
+/* 结果模块通用 */
+.bz-result-module {
+  width: 100%;
+  margin-bottom: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.bz-result-module.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.bz-module-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: default;
+}
+.bz-module-negative .bz-module-header { cursor: pointer; }
+.bz-module-negative .bz-module-header:hover { background: rgba(255,255,255,0.02); }
+.bz-module-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--wb-text-tertiary, #64748b);
+}
+.bz-module-icon svg { width: 14px; height: 14px; }
+.bz-module-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wb-text-secondary, #94a3b8);
+  flex: 1;
+}
+.bz-module-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(16,185,129,0.12);
+  color: #6ee7b7;
+  font-weight: 600;
+}
+.bz-module-toggle {
+  font-size: 10px;
+  color: var(--wb-text-tertiary, #64748b);
+  transition: transform 0.3s;
+}
+.bz-module-negative.expanded .bz-module-toggle { transform: rotate(180deg); }
+.bz-negative-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 14px;
+}
+.bz-module-negative.expanded .bz-negative-content {
+  max-height: 200px;
+  padding: 12px 14px;
+}
+.bz-text-small { font-size: 12px; line-height: 1.6; color: var(--wb-text-tertiary, #64748b); }
+
+/* 元信息模块 */
+.bz-result-meta {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.bz-result-meta.show { display: grid; animation: bzFadeUp 0.4s ease both; }
+.bz-meta-item {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.bz-meta-label {
+  display: block;
+  font-size: 10px;
+  color: var(--wb-text-tertiary, #475569);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.bz-meta-value {
+  display: block;
+  font-size: 13px;
+  color: var(--wb-text-primary, #e2e8f0);
+  font-weight: 500;
+}
+
+/* 评分网格 */
+.bz-score-grid {
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.bz-score-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.bz-score-item-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--wb-text-tertiary, #64748b);
+}
+.bz-score-item-value { font-weight: 600; color: var(--wb-text-secondary, #94a3b8); }
+.bz-score-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.bz-score-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.8s var(--wb-ease-out, ease);
+  width: 0%;
+}
+
+/* 操作按钮小尺寸 */
+.bz-action-sm {
+  padding: 5px 10px;
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+/* 最近生成历史 */
+.bz-history {
+  width: 100%;
+  margin-top: 28px;
+  display: none;
+}
+.bz-history.show { display: block; animation: bzFadeUp 0.5s ease both; }
+.bz-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.bz-history-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--wb-text-secondary, #94a3b8);
+}
+.bz-history-clear {
+  font-size: 11px;
+  color: var(--wb-text-tertiary, #64748b);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.bz-history-clear:hover { color: var(--wb-danger, #ef4444); }
+.bz-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bz-history-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.bz-history-item:hover {
+  border-color: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+}
+.bz-history-item-content {
+  flex: 1;
+  min-width: 0;
+}
+.bz-history-item-text {
+  font-size: 12px;
+  color: var(--wb-text-secondary, #94a3b8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.bz-history-item-meta {
+  font-size: 10px;
+  color: var(--wb-text-tertiary, #475569);
+  display: flex;
+  gap: 8px;
+}
+.bz-history-item-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.bz-history-item:hover .bz-history-item-actions { opacity: 1; }
+.bz-history-action {
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  color: var(--wb-text-tertiary, #64748b);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.bz-history-action:hover {
+  color: var(--wb-text-primary, #e2e8f0);
+  border-color: rgba(255,255,255,0.15);
+}
+.bz-history-action.fav.active { color: #fbbf24; border-color: rgba(251,191,36,0.3); }
+.bz-history-action svg { width: 12px; height: 12px; }
+.bz-history-empty {
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: var(--wb-text-tertiary, #475569);
+}
+
+/* 结果区增强（生成完成时） */
+.bz-result.generating .bz-result-module { opacity: 0.3; pointer-events: none; }
+.bz-result.generating .bz-result-status { display: flex; }
+.bz-result.completed .bz-result-status { display: flex; }
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+  .bz-result-meta { grid-template-columns: 1fr; }
+  .bz-score-grid { grid-template-columns: 1fr; }
+  .bz-history-item-actions { opacity: 1; }
+  .bz-example-chip { font-size: 11px; padding: 5px 10px; }
+}
+[data-theme="light"] .bz-result-module { background: rgba(0,0,0,0.01); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .bz-meta-item { background: rgba(0,0,0,0.01); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .bz-history-item { background: rgba(0,0,0,0.01); border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .bz-example-chip { border-color: rgba(0,0,0,0.06); background: rgba(0,0,0,0.01); color: #64748b; }
 </style>
 </head>
 <body>
@@ -3574,6 +3906,12 @@ nav {
       <textarea id="bzInput" placeholder="描述你想生成的画面，比如：一只猫坐在窗边看雨..." data-i18n-placeholder="bzInputPlaceholder"></textarea>
     </div>
 
+    <!-- 示例输入系统 -->
+    <div class="bz-examples" id="bzExamples">
+      <div class="bz-examples-label" data-i18n="bzTryExamples">试试这些示例</div>
+      <div class="bz-examples-list" id="bzExamplesList"></div>
+    </div>
+
     <!-- 选项 -->
     <div class="bz-options">
       <div class="bz-option-group">
@@ -3604,29 +3942,103 @@ nav {
       <span data-i18n="bzGenerate">立即生成</span>
     </button>
 
-    <!-- 结果区 -->
+    <!-- 结果区（重构：分模块展示） -->
     <div class="bz-result" id="bzResult">
-      <div class="bz-result-label">
-        <span class="bz-dot"></span>
-        <span data-i18n="bzResultLabel">优化后的描述</span>
+      <!-- 生成状态条 -->
+      <div class="bz-result-status" id="bzResultStatus">
+        <div class="bz-status-indicator" id="bzStatusIndicator">
+          <div class="bz-status-spinner"></div>
+          <span data-i18n="bzGenerating">生成中...</span>
+        </div>
       </div>
-      <div class="bz-result-box">
-        <div class="bz-result-text" id="bzResultText"></div>
+
+      <!-- 主 Prompt 模块 -->
+      <div class="bz-result-module bz-module-main" id="bzModuleMain">
+        <div class="bz-module-header">
+          <span class="bz-module-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/></svg>
+          </span>
+          <span class="bz-module-title" data-i18n="bzResultLabel">优化后的描述</span>
+          <span class="bz-module-badge" id="bzScoreBadge"></span>
+        </div>
+        <div class="bz-result-box">
+          <div class="bz-result-text" id="bzResultText"></div>
+        </div>
       </div>
-      <div class="bz-result-actions">
+
+      <!-- 元信息模块 -->
+      <div class="bz-result-meta" id="bzResultMeta">
+        <div class="bz-meta-item">
+          <span class="bz-meta-label" data-i18n="bzMetaModel">适用模型</span>
+          <span class="bz-meta-value" id="bzMetaModel"></span>
+        </div>
+        <div class="bz-meta-item">
+          <span class="bz-meta-label" data-i18n="bzMetaStyle">风格标签</span>
+          <span class="bz-meta-value" id="bzMetaStyle"></span>
+        </div>
+        <div class="bz-meta-item">
+          <span class="bz-meta-label" data-i18n="bzMetaScore">评分</span>
+          <span class="bz-meta-value" id="bzMetaScore"></span>
+        </div>
+      </div>
+
+      <!-- Negative Prompt 模块（可折叠） -->
+      <div class="bz-result-module bz-module-negative" id="bzModuleNegative">
+        <div class="bz-module-header" onclick="bzToggleNegative()">
+          <span class="bz-module-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </span>
+          <span class="bz-module-title" data-i18n="bzNegativeLabel">负面描述（可选）</span>
+          <span class="bz-module-toggle" id="bzNegativeToggle">▼</span>
+        </div>
+        <div class="bz-negative-content" id="bzNegativeContent">
+          <div class="bz-result-text bz-text-small" id="bzNegativeText"></div>
+          <button class="bz-action-btn bz-action-sm" onclick="bzCopyNegative()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <span data-i18n="bzCopyNegative">复制负面描述</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 评分模块 -->
+      <div class="bz-result-module bz-module-score" id="bzModuleScore">
+        <div class="bz-module-header">
+          <span class="bz-module-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </span>
+          <span class="bz-module-title" data-i18n="bzScoreTitle">质量评分</span>
+        </div>
+        <div class="bz-score-grid" id="bzScoreGrid"></div>
+      </div>
+
+      <!-- 操作按钮组 -->
+      <div class="bz-result-actions" id="bzResultActions">
         <button class="bz-action-btn primary" onclick="bzCopyResult()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           <span data-i18n="bzCopy">一键复制</span>
         </button>
         <button class="bz-action-btn" onclick="bzGenerate()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-          <span data-i18n="bzRegenerate">再生成一个</span>
+          <span data-i18n="bzRegenerate">重新生成</span>
         </button>
-        <button class="bz-action-btn" onclick="bzShowExamples()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          <span data-i18n="bzExamples">查看示例</span>
+        <button class="bz-action-btn" onclick="bzContinueOptimize()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span data-i18n="bzOptimize">继续优化</span>
+        </button>
+        <button class="bz-action-btn" onclick="bzToggleFavorite()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="bzFavIcon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span data-i18n="bzFavorite">收藏</span>
         </button>
       </div>
+    </div>
+
+    <!-- 最近生成历史 -->
+    <div class="bz-history" id="bzHistory">
+      <div class="bz-history-header">
+        <span class="bz-history-title" data-i18n="bzHistoryTitle">最近生成</span>
+        <button class="bz-history-clear" onclick="bzClearHistory()" data-i18n="bzHistoryClear">清空</button>
+      </div>
+      <div class="bz-history-list" id="bzHistoryList"></div>
     </div>
   </div>
 
@@ -5391,6 +5803,28 @@ const LOCALES = {
     proHintSidebar: '侧边栏',
     proHintTabs: '切换模块',
 
+    /* 结果页 + 历史 + 示例 */
+    bzTryExamples: '试试这些示例',
+    bzDone: '生成完成',
+    bzNegativeLabel: '负面描述（可选）',
+    bzCopyNegative: '复制负面描述',
+    bzScoreTitle: '质量评分',
+    bzMetaModel: '适用模型',
+    bzMetaStyle: '风格标签',
+    bzMetaScore: '评分',
+    bzScoreLength: '描述长度',
+    bzScoreStyle: '风格匹配',
+    bzScoreQuality: '质量参数',
+    bzScoreDetail: '细节丰富度',
+    bzOptimize: '继续优化',
+    bzOptimizeHint: '已切换到专业工作台，可使用高级优化功能',
+    bzFavorite: '收藏',
+    bzFavorited: '已收藏',
+    bzUnfavorited: '已取消收藏',
+    bzHistoryTitle: '最近生成',
+    bzHistoryClear: '清空',
+    bzHistoryCleared: '已清空历史记录',
+
     styleSearchPlaceholder: '搜索风格...',
     styleFavFilter: '收藏',
     styleFusionTitle: '风格融合引擎',
@@ -5666,6 +6100,28 @@ const LOCALES = {
     proHintCmdk: 'Command Palette',
     proHintSidebar: 'Toggle Sidebar',
     proHintTabs: 'Switch Modules',
+
+    /* Result page + History + Examples */
+    bzTryExamples: 'Try these examples',
+    bzDone: 'Generation complete',
+    bzNegativeLabel: 'Negative prompt (optional)',
+    bzCopyNegative: 'Copy negative',
+    bzScoreTitle: 'Quality Score',
+    bzMetaModel: 'Models',
+    bzMetaStyle: 'Style',
+    bzMetaScore: 'Score',
+    bzScoreLength: 'Length',
+    bzScoreStyle: 'Style Match',
+    bzScoreQuality: 'Quality',
+    bzScoreDetail: 'Detail Richness',
+    bzOptimize: 'Optimize',
+    bzOptimizeHint: 'Switched to Pro Workbench for advanced optimization',
+    bzFavorite: 'Favorite',
+    bzFavorited: 'Added to favorites',
+    bzUnfavorited: 'Removed from favorites',
+    bzHistoryTitle: 'Recent Generations',
+    bzHistoryClear: 'Clear',
+    bzHistoryCleared: 'History cleared',
 
     styleSearchPlaceholder: 'Search styles...',
     styleFavFilter: 'Favorites',
@@ -7400,10 +7856,64 @@ function bzUpdateSteps(step) {
 }
 
 /* 新手模式：生成 */
+/* ==================== 新手模式：示例数据 ==================== */
+const BZ_EXAMPLES = [
+  { useCase: 'image', style: 'cyberpunk', text: { zh: '一只橘猫坐在窗边看雨，窗外是霓虹灯闪烁的东京街头', en: 'An orange cat sitting by the window watching rain, neon-lit Tokyo street outside' }, icon: 'image' },
+  { useCase: 'video', style: 'cinematic', text: { zh: '镜头从太空缓缓推进到地球表面，穿过云层，定格在金色麦田', en: 'Camera slowly zooms from space to Earth surface, through clouds, stops at golden wheat field' }, icon: 'video' },
+  { useCase: 'writing', style: 'cinematic', text: { zh: '写一篇关于 AI 如何改变创意产业的深度文章', en: 'Write an in-depth article about how AI transforms creative industries' }, icon: 'writing' },
+  { useCase: 'code', style: 'minimalist', text: { zh: '用 React 写一个带动画的倒计时组件', en: 'Build an animated countdown component in React' }, icon: 'code' },
+  { useCase: 'image', style: 'watercolor', text: { zh: '一座漂浮在云端的空中城堡，水彩风格', en: 'A floating castle in the clouds, watercolor style' }, icon: 'image' },
+  { useCase: 'image', style: 'anime', text: { zh: '少女站在樱花树下，风吹起她的长发，动漫风格', en: 'A girl standing under cherry blossoms, wind blowing her hair, anime style' }, icon: 'image' }
+];
+
+const BZ_HISTORY_KEY = 'tsc-bz-history';
+const BZ_FAV_KEY = 'tsc-bz-favorites';
+let bzCurrentResult = null;
+let bzNegativeExpanded = false;
+
+/* ==================== 新手模式：示例渲染 ==================== */
+function bzRenderExamples() {
+  const list = document.getElementById('bzExamplesList');
+  if (!list) return;
+  const t = LOCALES[currentLang];
+  const iconMap = {
+    image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>',
+    video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>',
+    writing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>'
+  };
+  list.innerHTML = BZ_EXAMPLES.map((ex, i) => {
+    const text = ex.text[currentLang] || ex.text.zh;
+    return `<div class="bz-example-chip" onclick="bzUseExample(${i})">${iconMap[ex.icon] || ''}<span>${text.length > 18 ? text.slice(0, 18) + '...' : text}</span></div>`;
+  }).join('');
+}
+
+/* 使用示例：自动带入最优参数 */
+function bzUseExample(index) {
+  const ex = BZ_EXAMPLES[index];
+  if (!ex) return;
+  const t = LOCALES[currentLang];
+  /* 填入文本 */
+  document.getElementById('bzInput').value = ex.text[currentLang] || ex.text.zh;
+  /* 自动选择用途 */
+  document.querySelectorAll('#bzUseCaseChips .bz-chip').forEach(c => {
+    c.classList.toggle('selected', c.dataset.value === ex.useCase);
+  });
+  bzUseCase = ex.useCase;
+  /* 自动选择风格 */
+  document.querySelectorAll('#bzStyleChips .bz-chip').forEach(c => {
+    c.classList.toggle('selected', c.dataset.value === ex.style);
+  });
+  bzStyle = ex.style;
+  bzUpdateSteps(2);
+  showToast(t?.bzExampleFilled || '已填入示例，点击生成试试', 'info');
+}
+
+/* ==================== 新手模式：生成逻辑（重构） ==================== */
 async function bzGenerate() {
   const input = document.getElementById('bzInput').value.trim();
+  const t = LOCALES[currentLang];
   if (!input) {
-    const t = LOCALES[currentLang];
     showToast(t?.bzInputEmpty || '请先输入你的想法', 'warning');
     document.getElementById('bzInput').focus();
     return;
@@ -7415,48 +7925,327 @@ async function bzGenerate() {
   const btnText = btn.querySelector('span');
   const resultEl = document.getElementById('bzResult');
   const textEl = document.getElementById('bzResultText');
-  const t = LOCALES[currentLang];
+  const statusEl = document.getElementById('bzResultStatus');
 
   btn.disabled = true;
   btnText.textContent = t?.bzGenerating || '生成中...';
-  resultEl.classList.add('show');
+  resultEl.classList.add('show', 'generating');
+  resultEl.classList.remove('completed');
+  statusEl.classList.add('show');
+  statusEl.classList.remove('done');
+  statusEl.querySelector('span').textContent = t?.bzGenerating || '生成中...';
   textEl.innerHTML = '<span class="cursor-blink"></span>';
   bzUpdateSteps(3);
 
-  /* 获取风格 tokens */
+  /* 隐藏模块，生成完成后逐个显示 */
+  ['bzModuleMain', 'bzModuleNegative', 'bzModuleScore'].forEach(id => {
+    document.getElementById(id)?.classList.remove('show');
+  });
+  document.getElementById('bzResultMeta')?.classList.remove('show');
+  document.getElementById('bzResultActions')?.classList.remove('show');
+
+  /* 获取风格数据 */
   const styleData = STYLE_UNIVERSE.find(s => s.id === bzStyle);
   const styleTokens = styleData ? styleData.promptTokens.slice(0, 4) : [];
+  const styleName = styleData ? (styleData.name[currentLang] || styleData.name.en) : '通用';
+  const negativeTokens = styleData ? styleData.negativeTokens.slice(0, 4) : [];
 
-  /* 根据用途构建 prompt */
+  /* 构建 prompt */
   let prompt = '';
+  let negative = '';
+  let model = '';
   const useCaseMap = {
-    image: { prefix: '', suffix: ', ' + styleTokens.join(', ') },
-    video: { prefix: '', suffix: ', cinematic motion, ' + styleTokens.join(', ') },
-    writing: { prefix: '', suffix: '' },
-    code: { prefix: '', suffix: '' }
+    image: { model: 'Midjourney / Flux / SDXL', suffix: styleTokens.join(', ') },
+    video: { model: 'Sora / Runway / SeaDance', suffix: 'cinematic motion, ' + styleTokens.join(', ') },
+    writing: { model: 'GPT / Claude / Gemini', suffix: '' },
+    code: { model: 'GPT / Claude / DeepSeek', suffix: '' }
   };
 
-  /* 模拟流式生成 */
   if (bzUseCase === 'writing' || bzUseCase === 'code') {
-    /* 写作/编程：生成结构化描述 */
     prompt = bzUseCase === 'writing'
-      ? `请根据以下描述创作内容：\n\n主题：${input}\n风格：${styleData ? (styleData.name[currentLang] || styleData.name.en) : '通用'}\n要求：结构清晰，语言生动，适合目标受众阅读。`
+      ? `请根据以下描述创作内容：\n\n主题：${input}\n风格：${styleName}\n要求：结构清晰，语言生动，适合目标受众阅读。`
       : `请根据以下需求编写代码：\n\n需求：${input}\n要求：代码规范，注释清晰，可直接运行。`;
+    negative = '避免：内容空洞、逻辑混乱、格式不规范';
   } else {
-    /* 绘画/视频：生成英文 prompt */
-    const translated = input;
-    prompt = `${translated}${useCaseMap[bzUseCase].suffix}, high quality, detailed, professional`;
+    prompt = `${input}, ${useCaseMap[bzUseCase].suffix}, high quality, detailed, professional`;
+    negative = negativeTokens.length > 0 ? negativeTokens.join(', ') + ', low quality, blurry, distorted' : 'low quality, blurry, distorted';
   }
+  model = useCaseMap[bzUseCase].model;
 
-  /* 流式输出 */
+  /* 流式输出主 prompt */
   await bzStreamText(prompt, textEl);
+
+  /* 生成完成：状态切换 */
+  resultEl.classList.remove('generating');
+  resultEl.classList.add('completed');
+  statusEl.classList.add('done');
+  statusEl.querySelector('span').textContent = t?.bzDone || '生成完成';
+
+  /* 逐个显示模块 */
+  setTimeout(() => {
+    document.getElementById('bzModuleMain')?.classList.add('show');
+    /* 评分 badge */
+    const score = bzCalculateScore(prompt);
+    document.getElementById('bzScoreBadge').textContent = score.total + '/100';
+  }, 100);
+  setTimeout(() => {
+    document.getElementById('bzResultMeta')?.classList.add('show');
+    document.getElementById('bzMetaModel').textContent = model;
+    document.getElementById('bzMetaStyle').textContent = styleName;
+    document.getElementById('bzMetaScore').textContent = bzCalculateScore(prompt).total + '/100';
+  }, 250);
+  setTimeout(() => {
+    document.getElementById('bzModuleNegative')?.classList.add('show');
+    document.getElementById('bzNegativeText').textContent = negative;
+  }, 400);
+  setTimeout(() => {
+    document.getElementById('bzModuleScore')?.classList.add('show');
+    bzRenderScoreGrid(prompt);
+  }, 550);
+  setTimeout(() => {
+    document.getElementById('bzResultActions')?.classList.add('show');
+  }, 700);
+
+  /* 保存当前结果 */
+  bzCurrentResult = {
+    id: Date.now(),
+    input,
+    prompt,
+    negative,
+    model,
+    style: styleName,
+    styleId: bzStyle,
+    useCase: bzUseCase,
+    score: bzCalculateScore(prompt),
+    timestamp: Date.now()
+  };
+
+  /* 保存到历史 */
+  bzAddToHistory(bzCurrentResult);
 
   btn.disabled = false;
   btnText.textContent = t?.bzGenerate || '立即生成';
   bzIsGenerating = false;
 }
 
-/* 流式文本输出 */
+/* ==================== 评分系统 ==================== */
+function bzCalculateScore(text) {
+  const length = Math.min(text.length / 200 * 25, 25);
+  const hasStyle = /cinematic|anime|realistic|minimal|cyberpunk|watercolor|neon|noir/i.test(text) ? 25 : 15;
+  const hasQuality = /high quality|detailed|professional|4k|8k/i.test(text) ? 25 : 18;
+  const hasDetail = /lighting|composition|color|mood|detail/i.test(text) ? 25 : 20;
+  return {
+    total: Math.round(length + hasStyle + hasQuality + hasDetail),
+    length: Math.round(length),
+    style: hasStyle,
+    quality: hasQuality,
+    detail: hasDetail
+  };
+}
+
+function bzRenderScoreGrid(prompt) {
+  const score = bzCalculateScore(prompt);
+  const t = LOCALES[currentLang];
+  const items = [
+    { label: t?.bzScoreLength || '描述长度', value: score.length, color: '#6366f1' },
+    { label: t?.bzScoreStyle || '风格匹配', value: score.style, color: '#a855f7' },
+    { label: t?.bzScoreQuality || '质量参数', value: score.quality, color: '#10b981' },
+    { label: t?.bzScoreDetail || '细节丰富度', value: score.detail, color: '#f59e0b' }
+  ];
+  document.getElementById('bzScoreGrid').innerHTML = items.map(item => `
+    <div class="bz-score-item">
+      <div class="bz-score-item-label">
+        <span>${item.label}</span>
+        <span class="bz-score-item-value">${item.value}/25</span>
+      </div>
+      <div class="bz-score-bar">
+        <div class="bz-score-bar-fill" style="background:${item.color};width:${(item.value / 25) * 100}%"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ==================== Negative Prompt 折叠 ==================== */
+function bzToggleNegative() {
+  bzNegativeExpanded = !bzNegativeExpanded;
+  document.getElementById('bzModuleNegative')?.classList.toggle('expanded', bzNegativeExpanded);
+}
+
+function bzCopyNegative() {
+  const text = document.getElementById('bzNegativeText').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const t = LOCALES[currentLang];
+    showToast(t?.bzCopied || '已复制到剪贴板', 'success');
+  });
+}
+
+/* ==================== 继续优化 ==================== */
+function bzContinueOptimize() {
+  if (!bzCurrentResult) return;
+  const t = LOCALES[currentLang];
+  /* 切换到专业模式 */
+  switchMode('pro');
+  /* 填入专业模式输入框 */
+  const desc = document.getElementById('description');
+  if (desc) {
+    desc.value = bzCurrentResult.input;
+    desc.dispatchEvent(new Event('input'));
+  }
+  showToast(t?.bzOptimizeHint || '已切换到专业工作台，可使用高级优化功能', 'info');
+}
+
+/* ==================== 收藏 ==================== */
+function bzToggleFavorite() {
+  if (!bzCurrentResult) return;
+  const t = LOCALES[currentLang];
+  let favs = bzLoadFavorites();
+  const idx = favs.findIndex(f => f.id === bzCurrentResult.id);
+  const icon = document.getElementById('bzFavIcon');
+  if (idx >= 0) {
+    favs.splice(idx, 1);
+    icon?.setAttribute('fill', 'none');
+    showToast(t?.bzUnfavorited || '已取消收藏', 'info');
+  } else {
+    favs.unshift(bzCurrentResult);
+    icon?.setAttribute('fill', '#fbbf24');
+    showToast(t?.bzFavorited || '已收藏', 'success');
+  }
+  bzSaveFavorites(favs);
+}
+
+/* ==================== 历史记录管理 ==================== */
+function bzLoadHistory() {
+  try { return JSON.parse(localStorage.getItem(BZ_HISTORY_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function bzSaveHistory(history) {
+  try { localStorage.setItem(BZ_HISTORY_KEY, JSON.stringify(history.slice(0, 10))); } catch {}
+}
+
+function bzAddToHistory(item) {
+  let history = bzLoadHistory();
+  history.unshift(item);
+  history = history.slice(0, 10);
+  bzSaveHistory(history);
+  bzRenderHistory();
+}
+
+function bzRenderHistory() {
+  const container = document.getElementById('bzHistory');
+  const list = document.getElementById('bzHistoryList');
+  if (!container || !list) return;
+  const history = bzLoadHistory();
+  const favs = bzLoadFavorites();
+  const t = LOCALES[currentLang];
+
+  if (history.length === 0) {
+    container.classList.remove('show');
+    return;
+  }
+  container.classList.add('show');
+
+  list.innerHTML = history.map((item, i) => {
+    const isFav = favs.some(f => f.id === item.id);
+    const time = bzFormatTime(item.timestamp);
+    const text = (item.input || '').slice(0, 40);
+    return `
+      <div class="bz-history-item" onclick="bzRestoreHistory(${i})">
+        <div class="bz-history-item-content">
+          <div class="bz-history-item-text">${text}</div>
+          <div class="bz-history-item-meta">
+            <span>${item.model || ''}</span>
+            <span>${time}</span>
+            <span>${item.score?.total || 0}/100</span>
+          </div>
+        </div>
+        <div class="bz-history-item-actions" onclick="event.stopPropagation()">
+          <button class="bz-history-action fav ${isFav ? 'active' : ''}" onclick="bzToggleHistoryFav(${item.id})" title="${t?.bzFavorite || '收藏'}">
+            <svg viewBox="0 0 24 24" fill="${isFav ? '#fbbf24' : 'none'}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </button>
+          <button class="bz-history-action" onclick="bzCopyHistory(${i})" title="${t?.bzCopy || '复制'}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function bzFormatTime(ts) {
+  const diff = Date.now() - ts;
+  if (diff < 60000) return '刚刚';
+  if (diff < 3600000) return Math.floor(diff / 60000) + ' 分钟前';
+  if (diff < 86400000) return Math.floor(diff / 3600000) + ' 小时前';
+  return Math.floor(diff / 86400000) + ' 天前';
+}
+
+function bzRestoreHistory(index) {
+  const history = bzLoadHistory();
+  const item = history[index];
+  if (!item) return;
+  document.getElementById('bzInput').value = item.input;
+  /* 恢复用途和风格 */
+  if (item.useCase) {
+    document.querySelectorAll('#bzUseCaseChips .bz-chip').forEach(c => {
+      c.classList.toggle('selected', c.dataset.value === item.useCase);
+    });
+    bzUseCase = item.useCase;
+  }
+  if (item.styleId) {
+    document.querySelectorAll('#bzStyleChips .bz-chip').forEach(c => {
+      c.classList.toggle('selected', c.dataset.value === item.styleId);
+    });
+    bzStyle = item.styleId;
+  }
+  bzUpdateSteps(2);
+  document.getElementById('bzInput').focus();
+}
+
+function bzCopyHistory(index) {
+  const history = bzLoadHistory();
+  const item = history[index];
+  if (!item) return;
+  navigator.clipboard.writeText(item.prompt).then(() => {
+    const t = LOCALES[currentLang];
+    showToast(t?.bzCopied || '已复制到剪贴板', 'success');
+  });
+}
+
+function bzToggleHistoryFav(id) {
+  let history = bzLoadHistory();
+  const item = history.find(h => h.id === id);
+  if (!item) return;
+  let favs = bzLoadFavorites();
+  const idx = favs.findIndex(f => f.id === id);
+  if (idx >= 0) {
+    favs.splice(idx, 1);
+  } else {
+    favs.unshift(item);
+  }
+  bzSaveFavorites(favs);
+  bzRenderHistory();
+}
+
+function bzClearHistory() {
+  const t = LOCALES[currentLang];
+  localStorage.removeItem(BZ_HISTORY_KEY);
+  bzRenderHistory();
+  showToast(t?.bzHistoryCleared || '已清空历史记录', 'info');
+}
+
+/* ==================== 收藏管理 ==================== */
+function bzLoadFavorites() {
+  try { return JSON.parse(localStorage.getItem(BZ_FAV_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function bzSaveFavorites(favs) {
+  try { localStorage.setItem(BZ_FAV_KEY, JSON.stringify(favs.slice(0, 50))); } catch {}
+}
+
+/* ==================== 流式文本输出 ==================== */
 function bzStreamText(text, el) {
   return new Promise(resolve => {
     let i = 0;
@@ -7464,10 +8253,10 @@ function bzStreamText(text, el) {
     const delay = 20;
     function tick() {
       if (i >= text.length) {
+        el.innerHTML = text.replace(/\n/g, '<br>');
         resolve();
         return;
       }
-      const chunk = text.slice(i, i + chunkSize);
       i += chunkSize;
       el.innerHTML = text.slice(0, i).replace(/\n/g, '<br>') + '<span class="cursor-blink"></span>';
       setTimeout(tick, delay);
@@ -7476,7 +8265,7 @@ function bzStreamText(text, el) {
   });
 }
 
-/* 新手模式：复制结果 */
+/* ==================== 新手模式：复制结果 ==================== */
 function bzCopyResult() {
   const text = document.getElementById('bzResultText').textContent;
   if (!text) return;
@@ -7488,28 +8277,23 @@ function bzCopyResult() {
   });
 }
 
-/* 新手模式：查看示例 */
+/* ==================== 新手模式：查看示例 ==================== */
 function bzShowExamples() {
-  const examples = {
-    image: '一只橘猫坐在窗边看雨，窗外是霓虹灯闪烁的东京街头，玻璃上有水珠反光',
-    video: '镜头从太空缓缓推进到地球表面，穿过云层，最终定格在一片金色麦田',
-    writing: '写一篇关于 AI 如何改变创意产业的深度文章，面向设计师和艺术家',
-    code: '用 React 写一个带动画的倒计时组件，支持自定义结束回调'
-  };
-  const input = document.getElementById('bzInput');
-  input.value = examples[bzUseCase] || examples.image;
-  input.focus();
-  const t = LOCALES[currentLang];
-  showToast(t?.bzExampleFilled || '已填入示例，点击生成试试', 'info');
+  const ex = BZ_EXAMPLES[Math.floor(Math.random() * BZ_EXAMPLES.length)];
+  bzUseExample(BZ_EXAMPLES.indexOf(ex));
 }
 
-/* 新手模式：输入框监听 */
+/* ==================== 新手模式：输入框监听 ==================== */
 function bzInitInput() {
   const bzInput = document.getElementById('bzInput');
   if (bzInput) {
     bzInput.addEventListener('input', () => bzUpdateSteps(1));
   }
+  /* 渲染示例和历史 */
+  bzRenderExamples();
+  bzRenderHistory();
 }
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', bzInitInput);
 } else {
