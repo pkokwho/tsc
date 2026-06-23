@@ -1604,6 +1604,31 @@
     }
   }
 
+  /* ==================== 低性能设备降级 ==================== */
+  /* PERF_LOW 检测到低性能设备时，<html> 添加 .perf-low 类 */
+  .perf-low .motion-canvas,
+  .perf-low #styleCosmosCanvas,
+  .perf-low #particleCanvas { display:none !important; }
+  .perf-low * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .perf-low .bg-orb { animation:none; filter:blur(60px); opacity:0.12; }
+  .perf-low .bg-effects::before { opacity:0.15; }
+  .perf-low .style-card-v2:hover,
+  .perf-low .prompt-card:hover,
+  .perf-low .template-card:hover,
+  .perf-low .fusion-slot:hover,
+  .perf-low .btn-generate:hover,
+  .perf-low .btn-cta-primary:hover,
+  .perf-low .btn-cta-secondary:hover {
+    transform:none;
+  }
+  .perf-low .style-card-v2::before,
+  .perf-low .style-card-v2::after { display:none; }
+  .perf-low .token-inject-anim { animation:none; }
+  .perf-low .bz-result-module { animation:fadeIn 0.2s ease both; }
+
   /* ==================== Footer ==================== */
   footer {
     text-align:center; padding:40px 24px;
@@ -5587,23 +5612,32 @@ function wbSyncFromLivePreview() {
 }
 
 /* --- Init Workbench --- */
+var wbInitialized = false;
 function wbInit() {
+  if (wbInitialized) return; // 防止重复初始化（避免重复绑定事件监听）
+  wbInitialized = true;
   wbLoadXP();
   wbRenderXP();
   wbRenderStyleChips();
   wbUpdateHistoryBadge();
   wbSetupInlineSuggestion();
   wbUpdateProviderBadge();
-  // Sync on input
+  // Sync on input (merged: workbench sync + live preview in one listener)
   const desc = document.getElementById('description');
   if (desc) {
+    const debouncedLivePreview = debounce(() => {
+      const thinking = document.getElementById('livePreviewThinking');
+      if (thinking) thinking.classList.remove('hidden');
+      if (typeof updateLivePreview === 'function') updateLivePreview();
+    }, 200);
     desc.addEventListener('input', () => {
       clearTimeout(window._wbSyncTimer);
       window._wbSyncTimer = setTimeout(wbSyncFromLivePreview, 300);
+      debouncedLivePreview();
     });
   }
-  // Initial sync
-  setTimeout(wbSyncFromLivePreview, 500);
+  // Initial sync (deferred to idle to avoid blocking first paint)
+  idleSchedule(() => wbSyncFromLivePreview(), 2000);
 }
 
 /* ==================== 国际化 - Locales ==================== */
@@ -6478,8 +6512,10 @@ function drawMotionBackground(time) {
 
 function initMotionBackground() {
   const state = motionBackground;
+  if (state.initialized) return; // 防止重复初始化
   state.canvas = document.getElementById('motionCanvas');
   if (!state.canvas) return;
+  state.initialized = true;
   state.ctx = state.canvas.getContext('2d', { alpha: true });
   if (!state.ctx) return;
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -7760,10 +7796,10 @@ document.getElementById('vaultImportInput').addEventListener('change', function(
   importVaultJson(e.target.files && e.target.files[0]);
   e.target.value = '';
 });
-document.getElementById('templateSearch').addEventListener('input', function(e) {
+document.getElementById('templateSearch').addEventListener('input', debounce(function(e) {
   templateSearchQuery = e.target.value;
   renderTemplates();
-});
+}, 150));
 
 /* ==================== 双层模式管理 ==================== */
 const MODE_KEY = 'tsc-mode';
@@ -7821,6 +7857,7 @@ function switchMode(mode) {
     /* 确保专业模式初始化 */
     if (typeof switchTab === 'function') switchTab('generator');
     if (typeof wbInit === 'function') wbInit();
+    if (typeof initMotionBackground === 'function') initMotionBackground();
   }
 
   /* 移除过渡类 */
@@ -8304,20 +8341,23 @@ if (document.readyState === 'loading') {
 applyLocale();
 applyTheme();
 loadAdvancedState();
-initMotionBackground();
-fetchStarCount();
 setupTabKeyboard();
 switchTab('generator');
-wbInit();
 
-/* 模式初始化 */
+/* 模式初始化（先确定模式，再决定是否初始化专业工作台） */
 currentMode = getMode();
 if (currentMode === 'beginner') {
   document.getElementById('modeBeginner').classList.add('active');
   document.getElementById('wbApp').classList.add('mode-pro-hidden');
+  /* beginner 模式：延迟加载非首屏模块到空闲时段 */
+  idleSchedule(() => { initMotionBackground(); fetchStarCount(); }, 1500);
 } else {
   document.getElementById('bzModeBtnPro')?.classList.add('active');
   document.getElementById('bzModeBtnBeginner')?.classList.remove('active');
+  /* pro 模式：初始化工作台 + 背景 */
+  wbInit();
+  initMotionBackground();
+  fetchStarCount();
 }
 
 /* ==================== Tab 切换 ==================== */
@@ -9819,16 +9859,18 @@ function renderStyleCardV2(s, favs, index) {
   </div>`;
 }
 
-/* 卡片 hover 光效跟随 */
+/* 卡片 hover 光效跟随（RAF 节流，低性能设备禁用） */
 function bindCardHoverEffects() {
+  if (PERF_LOW) return; // 低性能设备跳过光效跟随
   document.querySelectorAll('.style-card-v2').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
+    const handler = rafThrottle((e) => {
       const rect = card.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
       card.style.setProperty('--mx', x + '%');
       card.style.setProperty('--my', y + '%');
     });
+    card.addEventListener('mousemove', handler);
   });
 }
 
@@ -9990,8 +10032,10 @@ function toggleFavFilter() {
 }
 
 /* 搜索 */
+var _filterStylesTimer = null;
 function filterStyles() {
-  renderStyleGrid();
+  clearTimeout(_filterStylesTimer);
+  _filterStylesTimer = setTimeout(renderStyleGrid, 150);
 }
 
 /* 虚拟滚动 scroll handler */
@@ -10114,7 +10158,7 @@ function initStyleCosmosParticles() {
     canvas.height = section.offsetHeight;
   }
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', debounce(resize, 200));
 
   // 初始化粒子
   styleCosmosParticles = [];
@@ -10203,6 +10247,64 @@ function debounce(fn, delay) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => fn.apply(this, args), delay);
   };
+}
+
+// Throttle utility (leading + trailing edge)
+function throttle(fn, wait) {
+  let last = 0, timer = null;
+  return function(...args) {
+    const now = Date.now();
+    const remaining = wait - (now - last);
+    if (remaining <= 0) {
+      if (timer) { clearTimeout(timer); timer = null; }
+      last = now;
+      fn.apply(this, args);
+    } else if (!timer) {
+      timer = setTimeout(() => {
+        last = Date.now();
+        timer = null;
+        fn.apply(this, args);
+      }, remaining);
+    }
+  };
+}
+
+// RAF-based throttle (best for mousemove/scroll — one frame at most)
+function rafThrottle(fn) {
+  let ticking = false;
+  let lastArgs = null;
+  return function(...args) {
+    lastArgs = args;
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      fn.apply(this, lastArgs);
+      ticking = false;
+      lastArgs = null;
+    });
+  };
+}
+
+// requestIdleCallback wrapper with setTimeout fallback
+function idleSchedule(fn, timeout) {
+  if ('requestIdleCallback' in window) {
+    return requestIdleCallback(fn, { timeout: timeout || 1000 });
+  }
+  return setTimeout(fn, 16);
+}
+
+// Low-performance device detection (run once at load)
+var PERF_LOW = (function() {
+  try {
+    var cores = navigator.hardwareConcurrency || 4;
+    var mem = navigator.deviceMemory || 4;
+    var mobile = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return cores <= 4 || mem <= 4 || (mobile && cores <= 6) || reduced;
+  } catch (e) { return false; }
+})();
+if (PERF_LOW) {
+  document.documentElement.classList.add('perf-low');
 }
 
 // Switch model tab
@@ -10518,12 +10620,6 @@ function updateLivePreview() {
 
 // Initialize live preview
 const debouncedUpdate = debounce(updateLivePreview, 200);
-
-document.getElementById('description').addEventListener('input', function() {
-  const thinking = document.getElementById('livePreviewThinking');
-  thinking.classList.remove('hidden');
-  debouncedUpdate();
-});
 
 // Initialize on load
 document.addEventListener('DOMContentLoaded', function() {
